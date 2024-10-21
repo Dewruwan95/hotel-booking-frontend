@@ -1,11 +1,17 @@
-import { BrowserRouter } from "react-router-dom";
-import Header from "./components/Header/Header";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./components/pages/clientPages/home/HomePage";
+import Dashboard from "./components/pages/adminPages/dashboard/AdminDashboard";
+import NotFoundPage from "./components/pages/clientPages/notFound/NotFoundPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Routes path="/*">
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin/*" element={<Dashboard />} />
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
       </BrowserRouter>
     </>
   );
