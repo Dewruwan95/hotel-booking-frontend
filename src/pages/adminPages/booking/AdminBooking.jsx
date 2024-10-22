@@ -1,12 +1,12 @@
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { bookings } from "../../../../data/BookingsData";
+import { bookings } from "../../../data/BookingsData";
 
 function AdminBooking() {
   return (
     <div className="w-full h-full p-[20px] bg-purple-200">
       <table className="w-full bg-white rounded-[10px] overflow-hidden">
-        <thead>
+        <thead className="">
           <tr className="bg-purple-600 text-white">
             <th className="py-3 px-6 text-center">Timestamp</th>
             <th className="py-3 px-6 text-center">Booking ID</th>

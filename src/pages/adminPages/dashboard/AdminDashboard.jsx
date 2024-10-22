@@ -6,7 +6,7 @@ import AdminUsers from "../users/AdminUsers";
 import AdminFeedback from "../feedbacks/AdminFeedback";
 import AdminTicketing from "../ticketing/AdminTicketing";
 import AdminGallery from "../gallery/AdminGallery";
-import NavigationItemList from "./NavigationItemList";
+import NavigationItemList from "../../../components/adminNavigation/NavigationItemList";
 
 function AdminDashboard() {
   return (
