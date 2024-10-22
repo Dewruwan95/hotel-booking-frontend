@@ -10,25 +10,25 @@ function TableRow(props) {
         }`}
       >
         <td className="py-4 px-6 text-center">
-          {new Date(props.booking.timestamp).toLocaleDateString()}
+          {new Date(props.row.timestamp).toLocaleDateString()}
         </td>
-        <td className="py-4 px-6 text-center">{props.booking.bookingId}</td>
-        <td className="py-4 px-6 text-center">{props.booking.roomId}</td>
-        <td className="py-4 px-6 text-center">{props.booking.email}</td>
-        <td className="py-4 px-6 text-center">{props.booking.reason}</td>
-        <td className="py-4 px-6 text-center">{props.booking.start}</td>
-        <td className="py-4 px-6 text-center">{props.booking.end}</td>
+        <td className="py-4 px-6 text-center">{props.row.bookingId}</td>
+        <td className="py-4 px-6 text-center">{props.row.roomId}</td>
+        <td className="py-4 px-6 text-center">{props.row.email}</td>
+        <td className="py-4 px-6 text-center">{props.row.reason}</td>
+        <td className="py-4 px-6 text-center">{props.row.start}</td>
+        <td className="py-4 px-6 text-center">{props.row.end}</td>
         <td className="py-4 px-6 text-center">
           <span
             className={`${
-              props.booking.status === "confirmed"
+              props.row.status === "confirmed"
                 ? "text-green-500"
-                : props.booking.status === "pending"
+                : props.row.status === "pending"
                 ? "text-yellow-500"
                 : "text-red-500"
             }`}
           >
-            {props.booking.status}
+            {props.row.status}
           </span>
         </td>
         <td className="py-4 px-6 text-center">
