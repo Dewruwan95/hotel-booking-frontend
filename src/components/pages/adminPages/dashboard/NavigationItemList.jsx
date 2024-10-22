@@ -12,42 +12,38 @@ function NavigationItemList() {
       <NavigationItem
         itemName="Dashboard"
         itemIcon={RiDashboardHorizontalFill}
-        itemLink="admin/dashboard"
+        itemLink="dashboard"
       />
       <NavigationItem
         itemName="Bookings"
         itemIcon={BsBookmarkCheckFill}
-        itemLink="admin/booking"
+        itemLink="bookings"
       />
       <NavigationItem
         itemName="Rooms"
         itemIcon={BsFillDoorOpenFill}
-        itemLink="admin/rooms"
+        itemLink="rooms"
       />
       <NavigationItem
         itemName="Categories"
         itemIcon={MdCategory}
-        itemLink="admin/categories"
+        itemLink="categories"
       />
-      <NavigationItem
-        itemName="Users"
-        itemIcon={ImUsers}
-        itemLink="admin/users"
-      />
+      <NavigationItem itemName="Users" itemIcon={ImUsers} itemLink="users" />
       <NavigationItem
         itemName="Feedbacks"
         itemIcon={PiListStarFill}
-        itemLink="admin/feedback"
+        itemLink="feedbacks"
       />
       <NavigationItem
         itemName="Ticketing"
         itemIcon={IoChatboxEllipses}
-        itemLink="admin/ticketing"
+        itemLink="ticketing"
       />
       <NavigationItem
         itemName="Gallery"
         itemIcon={IoIosImage}
-        itemLink="admin/gallery"
+        itemLink="gallery"
       />
     </div>
   );
