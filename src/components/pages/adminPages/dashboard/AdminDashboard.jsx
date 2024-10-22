@@ -11,22 +11,32 @@ import NavigationItemList from "./NavigationItemList";
 function AdminDashboard() {
   return (
     <>
-      <div className="w-full max-h-[100vh] flex">
-        {/* dashboard navigation design */}
+      <div className="w-full max-h-[100vh] bg-purple-900 flex">
         <div className="w-[20%] h-[100vh] bg-purple-300 flex flex-col">
-          <NavigationItemList />
+          <div className="h-[30%] max-h[30%] bg-purple-900">
+            {/* dashboard profile design */}
+          </div>
+          <div>
+            {/* dashboard navigation design */}
+            <NavigationItemList />
+          </div>
         </div>
-        {/* dashboard content design */}
-        <div className="w-[80%]  bg-purple-100">
-          <Routes path="/*">
-            <Route path="/bookings" element={<AdminBooking />} />
-            <Route path="/rooms" element={<AdminRooms />} />
-            <Route path="/categories" element={<AdminCategories />} />
-            <Route path="/users" element={<AdminUsers />} />
-            <Route path="/feedbacks" element={<AdminFeedback />} />
-            <Route path="/ticketing" element={<AdminTicketing />} />
-            <Route path="/gallery" element={<AdminGallery />} />
-          </Routes>
+
+        <div className="w-[80%] h-[100vh]">
+          <div className="h-[6%] bg-purple-900"></div>
+
+          <div className="h-[94%] overflow-y-scroll rounded-tl-[10px] bg-purple-200">
+            {/* dashboard content design */}
+            <Routes path="/*">
+              <Route path="/bookings" element={<AdminBooking />} />
+              <Route path="/rooms" element={<AdminRooms />} />
+              <Route path="/categories" element={<AdminCategories />} />
+              <Route path="/users" element={<AdminUsers />} />
+              <Route path="/feedbacks" element={<AdminFeedback />} />
+              <Route path="/ticketing" element={<AdminTicketing />} />
+              <Route path="/gallery" element={<AdminGallery />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@ import { PiListStarFill } from "react-icons/pi";
 import { IoIosImage } from "react-icons/io";
 function NavigationItemList() {
   return (
-    <div>
+    <div className="mt-[50px]">
       <NavigationItem
         itemName="Dashboard"
         itemIcon={RiDashboardHorizontalFill}
