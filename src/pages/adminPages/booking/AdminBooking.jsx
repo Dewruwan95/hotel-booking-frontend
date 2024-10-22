@@ -1,8 +1,8 @@
 import DataTable from "../../../components/adminDataTable/DataTable";
 import { bookings } from "../../../data/BookingsData";
 function AdminBooking() {
-  // Define the column headers as an array
-  const columns = [
+  // Column headers for Booking table
+  const bookingColumns = [
     "Timestamp",
     "Booking ID",
     "Room ID",
@@ -13,9 +13,25 @@ function AdminBooking() {
     "Status",
     "Action",
   ];
+
+  // Fields corresponding to the columns
+  const bookingFields = [
+    "timestamp",
+    "bookingId",
+    "roomId",
+    "email",
+    "reason",
+    "start",
+    "end",
+    "status",
+  ];
   return (
     <>
-      <DataTable columns={columns} data={bookings} />
+      <DataTable
+        columns={bookingColumns}
+        fields={bookingFields}
+        data={bookings}
+      />
     </>
   );
 }
