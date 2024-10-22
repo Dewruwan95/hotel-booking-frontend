@@ -25,7 +25,7 @@ function AdminDashboard() {
         <div className="w-[80%] h-[100vh]">
           <div className="h-[6%] bg-purple-900"></div>
 
-          <div className="h-[94%] overflow-y-scroll rounded-tl-[10px] bg-purple-200">
+          <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
             {/* dashboard content design */}
             <Routes path="/*">
               <Route path="/bookings" element={<AdminBooking />} />
