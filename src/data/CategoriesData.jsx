@@ -1,7 +1,7 @@
 export const categories = [
   {
     name: "Deluxe",
-    price: 350,
+    price: 3500.0,
     features: ["Ocean view", "King-sized bed", "Free Wi-Fi", "Jacuzzi"],
     description:
       "A luxurious suite with a stunning ocean view and top-notch amenities for a comfortable stay.",
@@ -9,7 +9,7 @@ export const categories = [
   },
   {
     name: "Standard",
-    price: 100,
+    price: 1000.0,
     features: ["Queen-sized bed", "Air conditioning", "Free Wi-Fi"],
     description:
       "A cozy room ideal for solo travelers or couples, offering all essential amenities.",
@@ -17,7 +17,7 @@ export const categories = [
   },
   {
     name: "Family",
-    price: 200,
+    price: 2000.0,
     features: ["Two double beds", "Play area for kids", "Free breakfast"],
     description:
       "Perfect for families, with spacious rooms and amenities catering to all family members.",
@@ -25,7 +25,7 @@ export const categories = [
   },
   {
     name: "Executive",
-    price: 450,
+    price: 4500.0,
     features: ["Private office", "King-sized bed", "City view", "Minibar"],
     description:
       "Designed for business professionals, this suite offers luxury and a private workspace.",
@@ -33,7 +33,7 @@ export const categories = [
   },
   {
     name: "Budget",
-    price: 75,
+    price: 750.0,
     features: ["Single bed", "Air conditioning", "Free Wi-Fi"],
     description:
       "Affordable room for solo travelers on a budget, with basic amenities.",
@@ -41,7 +41,7 @@ export const categories = [
   },
   {
     name: "Penthouse",
-    price: 600,
+    price: 6000.0,
     features: [
       "Private pool",
       "Panoramic view",
@@ -54,7 +54,7 @@ export const categories = [
   },
   {
     name: "Junior",
-    price: 220,
+    price: 2200.0,
     features: ["King-sized bed", "Balcony", "Living area"],
     description:
       "A spacious suite with modern décor, perfect for a relaxing getaway.",
@@ -62,7 +62,7 @@ export const categories = [
   },
   {
     name: "Single",
-    price: 90,
+    price: 900.0,
     features: ["Single bed", "Desk", "Free Wi-Fi"],
     description:
       "A small, efficient room for business travelers or solo adventurers.",
@@ -70,7 +70,7 @@ export const categories = [
   },
   {
     name: "Presidential",
-    price: 700,
+    price: 7000.0,
     features: [
       "Private gym",
       "Personal chef",
@@ -83,7 +83,7 @@ export const categories = [
   },
   {
     name: "Honeymoon",
-    price: 400,
+    price: 4000.0,
     features: ["Heart-shaped bed", "Private balcony", "Romantic décor"],
     description:
       "A romantic suite designed to create unforgettable moments for couples.",
@@ -91,7 +91,7 @@ export const categories = [
   },
   {
     name: "Cabana",
-    price: 180,
+    price: 1800.0,
     features: ["Outdoor seating", "Poolside view", "Private entrance"],
     description:
       "Enjoy the poolside experience in this charming room with private access to the pool area.",
@@ -99,7 +99,7 @@ export const categories = [
   },
   {
     name: "Loft",
-    price: 550,
+    price: 5500.0,
     features: ["Open-plan layout", "Rooftop access", "High ceilings"],
     description:
       "An upscale loft with a unique design, perfect for guests looking for a stylish stay.",
@@ -107,7 +107,7 @@ export const categories = [
   },
   {
     name: "Business",
-    price: 300,
+    price: 3000.0,
     features: ["Office desk", "Meeting area", "Complimentary coffee"],
     description:
       "Tailored for business travelers, this suite offers a perfect blend of comfort and functionality.",
@@ -115,7 +115,7 @@ export const categories = [
   },
   {
     name: "Studio",
-    price: 140,
+    price: 1400.0,
     features: ["Kitchenette", "Queen-sized bed", "Free Wi-Fi"],
     description:
       "Ideal for long-term stays, this studio room offers convenience and a homely feel.",
@@ -123,7 +123,7 @@ export const categories = [
   },
   {
     name: "Garden",
-    price: 180,
+    price: 1800.0,
     features: ["Private garden", "Outdoor seating", "Patio access"],
     description:
       "A serene garden view room with access to beautiful greenery for a peaceful stay.",
@@ -131,7 +131,7 @@ export const categories = [
   },
   {
     name: "Spa",
-    price: 380,
+    price: 3800.0,
     features: ["Private spa", "Sauna", "Jacuzzi"],
     description:
       "Relax and rejuvenate in this spa-focused suite with exclusive wellness amenities.",
@@ -139,7 +139,7 @@ export const categories = [
   },
   {
     name: "Twin",
-    price: 130,
+    price: 1300.0,
     features: ["Two single beds", "Air conditioning", "Free Wi-Fi"],
     description:
       "A simple yet comfortable room for friends or colleagues traveling together.",
@@ -147,7 +147,7 @@ export const categories = [
   },
   {
     name: "Lake",
-    price: 250,
+    price: 2500.0,
     features: ["Lake view", "Private balcony", "Minibar"],
     description:
       "This room offers stunning views of the nearby lake, providing a peaceful retreat.",
@@ -155,7 +155,7 @@ export const categories = [
   },
   {
     name: "Cottage",
-    price: 280,
+    price: 2800.0,
     features: ["Private cottage", "Fireplace", "Outdoor dining"],
     description:
       "A rustic cottage surrounded by nature, offering a unique and private experience.",
@@ -163,7 +163,7 @@ export const categories = [
   },
   {
     name: "Heritage",
-    price: 320,
+    price: 3200.0,
     features: ["Antique décor", "Four-poster bed", "Historical artwork"],
     description:
       "Step back in time with this elegantly designed suite featuring vintage furnishings.",
@@ -171,7 +171,7 @@ export const categories = [
   },
   {
     name: "Beachfront",
-    price: 500,
+    price: 5000.0,
     features: ["Private beach access", "Outdoor shower", "Hammock"],
     description:
       "A tropical paradise with private beachfront access and relaxing outdoor amenities.",
@@ -179,7 +179,7 @@ export const categories = [
   },
   {
     name: "Mountain",
-    price: 210,
+    price: 2100.0,
     features: ["Mountain view", "Private balcony", "Wooden interiors"],
     description:
       "This room offers scenic mountain views, perfect for nature lovers.",
@@ -187,7 +187,7 @@ export const categories = [
   },
   {
     name: "Urban",
-    price: 290,
+    price: 2900.0,
     features: ["City view", "Modern décor", "Smart home technology"],
     description:
       "A sleek and modern loft with smart home features and a vibrant city view.",
@@ -195,7 +195,7 @@ export const categories = [
   },
   {
     name: "Eco",
-    price: 160,
+    price: 1600.0,
     features: [
       "Sustainable materials",
       "Energy-efficient appliances",
@@ -207,7 +207,7 @@ export const categories = [
   },
   {
     name: "Desert",
-    price: 600,
+    price: 6000.0,
     features: ["Desert view", "Private pool", "Outdoor seating area"],
     description:
       "An exclusive villa offering a luxurious stay with sweeping desert views.",

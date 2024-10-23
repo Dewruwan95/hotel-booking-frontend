@@ -1,8 +1,26 @@
+import DataTable from "../../../components/adminDataTable/DataTable";
+import { categories } from "../../../data/CategoriesData";
+
 function AdminCategories() {
+  // Column headers for Room table
+  const categoryColumns = [
+    "Name",
+    "Price (Rs.)",
+    "Features",
+    "Description",
+    "Action",
+  ];
+
+  // Fields corresponding to the columns
+  const categoryFields = ["name", "price", "features", "description"];
   return (
-    <div>
-      <h1>Categories</h1>
-    </div>
+    <>
+      <DataTable
+        columns={categoryColumns}
+        fields={categoryFields}
+        data={categories}
+      />
+    </>
   );
 }
 

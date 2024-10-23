@@ -32,6 +32,12 @@ function TableRow({ fields, data, index }) {
               >
                 {data[field] === true ? "Available" : "Not Available"}
               </span>
+            ) : field === "price" ? (
+              // Format the price field to show commas and two decimal places
+              parseFloat(data[field]).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
             ) : (
               data[field]
             )}
