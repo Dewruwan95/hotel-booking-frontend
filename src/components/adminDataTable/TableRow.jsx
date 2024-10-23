@@ -9,7 +9,10 @@ function TableRow({ fields, data, index }) {
         }`}
       >
         {fields.map((field, fieldIndex) => (
-          <td key={fieldIndex} className="py-4 px-6 text-center">
+          <td
+            key={fieldIndex}
+            className="py-4 px-6 text-center max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
+          >
             {field === "timestamp" || field === "start" || field === "end" ? (
               new Date(data[field]).toLocaleDateString()
             ) : field === "status" ? (
@@ -38,6 +41,9 @@ function TableRow({ fields, data, index }) {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })
+            ) : field === "features" && Array.isArray(data[field]) ? (
+              // Join the features array into a comma-separated string
+              data[field].join(", ")
             ) : (
               data[field]
             )}

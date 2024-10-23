@@ -1,8 +1,22 @@
+import DataTable from "../../../components/adminDataTable/DataTable";
+import { users } from "../../../data/UsersData";
 function AdminUsers() {
+  // Column headers for User table
+  const userColumns = [
+    "First Name",
+    "Last Name",
+    "Email",
+    "Phone",
+    "WhatsApp",
+    "Action",
+  ];
+
+  // Fields corresponding to the columns
+  const userFields = ["firstName", "lastName", "email", "phone", "whatsApp"];
   return (
-    <div>
-      <h1>Users</h1>
-    </div>
+    <>
+      <DataTable columns={userColumns} fields={userFields} data={users} />
+    </>
   );
 }
 
