@@ -1,8 +1,37 @@
+import DataTable from "../../../components/adminDataTable/DataTable";
+import { feedback } from "../../../data/FeedbackData";
+
 function AdminFeedback() {
+  // Column headers for Room table
+  const feedbackColumns = [
+    "Date",
+    "Feedback ID",
+    "Name",
+    "Email",
+    "Title",
+    "Rating",
+    "Status",
+    "Action",
+  ];
+
+  // Fields corresponding to the columns
+  const feedbackFields = [
+    "timestamp",
+    "feedbackId",
+    "firstName",
+    "email",
+    "title",
+    "rating",
+    "approved",
+  ];
   return (
-    <div>
-      <h1>Feedback</h1>
-    </div>
+    <>
+      <DataTable
+        columns={feedbackColumns}
+        fields={feedbackFields}
+        data={feedback}
+      />
+    </>
   );
 }
 

@@ -44,6 +44,14 @@ function TableRow({ fields, data, index }) {
             ) : field === "features" && Array.isArray(data[field]) ? (
               // Join the features array into a comma-separated string
               data[field].join(", ")
+            ) : field === "approved" ? (
+              <span
+                className={`${
+                  data[field] === true ? "text-green-500" : "text-orange-500"
+                }`}
+              >
+                {data[field] === true ? "Approved" : "Pending"}
+              </span>
             ) : (
               data[field]
             )}
