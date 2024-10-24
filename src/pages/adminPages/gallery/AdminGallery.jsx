@@ -1,8 +1,20 @@
+import DataTable from "../../../components/adminDataTable/DataTable";
+import { events } from "../../../data/EventData";
+
 function AdminGallery() {
+  // Column headers for Gallery table
+  const galleryColumns = ["Event ID", "Event Name", "Description", "Action"];
+
+  // Fields corresponding to the columns
+  const galleryFields = ["eventId", "name", "description"];
   return (
-    <div>
-      <h1>Gallery</h1>
-    </div>
+    <>
+      <DataTable
+        columns={galleryColumns}
+        fields={galleryFields}
+        data={events}
+      />
+    </>
   );
 }
 
