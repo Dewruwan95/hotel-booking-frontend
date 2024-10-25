@@ -7,6 +7,7 @@ import AdminFeedback from "../feedbacks/AdminFeedback";
 import AdminTicketing from "../ticketing/AdminTicketing";
 import AdminGallery from "../gallery/AdminGallery";
 import NavigationItemList from "../../../components/adminNavigation/NavigationItemList";
+import DateAndTime from "../../../components/adminDashboardTimestamp/DateAndTime";
 
 function AdminDashboard() {
   return (
@@ -23,7 +24,9 @@ function AdminDashboard() {
         </div>
 
         <div className="w-[80%] h-[100vh]">
-          <div className="h-[6%] bg-purple-900"></div>
+          <div className="h-[6%] bg-purple-900 flex justify-center items-center">
+            <DateAndTime />
+          </div>
 
           <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
             {/* dashboard content design */}
