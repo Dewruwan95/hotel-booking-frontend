@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { FaRegUser } from "react-icons/fa";
 import { GoKey } from "react-icons/go";
 import { IoMdLogIn } from "react-icons/io";
+import { MdAlternateEmail } from "react-icons/md";
 
 function UserLogin() {
   const [email, setEmail] = useState("");
@@ -36,8 +36,8 @@ function UserLogin() {
         <div className="  flex flex-col   ">
           {/* email field */}
           <div className="flex my-4">
-            <div className=" bg-purple-300 text-purple-500 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-              <FaRegUser className="h-4 w-4" />
+            <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+              <MdAlternateEmail className="h-4 w-4" />
             </div>
 
             <input
@@ -51,7 +51,7 @@ function UserLogin() {
 
           {/* password field */}
           <div className="flex my-4">
-            <div className=" bg-purple-300 text-purple-500 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+            <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
               <GoKey className="h-4 w-4" />
             </div>
 
