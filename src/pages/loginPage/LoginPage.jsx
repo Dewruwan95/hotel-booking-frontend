@@ -8,7 +8,7 @@ function LoginPage() {
 
   function handleLogin() {
     axios
-      .post("http://localhost:5000/api/users/login", {
+      .post(import.meta.env.VITE_BACKEND_URL + "/api/users/login", {
         email: email,
         password: password,
       })
