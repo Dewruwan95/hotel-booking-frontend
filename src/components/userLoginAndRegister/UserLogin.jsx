@@ -43,7 +43,7 @@ function UserLogin() {
             <input
               type="email"
               placeholder="Email"
-              className="w-[360px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+              className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -58,7 +58,7 @@ function UserLogin() {
             <input
               type="password"
               placeholder="Password"
-              className="w-[360px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+              className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -84,7 +84,7 @@ function UserLogin() {
           {/* button */}
           <div className="my-4">
             <button
-              className="w-[405px] h-[40px] bg-purple-600 text-white text-lg 
+              className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
                       font-semibold rounded-lg shadow-md hover:bg-purple-800 hover:shadow-lg 
                       transition duration-300 ease-in-out flex items-center justify-center"
               onClick={handleLogin}

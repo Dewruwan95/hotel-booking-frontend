@@ -168,7 +168,7 @@ function UserRegistration() {
               onClick={handleRegister}
             >
               <IoCreate className="mr-2" />
-              Register
+              Sign Up
             </button>
           </div>
         </div>
