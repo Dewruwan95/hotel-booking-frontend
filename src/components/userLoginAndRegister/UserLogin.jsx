@@ -32,7 +32,7 @@ function UserLogin() {
 
   return (
     <>
-      <div className="bg-white w-full h-[100vh] flex items-center justify-center">
+      <div className=" w-full h-[100vh] flex items-center justify-center">
         <div className="  flex flex-col   ">
           {/* email field */}
           <div className="flex my-4">
