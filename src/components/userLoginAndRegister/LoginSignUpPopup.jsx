@@ -46,7 +46,7 @@ function LoginSignUpPopup({ onClose }) {
                 ${
                   userStatus === "login"
                     ? "bg-purple-900 text-white"
-                    : "bg-purple-200 text-purple-950 hover:bg-purple-900"
+                    : "bg-purple-200 text-purple-950 hover:bg-purple-500"
                 }`}
                   onClick={() => setUserStatus("login")}
                 >
@@ -61,7 +61,7 @@ function LoginSignUpPopup({ onClose }) {
                 ${
                   userStatus === "register"
                     ? "bg-purple-900 text-white"
-                    : "bg-purple-200 text-purple-950 hover:bg-purple-900"
+                    : "bg-purple-200 text-purple-950 hover:bg-purple-500"
                 }`}
                   onClick={() => setUserStatus("register")}
                 >
