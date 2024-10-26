@@ -2,6 +2,7 @@ import { TbLogin2 } from "react-icons/tb";
 import MenuList from "./MenuList";
 import { useState } from "react";
 import LoginSignUpPopup from "../userLoginAndRegister/LoginSignUpPopup";
+import UserHeaderProfile from "./UserHeaderProfile";
 
 function Header() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
@@ -24,6 +25,7 @@ function Header() {
             setIsLoginClicked(true);
           }}
         >
+          {<UserHeaderProfile />}
           <TbLogin2 className="text-[30px] mr-1" />
           Login
         </button>

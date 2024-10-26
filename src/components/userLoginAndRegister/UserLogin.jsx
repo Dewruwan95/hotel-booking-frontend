@@ -20,7 +20,7 @@ function UserLogin() {
         if (res.data.user) {
           if (res.data.user.type === "admin") {
             window.location.href = "/admin";
-          } else {
+          } else if (res.data.user.type === "customer") {
             window.location.href = "/";
           }
         }
