@@ -3,13 +3,13 @@ import UserRegistration from "./UserRegistration";
 import UserLogin from "./UserLogin";
 import { useState } from "react";
 
-function LoginSignUpPopup() {
+function LoginSignUpPopup({ onClose }) {
   const [userStatus, setUserStatus] = useState("login");
 
   return (
     <>
       {/*  background */}
-      <div className="h-[100vh] w-full flex justify-center items-center bg-[#00000066]">
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
         {/* component background */}
         <div className="w-[950px] h-[650px] bg-purple-50 rounded-lg relative">
           {/* close button */}
@@ -18,7 +18,7 @@ function LoginSignUpPopup() {
               className="h-[40px] w-[40px] absolute bg-purple-50 rounded-full right-[-20px] top-[-20px]
             flex justify-center items-center
             "
-              onClick={() => {}}
+              onClick={onClose}
             >
               <IoMdCloseCircleOutline className="text-[40px] text-purple-950 hover:text-purple-600" />
             </button>
