@@ -12,8 +12,7 @@ function LogedOutItems() {
   return (
     <div>
       <button
-        className="px-6 py-3  text-white text-lg font-semibold rounded-lg shadow-md 
-        hover:text-purple-300 transition duration-300 ease-in-out
+        className="px-6 py-3  text-white text-lg font-semibold rounded-lg shadow-md hover:text-purple-300 transition duration-300 ease-in-out
         flex items-center"
         onClick={() => {
           setIsLoginClicked(true);
