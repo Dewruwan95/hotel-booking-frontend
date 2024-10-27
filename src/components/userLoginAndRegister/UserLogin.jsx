@@ -4,7 +4,7 @@ import { GoKey } from "react-icons/go";
 import { IoMdLogIn } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
 
-function UserLogin() {
+function UserLogin({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -17,11 +17,13 @@ function UserLogin() {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+
         if (res.data.user) {
+          onLogin();
           if (res.data.user.type === "admin") {
-            window.location.href = "/admin";
+            //window.location.href = "/admin";
           } else if (res.data.user.type === "customer") {
-            window.location.href = "/";
+            //window.location.href = "/";
           }
         }
       })

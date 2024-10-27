@@ -3,7 +3,7 @@ import UserRegistration from "./UserRegistration";
 import UserLogin from "./UserLogin";
 import { useState } from "react";
 
-function LoginSignUpPopup({ onClose }) {
+function LoginSignUpPopup({ onClose, onLogin }) {
   const [userStatus, setUserStatus] = useState("login");
 
   return (
@@ -48,7 +48,9 @@ function LoginSignUpPopup({ onClose }) {
                     ? "bg-purple-900 text-white"
                     : "bg-purple-200 text-purple-950 hover:bg-purple-500"
                 }`}
-                  onClick={() => setUserStatus("login")}
+                  onClick={() => {
+                    setUserStatus("login");
+                  }}
                 >
                   Login
                 </button>
@@ -73,7 +75,7 @@ function LoginSignUpPopup({ onClose }) {
                 {userStatus === "register" ? (
                   <UserRegistration />
                 ) : (
-                  <UserLogin />
+                  <UserLogin onLogin={onLogin} />
                 )}
               </div>
             </div>

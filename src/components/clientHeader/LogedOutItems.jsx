@@ -2,7 +2,7 @@ import { useState } from "react";
 import LoginSignUpPopup from "../userLoginAndRegister/LoginSignUpPopup";
 import { TbLogin2 } from "react-icons/tb";
 
-function LogedOutItems() {
+function LogedOutItems({ onLogin }) {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
   // Function to close the popup
@@ -23,7 +23,7 @@ function LogedOutItems() {
       </button>
       {isLoginClicked && (
         <div>
-          <LoginSignUpPopup onClose={handleClosePopup} />
+          <LoginSignUpPopup onClose={handleClosePopup} onLogin={onLogin} />
         </div>
       )}
     </div>

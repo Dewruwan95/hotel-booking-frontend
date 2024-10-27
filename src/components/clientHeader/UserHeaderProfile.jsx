@@ -3,9 +3,25 @@ import LogedInItems from "./LogedInItems";
 import LogedOutItems from "./LogedOutItems";
 
 function UserHeaderProfile() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  return <div>{isUserLoggedIn ? <LogedInItems /> : <LogedOutItems />}</div>;
+  function handleUserLogedIn() {
+    setIsUserLoggedIn(true);
+    console.log(isUserLoggedIn);
+  }
+  function handleUserLogedOut() {
+    setIsUserLoggedIn(false);
+  }
+
+  return (
+    <div>
+      {isUserLoggedIn ? (
+        <LogedInItems onLogout={handleUserLogedOut} />
+      ) : (
+        <LogedOutItems onLogin={handleUserLogedIn} />
+      )}
+    </div>
+  );
 }
 
 export default UserHeaderProfile;
