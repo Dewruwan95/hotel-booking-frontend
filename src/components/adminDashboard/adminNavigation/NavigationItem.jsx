@@ -1,23 +1,29 @@
 import { Link } from "react-router-dom";
 
-function NavigationItem(props) {
+function NavigationItem({
+  itemName,
+  itemIcon: Icon,
+  itemLink,
+  isActive,
+  setActiveItem,
+}) {
   return (
     <div>
       <Link
-        className="
-      w-[90%] 
-      my-[5px]
-      py-[5px] pl-[25px] 
-      bg-purple-300 hover:bg-purple-900 
-      font-semibold text-[30px] text-purple-900 hover:text-white
-      flex items-center 
-      border-y-4 border-r-4 rounded-r-[50px] border-purple-950 
-      shadow-md hover:shadow-lg
-      transition duration-300 ease-in-out"
-        to={props.itemLink}
+        className={`w-[90%] my-[5px] py-[5px] pl-[25px]
+        font-semibold text-[30px] flex items-center 
+        border-y-4 border-r-4 rounded-r-[50px] border-purple-950 
+        shadow-md transition duration-300 ease-in-out ${
+          isActive
+            ? "bg-purple-900 text-white shadow-lg"
+            : "bg-purple-300 text-purple-900 hover:bg-purple-600 hover:text-white"
+        }
+        `}
+        to={itemLink}
+        onClick={() => setActiveItem(itemLink)}
       >
-        <props.itemIcon className="mr-[10px]" />
-        {props.itemName}
+        <Icon className="mr-[10px]" />
+        {itemName}
       </Link>
     </div>
   );
