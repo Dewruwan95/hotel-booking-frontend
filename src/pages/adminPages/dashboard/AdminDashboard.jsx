@@ -10,6 +10,7 @@ import NavigationItemList from "../../../components/adminNavigation/NavigationIt
 import DateAndTime from "../../../components/adminDashboardTimestamp/DateAndTime";
 import AdminDashboardProfile from "../../../components/adminDashboardProfile/AdminDashboardProfile";
 import { useState } from "react";
+import { TbLogout2 } from "react-icons/tb";
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -53,9 +54,10 @@ function AdminDashboard() {
             <div className="w-[20%] max-w[20%] h-[100%] flex items-center justify-center">
               {isUserLoggedIn && (
                 <button
-                  className="text-white bg-purple-500 px-6 py-1 rounded-2xl text-lg font-semibold "
+                  className="text-white bg-purple-500 px-6 py-1 rounded-2xl text-lg font-semibold flex items-center hover:bg-purple-600"
                   onClick={handleUserLogedOut}
                 >
+                  <TbLogout2 className="text-[25px] mr-1" />
                   Log Out
                 </button>
               )}
