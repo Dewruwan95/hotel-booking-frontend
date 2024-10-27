@@ -19,7 +19,7 @@ function LogedInItems({ onLogout, user }) {
           onClick={() => setIsProfileClicked(!isProfileClicked)}
         >
           <img
-            src={user.image ? user.image : "user.jpg"}
+            src={user.image}
             alt=""
             className="w-[75px] h-[75px] rounded-full border-4 border-white mr-5 hover:border-purple-300 "
           />

@@ -1,6 +1,8 @@
 import { FaEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
-function TableRow({ fields, data, index }) {
+import { RiDeleteBin2Fill } from "react-icons/ri";
+
+// Render table rows dynamically
+function TableRow({ fields, data, index, deleteElement, elementIdentifier }) {
   return (
     <>
       <tr
@@ -59,11 +61,17 @@ function TableRow({ fields, data, index }) {
         ))}
 
         {/* Add the Action column */}
-        <td className="py-4 px-6 text-center">
+        <td className="py-4 px-2 text-center">
           <div className="flex justify-center items-center">
-            <Link to="">
-              <FaEdit className="text-purple-500" />
-            </Link>
+            <button className="flex justify-center items-center ">
+              <FaEdit className="text-orange-500 text-[25px] mr-4" />
+            </button>
+            <button
+              className="flex justify-center items-center "
+              onClick={() => deleteElement(data[elementIdentifier])}
+            >
+              <RiDeleteBin2Fill className="text-red-500 text-[25px] ml-4" />
+            </button>
           </div>
         </td>
       </tr>

@@ -1,10 +1,16 @@
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-function DataTable({ columns, fields, data }) {
+function DataTable({
+  columns,
+  fields,
+  data,
+  deleteElement,
+  elementIdentifier,
+}) {
   return (
     <>
-      <div className="w-full h-full p-[20px] bg-purple-200">
+      <div className="w-full h-full p-[20px] bg-purple-200 rounded-tl-[10px]">
         <div className="w-full h-full overflow-y-scroll rounded-[10px]">
           <table className="w-full">
             {/* Reusable TableHeader */}
@@ -17,6 +23,8 @@ function DataTable({ columns, fields, data }) {
                   fields={fields}
                   data={item}
                   index={index}
+                  deleteElement={deleteElement}
+                  elementIdentifier={elementIdentifier}
                 />
               ))}
             </tbody>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function AdminDashboardProfile({ userLogedIn }) {
   const [userName, setUserName] = useState("");
   const [userImage, setUserImage] = useState("");
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,9 +19,8 @@ function AdminDashboardProfile({ userLogedIn }) {
         .then((res) => {
           if (res.data.user) {
             setUserName(res.data.user.firstName + " " + res.data.user.lastName);
-            setUserImage(
-              res.data.user.image ? res.data.user.image : "user.jpg"
-            );
+            setUserImage(res.data.user.image);
+            setUserType(res.data.user.type == "admin" ? "(Administrator)" : "");
             userLogedIn();
           }
         })
@@ -38,7 +38,7 @@ function AdminDashboardProfile({ userLogedIn }) {
         className="w-[100px] h-[100px] rounded-full border-5 border-white"
       />
       <span className="text-[30px] font-bold mt-2">{userName}</span>
-      <span className="text-[20px] font-light">{`(Administrator)`}</span>
+      <span className="text-[20px] font-light">{userType}</span>
     </div>
   );
 }
