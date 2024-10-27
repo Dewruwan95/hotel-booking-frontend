@@ -9,8 +9,20 @@ import AdminGallery from "../gallery/AdminGallery";
 import NavigationItemList from "../../../components/adminNavigation/NavigationItemList";
 import DateAndTime from "../../../components/adminDashboardTimestamp/DateAndTime";
 import AdminDashboardProfile from "../../../components/adminDashboardProfile/AdminDashboardProfile";
+import { useState } from "react";
 
 function AdminDashboard() {
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  function handleUserLogedIn() {
+    setIsUserLoggedIn(true);
+  }
+  function handleUserLogedOut() {
+    localStorage.removeItem("token");
+    setIsUserLoggedIn(false);
+    window.location.href = "/";
+  }
+
   return (
     <>
       <div className="w-full max-h-[100vh] bg-purple-900 flex">
@@ -18,7 +30,7 @@ function AdminDashboard() {
           <div className="h-[30%] max-h[30%] bg-purple-900">
             <div className="h-[80%] max-h-[80%]">
               {/* dashboard profile design */}
-              <AdminDashboardProfile />
+              <AdminDashboardProfile userLogedIn={handleUserLogedIn} />
             </div>
             <div className="h-[20%] max-h-[20%] bg-white">
               {/* dashboard settings design */}
@@ -30,9 +42,24 @@ function AdminDashboard() {
           </div>
         </div>
 
+        {/* dashboard top bar design */}
         <div className="w-[80%] h-[100vh]">
-          <div className="h-[6%] bg-purple-900 flex justify-center items-center">
-            <DateAndTime />
+          <div className="h-[6%] w-[100%] bg-purple-900 flex">
+            {/* timestabp area */}
+            <div className="w-[80%] max-w[80%] h-[100%] flex items-center justify-center">
+              <DateAndTime />
+            </div>
+            {/* logout button area */}
+            <div className="w-[20%] max-w[20%] h-[100%] flex items-center justify-center">
+              {isUserLoggedIn && (
+                <button
+                  className="text-white bg-purple-500 px-6 py-1 rounded-2xl text-lg font-semibold "
+                  onClick={handleUserLogedOut}
+                >
+                  Log Out
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
