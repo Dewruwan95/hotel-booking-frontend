@@ -21,9 +21,9 @@ function UserLogin({ onLogin }) {
         if (res.data.user) {
           onLogin();
           if (res.data.user.type === "admin") {
-            //window.location.href = "/admin";
+            window.location.href = "/admin";
           } else if (res.data.user.type === "customer") {
-            //window.location.href = "/";
+            window.location.href = "/";
           }
         }
       })

@@ -8,6 +8,7 @@ import AdminTicketing from "../ticketing/AdminTicketing";
 import AdminGallery from "../gallery/AdminGallery";
 import NavigationItemList from "../../../components/adminNavigation/NavigationItemList";
 import DateAndTime from "../../../components/adminDashboardTimestamp/DateAndTime";
+import AdminDashboardProfile from "../../../components/adminDashboardProfile/AdminDashboardProfile";
 
 function AdminDashboard() {
   return (
@@ -15,7 +16,13 @@ function AdminDashboard() {
       <div className="w-full max-h-[100vh] bg-purple-900 flex">
         <div className="w-[20%] h-[100vh] bg-purple-300 flex flex-col">
           <div className="h-[30%] max-h[30%] bg-purple-900">
-            {/* dashboard profile design */}
+            <div className="h-[80%] max-h-[80%]">
+              {/* dashboard profile design */}
+              <AdminDashboardProfile />
+            </div>
+            <div className="h-[20%] max-h-[20%] bg-white">
+              {/* dashboard settings design */}
+            </div>
           </div>
           <div>
             {/* dashboard navigation design */}
