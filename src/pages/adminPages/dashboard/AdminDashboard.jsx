@@ -6,11 +6,12 @@ import AdminUsers from "../users/AdminUsers";
 import AdminFeedback from "../feedbacks/AdminFeedback";
 import AdminTicketing from "../ticketing/AdminTicketing";
 import AdminGallery from "../gallery/AdminGallery";
-import NavigationItemList from "../../../components/adminNavigation/NavigationItemList";
-import DateAndTime from "../../../components/adminDashboardTimestamp/DateAndTime";
-import AdminDashboardProfile from "../../../components/adminDashboardProfile/AdminDashboardProfile";
+import NavigationItemList from "../../../components/adminDashboard/adminNavigation/NavigationItemList";
+import DateAndTime from "../../../components/adminDashboard/adminDashboardTimestamp/DateAndTime";
+import AdminDashboardProfile from "../../../components/adminDashboard/adminDashboardProfile/AdminDashboardProfile";
 import { useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
+import AdminDashboardOptions from "../../../components/adminDashboard/adminDashboardOptions/AdminDashboardOptions";
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -33,8 +34,9 @@ function AdminDashboard() {
               {/* dashboard profile design */}
               <AdminDashboardProfile userLogedIn={handleUserLogedIn} />
             </div>
-            <div className="h-[20%] max-h-[20%] bg-white">
-              {/* dashboard settings design */}
+            <div className="h-[20%] max-h-[20%]">
+              {/* dashboard options design */}
+              <AdminDashboardOptions />
             </div>
           </div>
           <div>

@@ -1,4 +1,4 @@
-import DataTable from "../../../components/adminDataTable/DataTable";
+import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import { feedback } from "../../../data/FeedbackData";
 
 function AdminFeedback() {

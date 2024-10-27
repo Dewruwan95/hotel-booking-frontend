@@ -1,4 +1,4 @@
-import DataTable from "../../../components/adminDataTable/DataTable";
+import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import { events } from "../../../data/EventData";
 
 function AdminGallery() {

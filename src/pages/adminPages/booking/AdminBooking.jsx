@@ -1,4 +1,4 @@
-import DataTable from "../../../components/adminDataTable/DataTable";
+import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import { bookings } from "../../../data/BookingsData";
 function AdminBooking() {
   // Column headers for Booking table
