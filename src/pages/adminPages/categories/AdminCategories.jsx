@@ -1,7 +1,22 @@
+import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
-import { categories } from "../../../data/CategoriesData";
+import axios from "axios";
 
 function AdminCategories() {
+  const [categoriesData, setCategoriesData] = useState([]);
+
+  useEffect(() => {
+    //get categories data from backend
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/categories")
+      .then((res) => {
+        setCategoriesData(res.data.categories);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   // Column headers for Room table
   const categoryColumns = [
     "Name",
@@ -18,7 +33,7 @@ function AdminCategories() {
       <DataTable
         columns={categoryColumns}
         fields={categoryFields}
-        data={categories}
+        data={categoriesData}
       />
     </>
   );
