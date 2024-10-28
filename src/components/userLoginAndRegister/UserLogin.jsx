@@ -17,6 +17,7 @@ function UserLogin({ onLogin }) {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userType", res.data.user.type);
 
         if (res.data.user) {
           onLogin();

@@ -20,7 +20,9 @@ function AdminDashboardProfile({ userLogedIn }) {
           if (res.data.user) {
             setUserName(res.data.user.firstName + " " + res.data.user.lastName);
             setUserImage(res.data.user.image);
-            setUserType(res.data.user.type == "admin" ? "(Administrator)" : "");
+            setUserType(
+              res.data.user.type === "admin" ? "(Administrator)" : ""
+            );
             userLogedIn();
           }
         })
@@ -33,7 +35,7 @@ function AdminDashboardProfile({ userLogedIn }) {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center text-white">
       <img
-        src={userImage}
+        src={`${userImage}`}
         alt="User Image"
         className="w-[100px] h-[100px] rounded-full border-5 border-white"
       />
