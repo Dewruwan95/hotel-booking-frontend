@@ -7,35 +7,43 @@ function AdminRooms() {
   const [isRoomsDataLoaded, setIsRoomsDataLoaded] = useState(false);
 
   useEffect(() => {
+    async function fetchRoomsData() {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/rooms`
+        );
+        setRoomsData(res.data.rooms);
+        setIsRoomsDataLoaded(true);
+      } catch (error) {
+        console.log("Error fetching rooms data:", error);
+      }
+    }
+
     if (!isRoomsDataLoaded) {
-      //get rooms data from backend
-      axios
-        .get(import.meta.env.VITE_BACKEND_URL + "/api/rooms")
-        .then((res) => {
-          setRoomsData(res.data.rooms);
-          setIsRoomsDataLoaded(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      fetchRoomsData();
     }
   }, [isRoomsDataLoaded]);
 
   // room delete function
-  function handleDelete(roomNo) {
-    if (window.confirm(`Are you sure you want to delete Room ${roomNo}?`)) {
+  async function handleDelete(roomNo) {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete Room ${roomNo}?`
+    );
+    if (confirmDelete) {
       const token = localStorage.getItem("token");
-      axios
-        .delete(`${import.meta.env.VITE_BACKEND_URL}/api/rooms/${roomNo}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then(() => {
-          setIsRoomsDataLoaded(false);
-        })
-        .catch((error) => {
-          console.error("Failed to delete room:", error);
-          alert("Failed to delete room. Please try again.");
-        });
+
+      try {
+        await axios.delete(
+          `${import.meta.env.VITE_BACKEND_URL}/api/rooms/${roomNo}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setIsRoomsDataLoaded(false);
+      } catch (error) {
+        console.error("Failed to delete room:", error);
+        alert("Failed to delete room. Please try again.");
+      }
     }
   }
 
