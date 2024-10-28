@@ -8,6 +8,8 @@ function DataTable({
   deleteElement,
   elementIdentifier,
 }) {
+  console.log(data);
+
   return (
     <>
       <div className="w-full h-full p-[20px] bg-purple-200 rounded-tl-[10px]">

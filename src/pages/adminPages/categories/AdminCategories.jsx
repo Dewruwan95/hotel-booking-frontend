@@ -7,22 +7,23 @@ function AdminCategories() {
   const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      if (!isCategoriesLoaded) {
-        try {
-          const res = await axios.get(
-            import.meta.env.VITE_BACKEND_URL + "/api/categories"
-          );
-          setCategoriesData(res.data.categories);
-          setIsCategoriesLoaded(true);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-
-    fetchCategories();
+    if (!isCategoriesLoaded) {
+      fetchCategoriesData();
+    }
   }, [isCategoriesLoaded]);
+
+  // fetch categories data function
+  async function fetchCategoriesData() {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories"
+      );
+      setCategoriesData(res.data.categories);
+      setIsCategoriesLoaded(true);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  }
 
   // category delete function
   async function handleDelete(name) {

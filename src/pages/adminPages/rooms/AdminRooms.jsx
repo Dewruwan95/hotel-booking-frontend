@@ -7,22 +7,23 @@ function AdminRooms() {
   const [isRoomsDataLoaded, setIsRoomsDataLoaded] = useState(false);
 
   useEffect(() => {
-    async function fetchRoomsData() {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/rooms`
-        );
-        setRoomsData(res.data.rooms);
-        setIsRoomsDataLoaded(true);
-      } catch (error) {
-        console.log("Error fetching rooms data:", error);
-      }
-    }
-
     if (!isRoomsDataLoaded) {
       fetchRoomsData();
     }
   }, [isRoomsDataLoaded]);
+
+  // fetch rooms data function
+  async function fetchRoomsData() {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/rooms`
+      );
+      setRoomsData(res.data.rooms);
+      setIsRoomsDataLoaded(true);
+    } catch (error) {
+      console.error("Error fetching rooms data:", error);
+    }
+  }
 
   // room delete function
   async function handleDelete(roomNo) {

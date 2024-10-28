@@ -1,6 +1,57 @@
+import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
-import { users } from "../../../data/UsersData";
+import axios from "axios";
+
 function AdminUsers() {
+  const [usersData, setUsersData] = useState([]);
+  const [isUsersLoaded, setIsUsersLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!isUsersLoaded) {
+      fetchUsersData();
+    }
+  }, [isUsersLoaded]);
+
+  // fetch users data function
+  async function fetchUsersData() {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/users/all",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUsersData(res.data.users);
+      setIsUsersLoaded(true);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
+  }
+
+  // user delete function
+  async function handleDelete(email) {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete User ${email}?`
+    );
+    if (confirmDelete) {
+      const token = localStorage.getItem("token");
+
+      try {
+        await axios.delete(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/${email}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setIsUsersLoaded(false);
+      } catch (error) {
+        console.error("Failed to delete user:", error);
+        alert("Failed to delete user. Please try again.");
+      }
+    }
+  }
+
   // Column headers for User table
   const userColumns = [
     "First Name",
@@ -15,7 +66,13 @@ function AdminUsers() {
   const userFields = ["firstName", "lastName", "email", "phone", "whatsApp"];
   return (
     <>
-      <DataTable columns={userColumns} fields={userFields} data={users} />
+      <DataTable
+        columns={userColumns}
+        fields={userFields}
+        data={usersData}
+        deleteElement={handleDelete}
+        elementIdentifier={"email"}
+      />
     </>
   );
 }
