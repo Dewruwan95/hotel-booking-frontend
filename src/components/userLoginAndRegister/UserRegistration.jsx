@@ -7,6 +7,7 @@ import { IoCreate } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import uploadImage from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function UserRegistration() {
   const [image, setImage] = useState("user.jpg");
@@ -26,6 +27,7 @@ function UserRegistration() {
   const [whatsAppError, setWhatsAppError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -123,13 +125,42 @@ function UserRegistration() {
     } else if (confirmPassword !== password) {
       setConfirmPasswordError("Passwords do not match.");
     } else {
-      setConfirmPasswordError("Passwords match");
+      setConfirmPasswordError("");
     }
   }
-
-  // user register function ------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //!------------------ user register function ----------------------
+  //-----------------------------------------------------------------
   async function handleRegister() {
+    // Check if the image is still uploading
+    if (isImageLoading) {
+      console.log("Please wait, image is still uploading...");
+      return; // Prevents submission until the upload is done
+    }
+
+    // Validate all fields before sending the request
+    validateEmail();
+    validateFirstName();
+    validateMobileNumber();
+    validateWhatsAppNumber();
+    validatePassword();
+    validateConfirmPassword();
+
+    // Check if there are any validation errors
+    if (
+      emailError ||
+      firstNameError ||
+      mobileNumberError ||
+      whatsAppError ||
+      passwordError ||
+      confirmPasswordError
+    ) {
+      console.log("Please fix the errors before submitting.");
+      return; // Prevents submission if there are validation errors
+    }
+
     try {
+      setProcessing(true);
       const res = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users",
         {
@@ -145,8 +176,11 @@ function UserRegistration() {
       console.log(res);
     } catch (error) {
       console.log(error);
+    } finally {
+      setProcessing(false); // Reset processing to false after registration is complete
     }
   }
+
   return (
     <>
       <div className=" w-full flex justify-center ">
@@ -414,20 +448,34 @@ function UserRegistration() {
           {/*///--------------------------------------- sign up button ------------------------------------*/}
           {/*----------------------------------------------------------------------------------------------*/}
           <div className="my-4">
-            <button
-              className={`w-[505px] h-[40px] text-white text-lg 
-                      font-semibold rounded-lg shadow-md  hover:shadow-lg 
-                      transition duration-300 ease-in-out flex items-center justify-center ${
-                        agreeTerms
-                          ? "bg-purple-600 hover:bg-purple-800"
-                          : "bg-gray-400 cursor-not-allowed"
-                      }`}
-              onClick={handleRegister}
-              disabled={!agreeTerms}
-            >
-              <IoCreate className="mr-2" />
-              Sign Up
-            </button>
+            {!processing ? (
+              <button
+                className={`w-[505px] h-[40px] text-white text-lg 
+                  font-semibold rounded-lg shadow-md  hover:shadow-lg 
+                  transition duration-300 ease-in-out flex items-center justify-center ${
+                    agreeTerms
+                      ? "bg-purple-600 hover:bg-purple-800"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                onClick={handleRegister}
+                disabled={!agreeTerms}
+              >
+                <IoCreate className="mr-2" />
+                Sign Up
+              </button>
+            ) : (
+              //--------------------------------------------------------------------------------------------
+              ///--------------------------------------- processing buttom ---------------------------------
+              //--------------------------------------------------------------------------------------------
+              <button
+                className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
+                           font-semibold rounded-lg shadow-md flex items-center justify-center"
+                disabled
+              >
+                <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
+                Processing...
+              </button>
+            )}
           </div>
         </div>
       </div>
