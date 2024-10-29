@@ -6,6 +6,7 @@ import { GoKey } from "react-icons/go";
 import { IoCreate } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import uploadImage from "../../utils/MediaUpload";
+import { LuCamera } from "react-icons/lu";
 
 function UserRegistration() {
   const [image, setImage] = useState("user.jpg");
@@ -170,7 +171,10 @@ function UserRegistration() {
                 ) : isImageLoading ? (
                   <span className="text-center">Loading...</span>
                 ) : (
-                  <span className="text-center">Upload Profile Image</span>
+                  <span className="text-center flex flex-col items-center">
+                    <LuCamera className="h-5 w-5" />
+                    Upload Image
+                  </span>
                 )}
               </div>
             </div>
