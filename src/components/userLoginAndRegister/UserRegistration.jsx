@@ -16,23 +16,36 @@ function UserRegistration() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
-  function handleRegister() {
-    axios
-      .post(import.meta.env.VITE_BACKEND_URL + "/api/users", {
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        whatsApp: whatsApp,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // handle image upload change
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setImage(selectedFile);
+      setImagePreview(URL.createObjectURL(selectedFile)); // Generate preview URL
+    }
+  };
+
+  // user register function
+  async function handleRegister() {
+    try {
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/users",
+        {
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          whatsApp: whatsApp,
+          image: image,
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <>
@@ -40,18 +53,24 @@ function UserRegistration() {
         <div className="  flex flex-col ">
           {/* image field */}
           <div className="flex justify-center items-center">
-            <label className="relative">
+            <div className="relative">
               <input
                 type="file"
                 className="absolute inset-0 opacity-0 cursor-pointer"
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                }}
+                onChange={handleImageChange}
               />
-              <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600">
-                <span>Upload</span>
+              <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
+                {imagePreview ? (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <span>Upload</span>
+                )}
               </div>
-            </label>
+            </div>
           </div>
 
           {/* email field */}
