@@ -21,6 +21,7 @@ function UserRegistration() {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
+  const [mobileNumberError, setMobileNumberError] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -60,6 +61,20 @@ function UserRegistration() {
       setFirstNameError("First name is required.");
     } else {
       setFirstNameError("");
+    }
+  }
+
+  //------------------------------------------------------------------
+  ///--------------------------- mobile number validation ------------
+  //------------------------------------------------------------------
+  function validateMobileNumber() {
+    if (!phone) {
+      setMobileNumberError("Mobile number is required.");
+    } else if (!/^\d{10}$/.test(phone)) {
+      // Adjust the regex if needed
+      setMobileNumberError("Invalid! Please enter a 10-digit number.");
+    } else {
+      setMobileNumberError("");
     }
   }
 
@@ -197,17 +212,26 @@ function UserRegistration() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- mobile phone field --------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FiPhone className="h-4 w-4" />
+            <div className="w-1/2">
+              <div className="flex my-4">
+                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                  <FiPhone className="h-4 w-4" />
+                </div>
+                <input
+                  type="tel"
+                  placeholder="Phone"
+                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  defaultValue={phone}
+                  onBlur={validateMobileNumber}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
-              <input
-                type="tel"
-                placeholder="Phone"
-                className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
+              {/* Display error message if mobile number is not valid */}
+              {mobileNumberError && (
+                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                  {mobileNumberError}
+                </div>
+              )}
             </div>
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- whatsApp field ------------------------------------*/}
@@ -221,7 +245,12 @@ function UserRegistration() {
                 placeholder="WhatsApp"
                 className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={whatsApp}
-                onChange={(e) => setWhatsApp(e.target.value)}
+                onChange={(e) => {
+                  setWhatsApp(e.target.value);
+                  validateEmail();
+                  validateFirstName();
+                  validateMobileNumber();
+                }}
               />
             </div>
           </div>
