@@ -22,6 +22,7 @@ function UserRegistration() {
   const [emailError, setEmailError] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [mobileNumberError, setMobileNumberError] = useState("");
+  const [whatsAppError, setWhatsAppError] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -69,12 +70,25 @@ function UserRegistration() {
   //------------------------------------------------------------------
   function validateMobileNumber() {
     if (!phone) {
-      setMobileNumberError("Mobile number is required.");
+      setMobileNumberError("Mobile is required.");
     } else if (!/^\d{10}$/.test(phone)) {
       // Adjust the regex if needed
-      setMobileNumberError("Invalid! Please enter a 10-digit number.");
+      setMobileNumberError("Invalid! Enter valid number.");
     } else {
       setMobileNumberError("");
+    }
+  }
+
+  //------------------------------------------------------------------
+  ///--------------------------- whatsapp number validation ----------
+  //------------------------------------------------------------------
+  function validateWhatsAppNumber() {
+    if (!whatsApp) {
+      setWhatsAppError("WhatsApp is required.");
+    } else if (!/^\d{10}$/.test(whatsApp)) {
+      setWhatsAppError("Invalid! Enter valid number.");
+    } else {
+      setWhatsAppError("");
     }
   }
 
@@ -142,8 +156,8 @@ function UserRegistration() {
               required
               className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={email}
-              onChange={(e) => setEmail(e.target.value)}
               onBlur={validateEmail}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           {/* Display error message if email is invalid */}
@@ -223,7 +237,11 @@ function UserRegistration() {
                   className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                   defaultValue={phone}
                   onBlur={validateMobileNumber}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    validateEmail();
+                    validateFirstName();
+                  }}
                 />
               </div>
               {/* Display error message if mobile number is not valid */}
@@ -236,22 +254,31 @@ function UserRegistration() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- whatsApp field ------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FaWhatsapp className="h-4 w-4" />
+            <div className="w-1/2">
+              <div className="flex my-4">
+                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                  <FaWhatsapp className="h-4 w-4" />
+                </div>
+                <input
+                  type="tel"
+                  placeholder="WhatsApp"
+                  className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  defaultValue={whatsApp}
+                  onBlur={validateWhatsAppNumber}
+                  onChange={(e) => {
+                    setWhatsApp(e.target.value);
+                    validateEmail();
+                    validateFirstName();
+                    validateMobileNumber();
+                  }}
+                />
               </div>
-              <input
-                type="tel"
-                placeholder="WhatsApp"
-                className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={whatsApp}
-                onChange={(e) => {
-                  setWhatsApp(e.target.value);
-                  validateEmail();
-                  validateFirstName();
-                  validateMobileNumber();
-                }}
-              />
+              {/* Display error message if whatsapp number is not valid */}
+              {whatsAppError && (
+                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                  {whatsAppError}
+                </div>
+              )}
             </div>
           </div>
 
