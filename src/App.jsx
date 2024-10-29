@@ -5,6 +5,7 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import UserLogin from "./components/userLoginAndRegister/UserLogin";
 import UserRegistration from "./components/userLoginAndRegister/UserRegistration";
 import LoginSignUpPopup from "./components/userLoginAndRegister/LoginSignUpPopup";
+import TestImageUpload from "./components/Test/TestImageUpload";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<LoginSignUpPopup />} />
           <Route path="/register2" element={<UserRegistration />} />
           <Route path="/*" element={<HomePage />} />
+          <Route path="/test" element={<TestImageUpload />} />
         </Routes>
       </BrowserRouter>
     </>

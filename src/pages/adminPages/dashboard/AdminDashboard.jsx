@@ -27,8 +27,6 @@ function AdminDashboard() {
 
   const userType = localStorage.getItem("userType");
   if (userType) {
-    console.log(userType);
-
     if (userType === "admin") {
       return (
         <>
