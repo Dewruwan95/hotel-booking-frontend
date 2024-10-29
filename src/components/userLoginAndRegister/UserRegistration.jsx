@@ -23,6 +23,7 @@ function UserRegistration() {
   const [firstNameError, setFirstNameError] = useState("");
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [whatsAppError, setWhatsAppError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -89,6 +90,21 @@ function UserRegistration() {
       setWhatsAppError("Invalid! Enter valid number.");
     } else {
       setWhatsAppError("");
+    }
+  }
+
+  //-----------------------------------------------------------------
+  ///-------------------------- password validation -----------------
+  //-----------------------------------------------------------------
+  function validatePassword() {
+    const minLength = 8;
+
+    if (!password) {
+      setPasswordError("Password is required.");
+    } else if (password.length < minLength) {
+      setPasswordError(`must be at least ${minLength} characters.`);
+    } else {
+      setPasswordError("");
     }
   }
 
@@ -289,32 +305,49 @@ function UserRegistration() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- password field ------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <GoKey className="h-4 w-4" />
+            <div className="w-1/2">
+              <div className="flex my-4">
+                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                  <GoKey className="h-4 w-4" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  defaultValue={password}
+                  onBlur={validatePassword}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    validateEmail();
+                    validateFirstName();
+                    validateMobileNumber();
+                    validateWhatsAppNumber();
+                  }}
+                />
               </div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              {/* Display error message if whatsapp number is not valid */}
+              {passwordError && (
+                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                  {passwordError}
+                </div>
+              )}
             </div>
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- confirm password field ----------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <GoKey className="h-4 w-4" />
+            <div className="w-1/2">
+              <div className="flex my-4">
+                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                  <GoKey className="h-4 w-4" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  defaultValue={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </div>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
             </div>
           </div>
 
