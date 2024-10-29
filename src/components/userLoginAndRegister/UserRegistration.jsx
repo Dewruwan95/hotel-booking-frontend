@@ -5,6 +5,7 @@ import { FiPhone } from "react-icons/fi";
 import { GoKey } from "react-icons/go";
 import { IoCreate } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
+import uploadImage from "../../utils/MediaUpload";
 
 function UserRegistration() {
   const [image, setImage] = useState(null);
@@ -17,15 +18,19 @@ function UserRegistration() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   // handle image upload change
-  const handleImageChange = (e) => {
+  async function handleImageChange(e) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setImage(selectedFile);
-      setImagePreview(URL.createObjectURL(selectedFile)); // Generate preview URL
+      setIsImageLoading(true);
+      const imageUrl = await uploadImage(selectedFile);
+      setImage(imageUrl);
+      setImagePreview(URL.createObjectURL(selectedFile));
+      setIsImageLoading(false);
     }
-  };
+  }
 
   // user register function
   async function handleRegister() {
@@ -66,8 +71,10 @@ function UserRegistration() {
                     alt="Preview"
                     className="w-full h-full object-cover rounded-full"
                   />
+                ) : isImageLoading ? (
+                  <span className="text-center">Loading...</span>
                 ) : (
-                  <span>Upload</span>
+                  <span className="text-center">Upload Profile Image</span>
                 )}
               </div>
             </div>
