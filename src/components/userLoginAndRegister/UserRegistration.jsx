@@ -20,8 +20,9 @@ function UserRegistration() {
   const [imagePreview, setImagePreview] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
 
-  // handle image upload change
+  // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -33,7 +34,13 @@ function UserRegistration() {
     }
   }
 
-  // Email validation function
+  //---------------------------------------------------------------------------------
+  //*--------------------------- fields validation functions ------------------------
+  //---------------------------------------------------------------------------------
+
+  //------------------------------------------------------------------
+  ///--------------------------- email validation --------------------
+  //------------------------------------------------------------------
   function validateEmail() {
     if (!email) {
       setEmailError("Email is required.");
@@ -44,7 +51,19 @@ function UserRegistration() {
     }
   }
 
-  // user register function
+  //------------------------------------------------------------------
+  ///--------------------------- first name validation ---------------
+  //------------------------------------------------------------------
+
+  function validateFirstName() {
+    if (!firstName) {
+      setFirstNameError("First name is required.");
+    } else {
+      setFirstNameError("");
+    }
+  }
+
+  // user register function ------------------------------------------------------------
   async function handleRegister() {
     try {
       const res = await axios.post(
@@ -114,7 +133,7 @@ function UserRegistration() {
           </div>
           {/* Display error message if email is invalid */}
           {emailError && (
-            <div className="text-red-500 text-sm mt-[-15px] ml-[50px]">
+            <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
               {emailError}
             </div>
           )}
@@ -125,21 +144,31 @@ function UserRegistration() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- first name field ----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FaRegUser className="h-4 w-4" />
+            <div className="w-1/2">
+              <div className="flex my-4">
+                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                  <FaRegUser className="h-4 w-4" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  defaultValue={firstName}
+                  onBlur={validateFirstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    validateEmail();
+                  }}
+                />
               </div>
-              <input
-                type="text"
-                placeholder="First Name"
-                className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                  validateEmail();
-                }}
-              />
+              {/* Display error message if first name is not provided */}
+              {firstNameError && (
+                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                  {firstNameError}
+                </div>
+              )}
             </div>
+
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- last name field -----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
@@ -152,7 +181,11 @@ function UserRegistration() {
                 placeholder="Last Name"
                 className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  validateEmail();
+                  validateFirstName();
+                }}
               />
             </div>
           </div>
