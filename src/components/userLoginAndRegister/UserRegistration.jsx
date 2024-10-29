@@ -24,6 +24,7 @@ function UserRegistration() {
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [whatsAppError, setWhatsAppError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -105,6 +106,23 @@ function UserRegistration() {
       setPasswordError(`must be at least ${minLength} characters.`);
     } else {
       setPasswordError("");
+    }
+  }
+
+  //-----------------------------------------------------------------
+  ///------------------ confirm password validation -----------------
+  //-----------------------------------------------------------------
+  function validateConfirmPassword() {
+    const minLength = 8;
+
+    if (!confirmPassword) {
+      setConfirmPasswordError("Please confirm password.");
+    } else if (password.length < minLength) {
+      setPasswordError(`must be at least ${minLength} characters.`);
+    } else if (confirmPassword !== password) {
+      setConfirmPasswordError("Passwords do not match.");
+    } else {
+      setConfirmPasswordError("Passwords match");
     }
   }
 
@@ -208,7 +226,7 @@ function UserRegistration() {
               </div>
               {/* Display error message if first name is not provided */}
               {firstNameError && (
-                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
                   {firstNameError}
                 </div>
               )}
@@ -262,7 +280,7 @@ function UserRegistration() {
               </div>
               {/* Display error message if mobile number is not valid */}
               {mobileNumberError && (
-                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
                   {mobileNumberError}
                 </div>
               )}
@@ -291,7 +309,7 @@ function UserRegistration() {
               </div>
               {/* Display error message if whatsapp number is not valid */}
               {whatsAppError && (
-                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
                   {whatsAppError}
                 </div>
               )}
@@ -325,9 +343,9 @@ function UserRegistration() {
                   }}
                 />
               </div>
-              {/* Display error message if whatsapp number is not valid */}
+              {/* Display error message if password is not valid */}
               {passwordError && (
-                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
                   {passwordError}
                 </div>
               )}
@@ -345,9 +363,27 @@ function UserRegistration() {
                   placeholder="Confirm Password"
                   className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                   defaultValue={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onBlur={validateConfirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    validateEmail();
+                    validateFirstName();
+                    validateMobileNumber();
+                    validateWhatsAppNumber();
+                    validatePassword();
+                  }}
                 />
               </div>
+              {/* Display error message if password is not valid */}
+              {confirmPasswordError == "Passwords match" ? (
+                <div className="text-green-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                  {confirmPasswordError}
+                </div>
+              ) : (
+                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                  {confirmPasswordError}
+                </div>
+              )}
             </div>
           </div>
 
