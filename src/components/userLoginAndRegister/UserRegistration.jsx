@@ -7,6 +7,7 @@ import { IoCreate } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 
 function UserRegistration() {
+  const [image, setImage] = useState(null);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -36,7 +37,23 @@ function UserRegistration() {
   return (
     <>
       <div className=" w-full flex justify-center ">
-        <div className="  flex flex-col   ">
+        <div className="  flex flex-col ">
+          {/* image field */}
+          <div className="flex justify-center items-center">
+            <label className="relative">
+              <input
+                type="file"
+                className="absolute inset-0 opacity-0 cursor-pointer"
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                }}
+              />
+              <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600">
+                <span>Upload</span>
+              </div>
+            </label>
+          </div>
+
           {/* email field */}
           <div className="flex my-4 ">
             <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
@@ -112,34 +129,34 @@ function UserRegistration() {
             </div>
           </div>
 
-          {/* password field */}
-          <div className="flex my-4">
-            <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-              <GoKey className="h-4 w-4" />
+          {/*  password fields */}
+          <div className="flex justify-between gap-4">
+            {/* password field */}
+            <div className="flex my-4 w-1/2">
+              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                <GoKey className="h-4 w-4" />
+              </div>
+              <input
+                type="password"
+                placeholder="Password"
+                className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                defaultValue={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-              defaultValue={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          {/* confirm password field */}
-          <div className="flex my-4">
-            <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-              <GoKey className="h-4 w-4" />
+            {/* confirm password field */}
+            <div className="flex my-4 w-1/2">
+              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                <GoKey className="h-4 w-4" />
+              </div>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                defaultValue={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
-
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-              defaultValue={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
           </div>
 
           {/* Remember me & Forgot Password */}
