@@ -8,7 +8,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import uploadImage from "../../utils/MediaUpload";
 
 function UserRegistration() {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("user.jpg");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,6 +19,7 @@ function UserRegistration() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   // handle image upload change
   async function handleImageChange(e) {
@@ -29,6 +30,17 @@ function UserRegistration() {
       setImage(imageUrl);
       setImagePreview(URL.createObjectURL(selectedFile));
       setIsImageLoading(false);
+    }
+  }
+
+  // Email validation function
+  function validateEmail() {
+    if (!email) {
+      setEmailError("Email is required.");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
     }
   }
 
@@ -89,12 +101,19 @@ function UserRegistration() {
             <input
               type="email"
               placeholder="Email"
+              required
               className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
+              onBlur={validateEmail}
             />
           </div>
-
+          {/* Display error message if email is invalid */}
+          {emailError && (
+            <div className="text-red-500 text-sm mt-[-15px] ml-[50px]">
+              {emailError}
+            </div>
+          )}
           {/*  name fields */}
           <div className="flex justify-between gap-4">
             {/* first name field */}
@@ -107,7 +126,10 @@ function UserRegistration() {
                 placeholder="First Name"
                 className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                  validateEmail();
+                }}
               />
             </div>
             {/* last name field */}

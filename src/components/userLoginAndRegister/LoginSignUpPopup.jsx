@@ -35,7 +35,7 @@ function LoginSignUpPopup({ onClose, onLogin }) {
               />
             </div>
             {/* right forms area */}
-            <div className="h-[100%] w-[60%] pt-[20px]">
+            <div className="h-[100%] w-[60%] pt-[5px]">
               {/*  forms navigation */}
               <div className="w-full h-[15%] bg-purple-50 flex items-center justify-items-stretch justify-center">
                 {/*  login button  */}
