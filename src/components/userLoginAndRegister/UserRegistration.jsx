@@ -415,10 +415,15 @@ function UserRegistration() {
           {/*----------------------------------------------------------------------------------------------*/}
           <div className="my-4">
             <button
-              className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
-                      font-semibold rounded-lg shadow-md hover:bg-purple-800 hover:shadow-lg 
-                      transition duration-300 ease-in-out flex items-center justify-center"
+              className={`w-[505px] h-[40px] text-white text-lg 
+                      font-semibold rounded-lg shadow-md  hover:shadow-lg 
+                      transition duration-300 ease-in-out flex items-center justify-center ${
+                        agreeTerms
+                          ? "bg-purple-600 hover:bg-purple-800"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
               onClick={handleRegister}
+              disabled={!agreeTerms}
             >
               <IoCreate className="mr-2" />
               Sign Up
