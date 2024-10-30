@@ -9,28 +9,30 @@ function UserLogin({ onLogin }) {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  function handleLogin() {
-    axios
-      .post(import.meta.env.VITE_BACKEND_URL + "/api/users/login", {
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userType", res.data.user.type);
-
-        if (res.data.user) {
-          onLogin();
-          if (res.data.user.type === "admin") {
-            window.location.href = "/admin";
-          } else if (res.data.user.type === "customer") {
-            window.location.href = "/";
-          }
+  async function handleLogin() {
+    try {
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/users/login",
+        {
+          email: email,
+          password: password,
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      );
+
+      localStorage.setItem("token", res.data.token);
+
+      if (res.data.user) {
+        localStorage.setItem("userType", res.data.user.type);
+        onLogin();
+        if (res.data.user.type === "admin") {
+          window.location.href = "/admin";
+        } else if (res.data.user.type === "customer") {
+          window.location.href = "/";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
