@@ -8,6 +8,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import uploadImage from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import CustomAlert from "../customAlert/CustomAlert";
 
 function UserRegistration({ setUserStatus }) {
   const [image, setImage] = useState("user.jpg");
@@ -28,6 +29,8 @@ function UserRegistration({ setUserStatus }) {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -180,8 +183,10 @@ function UserRegistration({ setUserStatus }) {
         }
       );
       console.log(res);
-      alert("Registration successful!");
-      setUserStatus("login");
+      setAlertMessage(
+        "Your Account has been created successfully. You can login now."
+      );
+      setAlertVisible(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -487,6 +492,16 @@ function UserRegistration({ setUserStatus }) {
           </div>
         </div>
       </div>
+      {/* visible custom alert message */}
+      {alertVisible && (
+        <CustomAlert
+          message={alertMessage}
+          onClose={() => {
+            setAlertVisible(false);
+            setUserStatus("login");
+          }}
+        />
+      )}
     </>
   );
 }

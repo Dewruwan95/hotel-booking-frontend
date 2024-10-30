@@ -6,6 +6,7 @@ import UserLogin from "./components/userLoginAndRegister/UserLogin";
 import UserRegistration from "./components/userLoginAndRegister/UserRegistration";
 import LoginSignUpPopup from "./components/userLoginAndRegister/LoginSignUpPopup";
 import TestImageUpload from "./components/Test/TestImageUpload";
+import CustomAlert from "./components/customAlert/CustomAlert";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login2" element={<UserLogin />} />
           <Route path="/register" element={<LoginSignUpPopup />} />
           <Route path="/register2" element={<UserRegistration />} />
+          <Route path="/alert" element={<CustomAlert />} />
           <Route path="/*" element={<HomePage />} />
           <Route path="/test" element={<TestImageUpload />} />
         </Routes>
