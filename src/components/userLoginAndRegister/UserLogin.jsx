@@ -9,6 +9,7 @@ function UserLogin({ onLogin }) {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   //------------------------------------------------------------------
   ///--------------------------- email validation --------------------
@@ -20,6 +21,21 @@ function UserLogin({ onLogin }) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");
+    }
+  }
+
+  //-----------------------------------------------------------------
+  ///-------------------------- password validation -----------------
+  //-----------------------------------------------------------------
+  function validatePassword() {
+    const minLength = 8;
+
+    if (!password) {
+      setPasswordError("Password is required.");
+    } else if (password.length < minLength) {
+      setPasswordError(`must be at least ${minLength} characters.`);
+    } else {
+      setPasswordError("");
     }
   }
 
@@ -92,12 +108,19 @@ function UserLogin({ onLogin }) {
               placeholder="Password"
               className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={password}
+              onBlur={validatePassword}
               onChange={(e) => {
                 setPassword(e.target.value);
                 validateEmail();
               }}
             />
           </div>
+          {/* Display error message if password is invalid */}
+          {passwordError && (
+            <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+              {passwordError}
+            </div>
+          )}
 
           {/*----------------------------------------------------------------------------------------------*/}
           {/*///----------------------------- Remember me & Forgot Password -------------------------------*/}
