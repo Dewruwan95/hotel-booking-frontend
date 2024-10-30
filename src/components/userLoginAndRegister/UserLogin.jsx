@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { GoKey } from "react-icons/go";
-import { IoMdLogIn } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
+import { TbLogin2 } from "react-icons/tb";
 
 function UserLogin({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ function UserLogin({ onLogin }) {
   const [rememberMe, setRememberMe] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   //------------------------------------------------------------------
   ///--------------------------- email validation --------------------
@@ -43,7 +45,18 @@ function UserLogin({ onLogin }) {
   //!---------------------- handle login function --------------------
   //------------------------------------------------------------------
   async function handleLogin() {
+    // Validate all fields before sending the request
+    validateEmail();
+    validatePassword();
+
+    // Check if there are any validation errors
+    if (emailError || passwordError) {
+      console.log("Please fix the errors before submitting.");
+      return; // Prevents submission if there are validation errors
+    }
+
     try {
+      setProcessing(true);
       const res = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
         {
@@ -64,6 +77,8 @@ function UserLogin({ onLogin }) {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setProcessing(false);
     }
   }
 
@@ -145,15 +160,26 @@ function UserLogin({ onLogin }) {
           {/*///--------------------------------------- login button --------------------------------------*/}
           {/*----------------------------------------------------------------------------------------------*/}
           <div className="my-4">
-            <button
-              className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
+            {!processing ? (
+              <button
+                className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
                       font-semibold rounded-lg shadow-md hover:bg-purple-800 hover:shadow-lg 
                       transition duration-300 ease-in-out flex items-center justify-center"
-              onClick={handleLogin}
-            >
-              <IoMdLogIn className="mr-2" />
-              Login
-            </button>
+                onClick={handleLogin}
+              >
+                <TbLogin2 className="mr-2" />
+                Login
+              </button>
+            ) : (
+              <button
+                className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
+                           font-semibold rounded-lg shadow-md flex items-center justify-center"
+                disabled
+              >
+                <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
+                Processing...
+              </button>
+            )}
           </div>
         </div>
       </div>
