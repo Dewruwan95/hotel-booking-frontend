@@ -8,7 +8,24 @@ function UserLogin({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
+  //------------------------------------------------------------------
+  ///--------------------------- email validation --------------------
+  //------------------------------------------------------------------
+  function validateEmail() {
+    if (!email) {
+      setEmailError("Email is required.");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  }
+
+  //------------------------------------------------------------------
+  //!---------------------- handle login function --------------------
+  //------------------------------------------------------------------
   async function handleLogin() {
     try {
       const res = await axios.post(
@@ -19,11 +36,10 @@ function UserLogin({ onLogin }) {
         }
       );
 
-      localStorage.setItem("token", res.data.token);
-
       if (res.data.user) {
-        localStorage.setItem("userType", res.data.user.type);
         onLogin();
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userType", res.data.user.type);
         if (res.data.user.type === "admin") {
           window.location.href = "/admin";
         } else if (res.data.user.type === "customer") {
@@ -39,7 +55,9 @@ function UserLogin({ onLogin }) {
     <>
       <div className=" w-full flex justify-center">
         <div className="  flex flex-col   ">
-          {/* email field */}
+          {/*----------------------------------------------------------------------------------------------*/}
+          {/*///--------------------------------------- image field ---------------------------------------*/}
+          {/*----------------------------------------------------------------------------------------------*/}
           <div className="flex my-4">
             <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
               <MdAlternateEmail className="h-4 w-4" />
@@ -50,11 +68,20 @@ function UserLogin({ onLogin }) {
               placeholder="Email"
               className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={email}
+              onBlur={validateEmail}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+          {/* Display error message if email is invalid */}
+          {emailError && (
+            <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+              {emailError}
+            </div>
+          )}
 
-          {/* password field */}
+          {/*----------------------------------------------------------------------------------------------*/}
+          {/*///--------------------------------------- password field ------------------------------------*/}
+          {/*----------------------------------------------------------------------------------------------*/}
           <div className="flex my-4">
             <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
               <GoKey className="h-4 w-4" />
@@ -65,11 +92,16 @@ function UserLogin({ onLogin }) {
               placeholder="Password"
               className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
               defaultValue={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                validateEmail();
+              }}
             />
           </div>
 
-          {/* Remember me & Forgot Password */}
+          {/*----------------------------------------------------------------------------------------------*/}
+          {/*///----------------------------- Remember me & Forgot Password -------------------------------*/}
+          {/*----------------------------------------------------------------------------------------------*/}
           <div className="my-4 px-8 flex justify-between w-full">
             <span className=" text-gray-600">
               <input
@@ -86,7 +118,9 @@ function UserLogin({ onLogin }) {
             </a>
           </div>
 
-          {/* button */}
+          {/*----------------------------------------------------------------------------------------------*/}
+          {/*///--------------------------------------- login button --------------------------------------*/}
+          {/*----------------------------------------------------------------------------------------------*/}
           <div className="my-4">
             <button
               className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
