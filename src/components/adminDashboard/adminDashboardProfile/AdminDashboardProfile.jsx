@@ -34,11 +34,10 @@ function AdminDashboardProfile({ userLogedIn }) {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center text-white">
-      <img
-        src={`${userImage}`}
-        alt="User Image"
-        className="w-[100px] h-[100px] rounded-full border-5 border-white"
-      />
+      <div
+        className=" w-[100px] h-[100px] bg-cover bg-center rounded-full border-5 border-white overflow-hidden bg-gray-200 "
+        style={{ backgroundImage: `url(${userImage})` }}
+      ></div>
       <span className="text-[30px] font-bold mt-2">{userName}</span>
       <span className="text-[20px] font-light">{userType}</span>
     </div>
