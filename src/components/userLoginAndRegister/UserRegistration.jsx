@@ -135,7 +135,24 @@ function UserRegistration({ setUserStatus }) {
   //-----------------------------------------------------------------
   ///---------------------- clear all fields ------------------------
   //-----------------------------------------------------------------
-  function clearAll() {}
+  function clearAll() {
+    setImage("user.jpg");
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setPhone("");
+    setWhatsApp("");
+    setPassword("");
+    setConfirmPassword("");
+    setAgreeTerms(false);
+    setImagePreview(null);
+    setEmailError("");
+    setFirstNameError("");
+    setMobileNumberError("");
+    setWhatsAppError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+  }
 
   //-----------------------------------------------------------------
   //!------------------ user register function ----------------------
@@ -186,6 +203,7 @@ function UserRegistration({ setUserStatus }) {
       setAlertMessage(
         "Your Account has been created successfully. You can login now."
       );
+      clearAll();
       setAlertVisible(true);
     } catch (error) {
       console.log(error);
