@@ -9,7 +9,7 @@ import uploadImage from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-function UserRegistration() {
+function UserRegistration({ setUserStatus }) {
   const [image, setImage] = useState("user.jpg");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -128,6 +128,12 @@ function UserRegistration() {
       setConfirmPasswordError("");
     }
   }
+
+  //-----------------------------------------------------------------
+  ///---------------------- clear all fields ------------------------
+  //-----------------------------------------------------------------
+  function clearAll() {}
+
   //-----------------------------------------------------------------
   //!------------------ user register function ----------------------
   //-----------------------------------------------------------------
@@ -174,6 +180,8 @@ function UserRegistration() {
         }
       );
       console.log(res);
+      alert("Registration successful!");
+      setUserStatus("login");
     } catch (error) {
       console.log(error);
     } finally {

@@ -73,7 +73,7 @@ function LoginSignUpPopup({ onClose, onLogin }) {
               {/*  forms content */}
               <div className="w-full h-[85%] rounded-br-lg ">
                 {userStatus === "register" ? (
-                  <UserRegistration />
+                  <UserRegistration setUserStatus={setUserStatus} />
                 ) : (
                   <UserLogin onLogin={onLogin} />
                 )}
