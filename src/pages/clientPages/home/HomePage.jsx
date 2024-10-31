@@ -1,6 +1,7 @@
 import Header from "../../../components/clientHeader/Header";
 
 function HomePage() {
+  const today = new Date().toISOString().split("T")[0];
   return (
     <>
       {/* client header */}
@@ -43,6 +44,7 @@ function HomePage() {
                         </label>
                         <input
                           type="date"
+                          min={today}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center "
                         />
                       </div>
@@ -54,6 +56,7 @@ function HomePage() {
                         </label>
                         <input
                           type="date"
+                          min={today}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         />
                       </div>
