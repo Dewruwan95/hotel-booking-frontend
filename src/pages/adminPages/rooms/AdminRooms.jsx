@@ -42,7 +42,7 @@ function AdminRooms() {
         );
         setIsRoomsDataLoaded(false);
       } catch (error) {
-        console.error("Failed to delete room:", error);
+        console.log("Failed to delete room:", error);
         alert("Failed to delete room. Please try again.");
       }
     }

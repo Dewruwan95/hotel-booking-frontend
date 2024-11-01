@@ -4,13 +4,13 @@ import axios from "axios";
 
 function AdminFeedback() {
   const [feedbackData, setFeedbackData] = useState([]);
-  const [isFeedbacksLoaded, setIsFeedbacksLoaded] = useState(false);
+  const [isFeedbacksDataLoaded, setIsFeedbacksDataLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isFeedbacksLoaded) {
+    if (!isFeedbacksDataLoaded) {
       fetchFeedbackData();
     }
-  }, [isFeedbacksLoaded]);
+  }, [isFeedbacksDataLoaded]);
 
   // fetch feedback data function
   async function fetchFeedbackData() {
@@ -24,7 +24,7 @@ function AdminFeedback() {
       );
 
       setFeedbackData(res.data.feedbacks);
-      setIsFeedbacksLoaded(true);
+      setIsFeedbacksDataLoaded(true);
     } catch (error) {
       console.error("Failed to fetch feedbacks:", error);
     }
@@ -44,7 +44,7 @@ function AdminFeedback() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setIsFeedbacksLoaded(false);
+        setIsFeedbacksDataLoaded(false);
       } catch (error) {
         console.error("Failed to delete feedback:", error);
         alert("Failed to delete feedback. Please try again.");
