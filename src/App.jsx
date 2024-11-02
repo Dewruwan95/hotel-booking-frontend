@@ -13,7 +13,13 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Toaster position="top-right" reverseOrder={false} />
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 5000,
+          }}
+        />
         <Routes path="/*">
           <Route path="/admin/*" element={<AdminDashboard />} />
           <Route path="/login" element={<LoginPage />} />

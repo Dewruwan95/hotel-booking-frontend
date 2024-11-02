@@ -157,7 +157,8 @@ function UserRegistration({ setUserStatus }) {
   //-----------------------------------------------------------------
   //!------------------ user register function ----------------------
   //-----------------------------------------------------------------
-  async function handleRegister() {
+  async function handleRegister(e) {
+    e.preventDefault();
     // Check if the image is still uploading
     if (isImageLoading) {
       console.log("Please wait, image is still uploading...");
@@ -214,302 +215,307 @@ function UserRegistration({ setUserStatus }) {
 
   return (
     <>
-      <div className=" w-full flex justify-center ">
-        <div className="  flex flex-col ">
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*///--------------------------------------- image field ---------------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="flex justify-center items-center">
-            <div className="relative">
-              <input
-                type="file"
-                className="absolute inset-0 opacity-0 cursor-pointer"
-                onChange={handleImageChange}
-              />
-              <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : isImageLoading ? (
-                  <span className="text-center">Loading...</span>
-                ) : (
-                  <span className="text-center flex flex-col items-center">
-                    <LuCamera className="h-5 w-5" />
-                    Upload Image
-                  </span>
-                )}
+      <form onSubmit={handleRegister}>
+        <div className=" w-full flex justify-center ">
+          <div className="  flex flex-col ">
+            {/*----------------------------------------------------------------------------------------------*/}
+            {/*///--------------------------------------- image field ---------------------------------------*/}
+            {/*----------------------------------------------------------------------------------------------*/}
+            <div className="flex justify-center items-center">
+              <div className="relative">
+                <input
+                  type="file"
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  onChange={handleImageChange}
+                />
+                <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
+                  {imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : isImageLoading ? (
+                    <span className="text-center">Loading...</span>
+                  ) : (
+                    <span className="text-center flex flex-col items-center">
+                      <LuCamera className="h-5 w-5" />
+                      Upload Image
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*///--------------------------------------- email field ---------------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="flex my-4 ">
-            <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-              <MdAlternateEmail className="h-4 w-4" />
-            </div>
-
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-              defaultValue={email}
-              onBlur={validateEmail}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          {/* Display error message if email is invalid */}
-          {emailError && (
-            <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-              {emailError}
-            </div>
-          )}
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*//*--------------------------------------- name field ----------------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="flex justify-between gap-4">
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- first name field ----------------------------------*/}
+            {/*///--------------------------------------- email field ---------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="w-1/2">
-              <div className="flex my-4">
+            <div className="flex my-4 ">
+              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                <MdAlternateEmail className="h-4 w-4" />
+              </div>
+              <input
+                type="email"
+                placeholder="Email"
+                autoComplete="true"
+                required={true}
+                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                defaultValue={email}
+                onBlur={validateEmail}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            {/* Display error message if email is invalid */}
+            {emailError && (
+              <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                {emailError}
+              </div>
+            )}
+            {/*----------------------------------------------------------------------------------------------*/}
+            {/*//*--------------------------------------- name field ----------------------------------------*/}
+            {/*----------------------------------------------------------------------------------------------*/}
+            <div className="flex justify-between gap-4">
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- first name field ----------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="flex my-4">
+                  <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <FaRegUser className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    autoComplete="true"
+                    required={true}
+                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    defaultValue={firstName}
+                    onBlur={validateFirstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                      validateEmail();
+                    }}
+                  />
+                </div>
+                {/* Display error message if first name is not provided */}
+                {firstNameError && (
+                  <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                    {firstNameError}
+                  </div>
+                )}
+              </div>
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- last name field -----------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="flex my-4 w-1/2">
                 <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                   <FaRegUser className="h-4 w-4" />
                 </div>
                 <input
                   type="text"
-                  placeholder="First Name"
-                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                  defaultValue={firstName}
-                  onBlur={validateFirstName}
-                  onChange={(e) => {
-                    setFirstName(e.target.value);
-                    validateEmail();
-                  }}
-                />
-              </div>
-              {/* Display error message if first name is not provided */}
-              {firstNameError && (
-                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                  {firstNameError}
-                </div>
-              )}
-            </div>
-
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- last name field -----------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4 w-1/2">
-              <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FaRegUser className="h-4 w-4" />
-              </div>
-              <input
-                type="text"
-                placeholder="Last Name"
-                className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                defaultValue={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                  validateEmail();
-                  validateFirstName();
-                }}
-              />
-            </div>
-          </div>
-
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*//*--------------------------------------- phone fields --------------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="flex justify-between gap-4">
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- mobile phone field --------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="w-1/2">
-              <div className="flex my-4">
-                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                  <FiPhone className="h-4 w-4" />
-                </div>
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                  defaultValue={phone}
-                  onBlur={validateMobileNumber}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                    validateEmail();
-                    validateFirstName();
-                  }}
-                />
-              </div>
-              {/* Display error message if mobile number is not valid */}
-              {mobileNumberError && (
-                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                  {mobileNumberError}
-                </div>
-              )}
-            </div>
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- whatsApp field ------------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="w-1/2">
-              <div className="flex my-4">
-                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                  <FaWhatsapp className="h-4 w-4" />
-                </div>
-                <input
-                  type="tel"
-                  placeholder="WhatsApp"
+                  placeholder="Last Name"
+                  autoComplete="true"
                   className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                  defaultValue={whatsApp}
-                  onBlur={validateWhatsAppNumber}
+                  defaultValue={lastName}
                   onChange={(e) => {
-                    setWhatsApp(e.target.value);
+                    setLastName(e.target.value);
                     validateEmail();
                     validateFirstName();
-                    validateMobileNumber();
                   }}
                 />
               </div>
-              {/* Display error message if whatsapp number is not valid */}
-              {whatsAppError && (
-                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                  {whatsAppError}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*//*--------------------------------------- password fields -----------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="flex justify-between gap-4">
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- password field ------------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="w-1/2">
-              <div className="flex my-4">
-                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                  <GoKey className="h-4 w-4" />
-                </div>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                  defaultValue={password}
-                  onBlur={validatePassword}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    validateEmail();
-                    validateFirstName();
-                    validateMobileNumber();
-                    validateWhatsAppNumber();
-                  }}
-                />
-              </div>
-              {/* Display error message if password is not valid */}
-              {passwordError && (
-                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                  {passwordError}
-                </div>
-              )}
             </div>
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------------- confirm password field ----------------------------*/}
+            {/*//*--------------------------------------- phone fields --------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="w-1/2">
-              <div className="flex my-4">
-                <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                  <GoKey className="h-4 w-4" />
+            <div className="flex justify-between gap-4">
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- mobile phone field --------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="flex my-4">
+                  <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <FiPhone className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="tel"
+                    placeholder="Phone"
+                    autoComplete="true"
+                    required={true}
+                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    defaultValue={phone}
+                    onBlur={validateMobileNumber}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      validateEmail();
+                      validateFirstName();
+                    }}
+                  />
                 </div>
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                  defaultValue={confirmPassword}
-                  onBlur={validateConfirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    validateEmail();
-                    validateFirstName();
-                    validateMobileNumber();
-                    validateWhatsAppNumber();
-                    validatePassword();
-                  }}
-                />
+                {/* Display error message if mobile number is not valid */}
+                {mobileNumberError && (
+                  <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                    {mobileNumberError}
+                  </div>
+                )}
               </div>
-              {/* Display error message if password is not valid */}
-              {confirmPasswordError == "Passwords match" ? (
-                <div className="text-green-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                  {confirmPasswordError}
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- whatsApp field ------------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="flex my-4">
+                  <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <FaWhatsapp className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="tel"
+                    placeholder="WhatsApp"
+                    autoComplete="true"
+                    required={true}
+                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    defaultValue={whatsApp}
+                    onBlur={validateWhatsAppNumber}
+                    onChange={(e) => {
+                      setWhatsApp(e.target.value);
+                      validateEmail();
+                      validateFirstName();
+                      validateMobileNumber();
+                    }}
+                  />
                 </div>
+                {/* Display error message if whatsapp number is not valid */}
+                {whatsAppError && (
+                  <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                    {whatsAppError}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/*----------------------------------------------------------------------------------------------*/}
+            {/*//*--------------------------------------- password fields -----------------------------------*/}
+            {/*----------------------------------------------------------------------------------------------*/}
+            <div className="flex justify-between gap-4">
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- password field ------------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="flex my-4">
+                  <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <GoKey className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="true"
+                    required={true}
+                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    defaultValue={password}
+                    onBlur={validatePassword}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      validateEmail();
+                      validateFirstName();
+                      validateMobileNumber();
+                      validateWhatsAppNumber();
+                    }}
+                  />
+                </div>
+                {/* Display error message if password is not valid */}
+                {passwordError && (
+                  <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                    {passwordError}
+                  </div>
+                )}
+              </div>
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///--------------------------------------- confirm password field ----------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="flex my-4">
+                  <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <GoKey className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    autoComplete="true"
+                    required={true}
+                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    defaultValue={confirmPassword}
+                    onBlur={validateConfirmPassword}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                      validateEmail();
+                      validateFirstName();
+                      validateMobileNumber();
+                      validateWhatsAppNumber();
+                      validatePassword();
+                    }}
+                  />
+                </div>
+                {/* Display error message if password is not valid */}
+                {confirmPasswordError == "Passwords match" ? (
+                  <div className="text-green-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                    {confirmPasswordError}
+                  </div>
+                ) : (
+                  <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
+                    {confirmPasswordError}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/*----------------------------------------------------------------------------------------------*/}
+            {/*///--------------------------------------- license agreement field ---------------------------*/}
+            {/*----------------------------------------------------------------------------------------------*/}
+            <div className="my-4 px-2 w-full">
+              <span className=" text-gray-600">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  defaultValue={agreeTerms}
+                  onChange={(e) => setAgreeTerms(e.target.checked)}
+                />
+                I accept the&nbsp;
+              </span>
+              <a href="#" className=" text-purple-500 hover:underline">
+                Terms of Service and Privacy Policy
+              </a>
+            </div>
+            {/*----------------------------------------------------------------------------------------------*/}
+            {/*///--------------------------------------- sign up button ------------------------------------*/}
+            {/*----------------------------------------------------------------------------------------------*/}
+            <div className="my-4">
+              {!processing ? (
+                <button
+                  className={`w-[505px] h-[40px] text-white text-lg
+                    font-semibold rounded-lg shadow-md  hover:shadow-lg
+                    transition duration-300 ease-in-out flex items-center justify-center ${
+                      agreeTerms
+                        ? "bg-purple-600 hover:bg-purple-800"
+                        : "bg-gray-400 cursor-not-allowed"
+                    }`}
+                  disabled={!agreeTerms}
+                >
+                  <IoCreate className="mr-2" />
+                  Sign Up
+                </button>
               ) : (
-                <div className="text-red-500 text-sm my-[-15px] ml-[50px]">
-                  {confirmPasswordError}
-                </div>
+                //--------------------------------------------------------------------------------------------
+                ///--------------------------------------- processing buttom ---------------------------------
+                //--------------------------------------------------------------------------------------------
+                <button
+                  className="w-[505px] h-[40px] bg-purple-600 text-white text-lg
+                             font-semibold rounded-lg shadow-md flex items-center justify-center"
+                  disabled
+                >
+                  <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
+                  Processing...
+                </button>
               )}
             </div>
-          </div>
-
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*///--------------------------------------- license agreement field ---------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="my-4 px-2 w-full">
-            <span className=" text-gray-600">
-              <input
-                type="checkbox"
-                className="mr-2"
-                defaultValue={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
-              />
-              I accept the&nbsp;
-            </span>
-
-            <a href="#" className=" text-purple-500 hover:underline">
-              Terms of Service and Privacy Policy
-            </a>
-          </div>
-
-          {/*----------------------------------------------------------------------------------------------*/}
-          {/*///--------------------------------------- sign up button ------------------------------------*/}
-          {/*----------------------------------------------------------------------------------------------*/}
-          <div className="my-4">
-            {!processing ? (
-              <button
-                className={`w-[505px] h-[40px] text-white text-lg 
-                  font-semibold rounded-lg shadow-md  hover:shadow-lg 
-                  transition duration-300 ease-in-out flex items-center justify-center ${
-                    agreeTerms
-                      ? "bg-purple-600 hover:bg-purple-800"
-                      : "bg-gray-400 cursor-not-allowed"
-                  }`}
-                onClick={handleRegister}
-                disabled={!agreeTerms}
-              >
-                <IoCreate className="mr-2" />
-                Sign Up
-              </button>
-            ) : (
-              //--------------------------------------------------------------------------------------------
-              ///--------------------------------------- processing buttom ---------------------------------
-              //--------------------------------------------------------------------------------------------
-              <button
-                className="w-[505px] h-[40px] bg-purple-600 text-white text-lg 
-                           font-semibold rounded-lg shadow-md flex items-center justify-center"
-                disabled
-              >
-                <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
-                Processing...
-              </button>
-            )}
           </div>
         </div>
-      </div>
+      </form>
       {/* visible custom alert message */}
       {alertVisible && (
         <CustomAlert
