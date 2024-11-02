@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
 import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
+import { useNavigate } from "react-router-dom";
 
 function AdminCategories() {
   const [categoriesData, setCategoriesData] = useState([]);
   const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isCategoriesLoaded) {
@@ -60,7 +63,11 @@ function AdminCategories() {
   return (
     <>
       <div className="h-full flex flex-col">
-        <AdminDataSummary />
+        <AdminDataSummary
+          onAddElementClick={() => {
+            navigate("/admin/add-category");
+          }}
+        />
         <div className="overflow-y-auto">
           <DataTable
             columns={categoryColumns}
