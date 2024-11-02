@@ -8,7 +8,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import uploadImage from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import CustomAlert from "../customAlert/CustomAlert";
+import toast from "react-hot-toast";
 
 function UserRegistration({ setUserStatus }) {
   const [image, setImage] = useState("user.jpg");
@@ -29,8 +29,6 @@ function UserRegistration({ setUserStatus }) {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -201,12 +199,11 @@ function UserRegistration({ setUserStatus }) {
         }
       );
       console.log(res);
-      setAlertMessage(
-        "Your Account has been created successfully. You can login now."
-      );
+      toast.success("Registration Successful. Please Login");
       clearAll();
-      setAlertVisible(true);
+      setUserStatus("login");
     } catch (error) {
+      toast.error("Failed to register. Please try again.");
       console.log(error);
     } finally {
       setProcessing(false); // Reset processing to false after registration is complete
@@ -516,16 +513,6 @@ function UserRegistration({ setUserStatus }) {
           </div>
         </div>
       </form>
-      {/* visible custom alert message */}
-      {alertVisible && (
-        <CustomAlert
-          message={alertMessage}
-          onClose={() => {
-            setAlertVisible(false);
-            setUserStatus("login");
-          }}
-        />
-      )}
     </>
   );
 }

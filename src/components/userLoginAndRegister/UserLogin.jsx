@@ -79,6 +79,7 @@ function UserLogin({ onLogin }) {
         } else if (res.data.user.type === "customer") {
           window.location.href = "/";
         }
+        toast.success("Login successful.");
       } else {
         toast.error("Login failed. Please try again.");
         setEmailError("Increct email or password.");
