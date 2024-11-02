@@ -7,11 +7,13 @@ import UserRegistration from "./components/userLoginAndRegister/UserRegistration
 import LoginSignUpPopup from "./components/userLoginAndRegister/LoginSignUpPopup";
 import TestImageUpload from "./components/Test/TestImageUpload";
 import CustomAlert from "./components/customAlert/CustomAlert";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <Toaster position="top-right" reverseOrder={false} />
         <Routes path="/*">
           <Route path="/admin/*" element={<AdminDashboard />} />
           <Route path="/login" element={<LoginPage />} />

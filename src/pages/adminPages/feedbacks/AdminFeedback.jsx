@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function AdminFeedback() {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -44,10 +45,11 @@ function AdminFeedback() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        toast.success("Feedback Deleted Successfully");
         setIsFeedbacksDataLoaded(false);
       } catch (error) {
+        toast.error("Failed to delete feedback. Please try again.");
         console.error("Failed to delete feedback:", error);
-        alert("Failed to delete feedback. Please try again.");
       }
     }
   }

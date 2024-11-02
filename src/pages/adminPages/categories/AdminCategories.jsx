@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 
 function AdminCategories() {
   const [categoriesData, setCategoriesData] = useState([]);
@@ -58,13 +59,18 @@ function AdminCategories() {
   const categoryFields = ["name", "price", "features", "description"];
   return (
     <>
-      <DataTable
-        columns={categoryColumns}
-        fields={categoryFields}
-        data={categoriesData}
-        deleteElement={handleDelete}
-        elementIdentifier={"name"}
-      />
+      <div className="h-full flex flex-col">
+        <AdminDataSummary />
+        <div className="overflow-y-auto">
+          <DataTable
+            columns={categoryColumns}
+            fields={categoryFields}
+            data={categoriesData}
+            deleteElement={handleDelete}
+            elementIdentifier={"name"}
+          />
+        </div>
+      </div>
     </>
   );
 }

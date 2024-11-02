@@ -48,8 +48,8 @@ function AdminDashboard() {
               </div>
             </div>
 
-            {/* dashboard top bar design */}
             <div className="w-[80%] h-[100vh]">
+              {/* dashboard top bar design */}
               <div className="h-[6%] w-[100%] bg-purple-900 flex">
                 {/* timestabp area */}
                 <div className="w-[80%] max-w[80%] h-[100%] flex items-center justify-center">
@@ -69,8 +69,8 @@ function AdminDashboard() {
                 </div>
               </div>
 
+              {/* dashboard content design */}
               <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
-                {/* dashboard content design */}
                 <Routes path="/*">
                   <Route path="/bookings" element={<AdminBooking />} />
                   <Route path="/rooms" element={<AdminRooms />} />
