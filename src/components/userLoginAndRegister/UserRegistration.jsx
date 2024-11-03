@@ -11,7 +11,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from "react-hot-toast";
 
 function UserRegistration({ setUserStatus }) {
-  const [image, setImage] = useState("user.jpg");
+  const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -20,7 +20,6 @@ function UserRegistration({ setUserStatus }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
@@ -37,7 +36,6 @@ function UserRegistration({ setUserStatus }) {
       setIsImageLoading(true);
       const imageUrl = await uploadImage(selectedFile);
       setImage(imageUrl);
-      setImagePreview(URL.createObjectURL(selectedFile));
       setIsImageLoading(false);
     }
   }
@@ -143,7 +141,6 @@ function UserRegistration({ setUserStatus }) {
     setPassword("");
     setConfirmPassword("");
     setAgreeTerms(false);
-    setImagePreview(null);
     setEmailError("");
     setFirstNameError("");
     setMobileNumberError("");
@@ -226,9 +223,9 @@ function UserRegistration({ setUserStatus }) {
                   onChange={handleImageChange}
                 />
                 <div className="w-24 h-24 bg-purple-300 rounded-full border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
-                  {imagePreview ? (
+                  {image ? (
                     <img
-                      src={imagePreview}
+                      src={image}
                       alt="Preview"
                       className="w-full h-full object-cover rounded-full"
                     />

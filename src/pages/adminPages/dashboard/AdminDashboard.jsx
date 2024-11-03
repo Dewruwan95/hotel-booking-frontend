@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AdminBooking from "../booking/AdminBooking";
 import AdminRooms from "../rooms/AdminRooms";
 import AdminCategories from "../categories/AdminCategories";
@@ -13,17 +13,22 @@ import { useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import AdminDashboardOptions from "../../../components/adminDashboard/adminDashboardOptions/AdminDashboardOptions";
 import AddCategoryForm from "../../../components/adminDashboard/adminCreateNewElement/createNewCategoryForm.jsx/AddCategoryForm";
+import toast from "react-hot-toast";
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
 
   function handleUserLogedIn() {
     setIsUserLoggedIn(true);
   }
   function handleUserLogedOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userType");
     setIsUserLoggedIn(false);
-    window.location.href = "/";
+    toast.success("Logged Out Successfully");
+    navigate("/");
   }
 
   const userType = localStorage.getItem("userType");
