@@ -51,6 +51,7 @@ function AdminCategories() {
 
   // Column headers for Room table
   const categoryColumns = [
+    "Image",
     "Name",
     "Price (Rs.)",
     "Features",
@@ -59,7 +60,7 @@ function AdminCategories() {
   ];
 
   // Fields corresponding to the columns
-  const categoryFields = ["name", "price", "features", "description"];
+  const categoryFields = ["image", "name", "price", "features", "description"];
   return (
     <>
       <div className="h-full flex flex-col">

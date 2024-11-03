@@ -6,14 +6,14 @@ function TableRow({ fields, data, index, deleteElement, elementIdentifier }) {
   return (
     <>
       <tr
-        className={`border-b border-purple-200 ${
+        className={`border-b h-auto max-h-[150px]  border-purple-200 ${
           index % 2 === 0 ? "bg-purple-100" : "bg-white"
         }`}
       >
         {fields.map((field, fieldIndex) => (
           <td
             key={fieldIndex}
-            className="py-4 px-6 text-center max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
+            className="py-4 px-6 text-center max-w-xs h-auto max-h-[150px] whitespace-normal overflow-hidden text-ellipsis"
           >
             {field === "timestamp" || field === "start" || field === "end" ? (
               new Date(data[field]).toLocaleDateString()
@@ -54,6 +54,12 @@ function TableRow({ fields, data, index, deleteElement, elementIdentifier }) {
               >
                 {data[field] === true ? "Approved" : "Pending"}
               </span>
+            ) : field === "image" ? (
+              <img
+                src={data[field]}
+                alt=""
+                className="w-[100px] h-[100px] rounded-[6px] object-cover"
+              />
             ) : (
               data[field]
             )}
