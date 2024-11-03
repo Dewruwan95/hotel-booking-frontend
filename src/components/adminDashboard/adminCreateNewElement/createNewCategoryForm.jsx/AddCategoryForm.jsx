@@ -5,6 +5,9 @@ import { IoImageSharp } from "react-icons/io5";
 import { MdCategory } from "react-icons/md";
 import { TbCategoryPlus } from "react-icons/tb";
 import uploadImage from "../../../../utils/MediaUpload";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function AddCategoryForm() {
   const [name, setName] = useState("");
@@ -14,30 +17,79 @@ function AddCategoryForm() {
   const [image, setImage] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [uploadPromise, setUploadPromise] = useState(null);
+
+  const navigate = useNavigate();
+
+  // check if user is admin
+  const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
+  if (userType !== "admin" || !token) {
+    window.location.href = "/";
+  }
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const imageUrl = await uploadImage(selectedFile);
-      console.log(imageUrl);
-      setImage(imageUrl);
-      setIsImageLoading(false);
+      const promise = uploadImage(selectedFile);
+      setUploadPromise(promise);
+
+      try {
+        const imageUrl = await promise;
+        setImage(imageUrl);
+      } finally {
+        setIsImageLoading(false);
+        setUploadPromise(null);
+      }
     }
   }
 
   //-----------------------------------------------------------------
   //!------------------ add category function -----------------------
   //-----------------------------------------------------------------
-  const handleAddCategory = (e) => {
+  async function handleAddCategory(e) {
     e.preventDefault();
     setProcessing(true);
+    toast.loading("Creating Category...");
+    if (uploadPromise) {
+      await uploadPromise;
+    }
 
-    console.log("category created successfully");
+    // create new category object
+    const newCategory = {
+      name: name,
+      price: price,
+      features: features.split(","),
+      description: description,
+      image: image,
+    };
+    try {
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories",
+        newCategory,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    setProcessing(false);
-  };
+      console.log(res);
+      toast.dismiss();
+      toast.success("Category created successfully");
+      navigate("/admin/categories");
+    } catch (error) {
+      console.log(error);
+      toast.dismiss();
+      toast.error("Failed to create category. Please try again.");
+    } finally {
+      setProcessing(false);
+    }
+  }
+
   return (
     <div>
       <div className="w-full h-full flex justify-center pt-[70px]">
@@ -61,7 +113,7 @@ function AddCategoryForm() {
                       className="w-full h-full object-cover"
                     />
                   ) : isImageLoading ? (
-                    <span className="text-center">Loading...</span>
+                    <span className="text-center">Uploading Image...</span>
                   ) : (
                     <span className="text-center flex flex-col items-center">
                       <IoImageSharp className="h-[50px] w-[50px]" />
