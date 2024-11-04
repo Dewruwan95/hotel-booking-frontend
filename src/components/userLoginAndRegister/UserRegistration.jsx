@@ -28,15 +28,25 @@ function UserRegistration({ setUserStatus }) {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [uploadPromise, setUploadPromise] = useState(null);
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const imageUrl = await uploadImage(selectedFile);
-      setImage(imageUrl);
-      setIsImageLoading(false);
+      const promise = uploadImage(selectedFile);
+      setUploadPromise(promise);
+
+      try {
+        const imageUrl = await promise;
+        setImage(imageUrl);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsImageLoading(false);
+        setUploadPromise(null);
+      }
     }
   }
 
@@ -154,11 +164,6 @@ function UserRegistration({ setUserStatus }) {
   //-----------------------------------------------------------------
   async function handleRegister(e) {
     e.preventDefault();
-    // Check if the image is still uploading
-    if (isImageLoading) {
-      console.log("Please wait, image is still uploading...");
-      return; // Prevents submission until the upload is done
-    }
 
     // Validate all fields before sending the request
     validateEmail();
@@ -181,27 +186,41 @@ function UserRegistration({ setUserStatus }) {
       return; // Prevents submission if there are validation errors
     }
 
+    setProcessing(true);
+    // Check if the image is still uploading
+    if (uploadPromise) {
+      await uploadPromise;
+    }
+
+    // create new user object
+    const newUser = {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      whatsApp: whatsApp,
+      image: image,
+    };
+
     try {
-      setProcessing(true);
+      toast.loading("Creating User...");
+
       const res = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users",
-        {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName,
-          phone: phone,
-          whatsApp: whatsApp,
-          image: image,
-        }
+        newUser
       );
+
       console.log(res);
+      toast.dismiss();
       toast.success("Registration Successful. Please Login");
       clearAll();
       setUserStatus("login");
     } catch (error) {
       toast.error("Failed to register. Please try again.");
       console.log(error);
+      toast.dismiss();
+      toast.error("Failed to create user. Please try again.");
     } finally {
       setProcessing(false); // Reset processing to false after registration is complete
     }
