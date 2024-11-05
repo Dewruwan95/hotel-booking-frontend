@@ -1,25 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRupeeSign } from "react-icons/fa6";
 import { IoImageSharp } from "react-icons/io5";
 import { MdCategory } from "react-icons/md";
-import { TbCategoryPlus } from "react-icons/tb";
-import uploadImage from "../../../../utils/MediaUpload";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { GrUpdate } from "react-icons/gr";
+import uploadImage from "../../../../utils/MediaUpload";
 
-function AddCategoryForm() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [features, setFeatures] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [isImageLoading, setIsImageLoading] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [uploadPromise, setUploadPromise] = useState(null);
-
-  const navigate = useNavigate();
+function UpdateCategoryForm() {
+  // check if state is available
+  const location = useLocation();
+  if (location.state == null) {
+    window.location.href = "/admin/categories";
+  }
 
   // check if user is admin
   const token = localStorage.getItem("token");
@@ -27,6 +22,28 @@ function AddCategoryForm() {
   if (userType !== "admin" || !token) {
     window.location.href = "/";
   }
+
+  const category = location.state.data;
+
+  const [name, setName] = useState(category.name);
+  const [price, setPrice] = useState(category.price);
+  const [features, setFeatures] = useState(category.features.join(", "));
+  const [description, setDescription] = useState(category.description);
+  const [image, setImage] = useState(category.image);
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [uploadPromise, setUploadPromise] = useState(null);
+  const [pendingSubmission, setPendingSubmission] = useState(false);
+
+  // useEffect to check when uploadPromise is completed and form submit if pending
+  useEffect(() => {
+    if (!uploadPromise && pendingSubmission) {
+      handleUpdateCategory();
+      setPendingSubmission(false);
+    }
+  }, [uploadPromise, pendingSubmission]);
+
+  const navigate = useNavigate();
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -39,6 +56,8 @@ function AddCategoryForm() {
       try {
         const imageUrl = await promise;
         setImage(imageUrl);
+      } catch (error) {
+        console.log(error);
       } finally {
         setIsImageLoading(false);
         setUploadPromise(null);
@@ -47,28 +66,31 @@ function AddCategoryForm() {
   }
 
   //-----------------------------------------------------------------
-  //!------------------ add category function -----------------------
+  //!---------------- update category function ----------------------
   //-----------------------------------------------------------------
-  async function handleAddCategory(e) {
-    e.preventDefault();
+  async function handleUpdateCategory() {
     setProcessing(true);
-    toast.loading("Creating Category...");
+    toast.loading("Updating Category...");
+
+    // Check if the image is still uploading
     if (uploadPromise) {
-      await uploadPromise;
+      // Set pending submission to submit after image upload
+      setPendingSubmission(true);
+      return;
     }
 
     // create new category object
-    const newCategory = {
-      name: name,
+    const updatedCategory = {
       price: price,
       features: features.split(","),
       description: description,
       image: image,
     };
+
     try {
-      const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/categories",
-        newCategory,
+      const res = await axios.put(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories/" + category.name,
+        updatedCategory,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,12 +101,12 @@ function AddCategoryForm() {
 
       console.log(res);
       toast.dismiss();
-      toast.success("Category created successfully");
+      toast.success("Category updated successfully");
       navigate("/admin/categories");
     } catch (error) {
       console.log(error);
       toast.dismiss();
-      toast.error("Failed to create category. Please try again.");
+      toast.error("Failed to update category. Please try again.");
     } finally {
       setProcessing(false);
     }
@@ -92,33 +114,46 @@ function AddCategoryForm() {
 
   return (
     <div>
-      <div className="w-full h-full flex justify-center pt-[70px]">
-        <form onSubmit={handleAddCategory}>
+      <div className="w-full h-full flex justify-center pt-[30px]">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdateCategory();
+          }}
+        >
           <div className="flex flex-col">
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///----------------------------------- category image field ----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Image:</span>
+            </div>
             <div className="flex justify-center items-center">
               <div className="relative">
                 <input
                   type="file"
-                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-[10]"
                   onChange={handleImageChange}
                 />
                 <div className="w-[500px] h-[300px] rounded-lg bg-purple-300 border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
-                  {image ? (
-                    <img
-                      src={image}
-                      alt="Preview"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : isImageLoading ? (
-                    <span className="text-center">Uploading Image...</span>
-                  ) : (
-                    <span className="text-center flex flex-col items-center">
-                      <IoImageSharp className="h-[50px] w-[50px]" />
-                      Select or Drag & Drop Image Here
+                  {isImageLoading ? (
+                    <span className="text-center text-purple-700">
+                      Uploading Image...
                     </span>
+                  ) : image ? (
+                    <div className="w-full h-full rounded-lg">
+                      <img
+                        src={image}
+                        alt="Preview"
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                      <span className="text-center flex rounded-lg flex-col items-center justify-center absolute inset-0 z-[9] bg-black bg-opacity-50 text-white">
+                        <IoImageSharp className="h-[50px] w-[50px]" />
+                        Select or Drag & Drop New Image Here
+                      </span>
+                    </div>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
@@ -127,7 +162,10 @@ function AddCategoryForm() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///----------------------------------- category name field -----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4">
+            <div className="pl-1 my-2 text-[16px] text-purple-600">
+              <span>Name:</span>
+            </div>
+            <div className="flex mb-4">
               <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                 <MdCategory className="h-4 w-4" />
               </div>
@@ -144,7 +182,9 @@ function AddCategoryForm() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///----------------------------------- category price field ----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            {/* Price Field */}
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Price:</span>
+            </div>
             <div className="flex mb-4">
               <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                 <FaRupeeSign className="h-4 w-4" />
@@ -162,6 +202,9 @@ function AddCategoryForm() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------- category features field ---------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Features:</span>
+            </div>
             <div className="flex mb-4">
               <textarea
                 placeholder="Features (comma-separated)"
@@ -174,6 +217,9 @@ function AddCategoryForm() {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///-------------------------------- category description field -------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Description:</span>
+            </div>
             <div className="flex mb-4">
               <textarea
                 placeholder="Description"
@@ -185,13 +231,13 @@ function AddCategoryForm() {
             </div>
 
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///------------------------------------ add category button ----------------------------------*/}
+            {/*///----------------------------------- update category button --------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
             <div className="my-4">
               {!processing ? (
                 <button className="w-[505px] h-[40px] text-white text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out flex items-center justify-center bg-purple-600 hover:bg-purple-800">
-                  <TbCategoryPlus className="mr-2" />
-                  Add Category
+                  <GrUpdate className="mr-2" />
+                  Update Category
                 </button>
               ) : (
                 <button
@@ -210,4 +256,4 @@ function AddCategoryForm() {
   );
 }
 
-export default AddCategoryForm;
+export default UpdateCategoryForm;

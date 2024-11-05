@@ -6,6 +6,7 @@ function DataTable({
   fields,
   data,
   deleteElement,
+  editElementPath,
   elementIdentifier,
 }) {
   return (
@@ -24,6 +25,7 @@ function DataTable({
                   data={item}
                   index={index}
                   deleteElement={deleteElement}
+                  editElementPath={editElementPath}
                   elementIdentifier={elementIdentifier}
                 />
               ))}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { GoKey } from "react-icons/go";
@@ -29,6 +29,15 @@ function UserRegistration({ setUserStatus }) {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [processing, setProcessing] = useState(false);
   const [uploadPromise, setUploadPromise] = useState(null);
+  const [pendingSubmission, setPendingSubmission] = useState(false);
+
+  // useEffect to check when uploadPromise is completed and form submit if pending
+  useEffect(() => {
+    if (!uploadPromise && pendingSubmission) {
+      handleRegister();
+      setPendingSubmission(false);
+    }
+  }, [uploadPromise, pendingSubmission]);
 
   // handle image upload change ---------------------------------------------------------
   async function handleImageChange(e) {
@@ -162,9 +171,7 @@ function UserRegistration({ setUserStatus }) {
   //-----------------------------------------------------------------
   //!------------------ user register function ----------------------
   //-----------------------------------------------------------------
-  async function handleRegister(e) {
-    e.preventDefault();
-
+  async function handleRegister() {
     // Validate all fields before sending the request
     validateEmail();
     validateFirstName();
@@ -187,9 +194,13 @@ function UserRegistration({ setUserStatus }) {
     }
 
     setProcessing(true);
+    toast.loading("Creating User...");
+
     // Check if the image is still uploading
     if (uploadPromise) {
-      await uploadPromise;
+      // Set pending submission to submit after image upload
+      setPendingSubmission(true);
+      return;
     }
 
     // create new user object
@@ -200,12 +211,12 @@ function UserRegistration({ setUserStatus }) {
       lastName: lastName,
       phone: phone,
       whatsApp: whatsApp,
-      image: image,
+      image: !image
+        ? "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/user.jpg?alt=media&token=698a12bd-0c12-48be-b4e8-8829c7d66a65"
+        : image,
     };
 
     try {
-      toast.loading("Creating User...");
-
       const res = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users",
         newUser
@@ -228,7 +239,12 @@ function UserRegistration({ setUserStatus }) {
 
   return (
     <>
-      <form onSubmit={handleRegister}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleRegister();
+        }}
+      >
         <div className=" w-full flex justify-center ">
           <div className="  flex flex-col ">
             {/*----------------------------------------------------------------------------------------------*/}

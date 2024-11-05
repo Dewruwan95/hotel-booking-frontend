@@ -75,6 +75,7 @@ function AdminCategories() {
             fields={categoryFields}
             data={categoriesData}
             deleteElement={handleDelete}
+            editElementPath={"/admin/update-category"}
             elementIdentifier={"name"}
           />
         </div>

@@ -12,8 +12,9 @@ import AdminDashboardProfile from "../../../components/adminDashboard/adminDashb
 import { useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import AdminDashboardOptions from "../../../components/adminDashboard/adminDashboardOptions/AdminDashboardOptions";
-import AddCategoryForm from "../../../components/adminDashboard/adminCreateNewElement/createNewCategoryForm.jsx/AddCategoryForm";
+import AddCategoryForm from "../../../components/adminDashboard/adminCreateNewElement/createNewCategoryForm/AddCategoryForm";
 import toast from "react-hot-toast";
+import UpdateCategoryForm from "../../../components/adminDashboard/adminUpdateElement/updateCategoryForm/UpdateCategoryForm";
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -82,6 +83,10 @@ function AdminDashboard() {
                   <Route path="/rooms" element={<AdminRooms />} />
                   <Route path="/categories" element={<AdminCategories />} />
                   <Route path="/add-category" element={<AddCategoryForm />} />
+                  <Route
+                    path="/update-category"
+                    element={<UpdateCategoryForm />}
+                  />
                   <Route path="/users" element={<AdminUsers />} />
                   <Route path="/feedbacks" element={<AdminFeedback />} />
                   <Route path="/ticketing" element={<AdminTicketing />} />
