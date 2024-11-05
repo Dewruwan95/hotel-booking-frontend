@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
+import { useNavigate } from "react-router-dom";
 
 function AdminGallery() {
   const [galleryData, setGalleryData] = useState([]);
   const [isGalleryDataLoaded, setIsGalleryDataLoaded] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isGalleryDataLoaded) {
@@ -46,19 +50,28 @@ function AdminGallery() {
   }
 
   // Column headers for Gallery table
-  const galleryColumns = ["Event ID", "Event Name", "Description", "Action"];
+  const galleryColumns = ["Image", "Event Name", "Description", "Action"];
 
   // Fields corresponding to the columns
-  const galleryFields = ["eventId", "name", "description"];
+  const galleryFields = ["image", "name", "description"];
   return (
     <>
-      <DataTable
-        columns={galleryColumns}
-        fields={galleryFields}
-        data={galleryData}
-        deleteElement={handleDelete}
-        elementIdentifier="eventId"
-      />
+      <div className="h-full flex flex-col">
+        <AdminDataSummary
+          onAddElementClick={() => {
+            navigate("/admin/add-event");
+          }}
+        />
+        <div className="overflow-y-auto">
+          <DataTable
+            columns={galleryColumns}
+            fields={galleryFields}
+            data={galleryData}
+            deleteElement={handleDelete}
+            elementIdentifier="eventId"
+          />
+        </div>
+      </div>
     </>
   );
 }

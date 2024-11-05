@@ -15,6 +15,7 @@ import AdminDashboardOptions from "../../../components/adminDashboard/adminDashb
 import AddCategoryForm from "../../../components/adminDashboard/adminCreateNewElement/createNewCategoryForm/AddCategoryForm";
 import toast from "react-hot-toast";
 import UpdateCategoryForm from "../../../components/adminDashboard/adminUpdateElement/updateCategoryForm/UpdateCategoryForm";
+import AddEventForm from "../../../components/adminDashboard/adminCreateNewElement/ctreateNewEventForm/AddEventForm";
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -91,6 +92,7 @@ function AdminDashboard() {
                   <Route path="/feedbacks" element={<AdminFeedback />} />
                   <Route path="/ticketing" element={<AdminTicketing />} />
                   <Route path="/gallery" element={<AdminGallery />} />
+                  <Route path="/add-event" element={<AddEventForm />} />
                 </Routes>
               </div>
             </div>
