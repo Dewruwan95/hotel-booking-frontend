@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FaRupeeSign } from "react-icons/fa6";
-import { IoImageSharp } from "react-icons/io5";
-import { MdCategory } from "react-icons/md";
-import { TbCategoryPlus } from "react-icons/tb";
+import { useLocation, useNavigate } from "react-router-dom";
 import uploadImage from "../../../../utils/MediaUpload";
+import { IoImageSharp } from "react-icons/io5";
+import { MdEmojiEvents } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
-function AddCategoryForm() {
+function UpdateEventForm() {
+  // check if state is available
+  const location = useLocation();
+  if (location.state == null) {
+    window.location.href = "/admin/gallery";
+  }
+
   // check if user is admin
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
@@ -17,11 +22,11 @@ function AddCategoryForm() {
     window.location.href = "/";
   }
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [features, setFeatures] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const event = location.state.data;
+
+  const [name, setName] = useState(event.name);
+  const [description, setDescription] = useState(event.description);
+  const [image, setImage] = useState(event.image);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [uploadPromise, setUploadPromise] = useState(null);
@@ -30,7 +35,7 @@ function AddCategoryForm() {
   // useEffect to check when uploadPromise is completed and form submit if pending
   useEffect(() => {
     if (!uploadPromise && pendingSubmission) {
-      handleAddCategory();
+      handleUpdateEvent();
       setPendingSubmission(false);
     }
   }, [uploadPromise, pendingSubmission]);
@@ -58,11 +63,11 @@ function AddCategoryForm() {
   }
 
   //-----------------------------------------------------------------
-  //!------------------ add category function -----------------------
+  //!------------------ update event function -----------------------
   //-----------------------------------------------------------------
-  async function handleAddCategory() {
+  async function handleUpdateEvent() {
     setProcessing(true);
-    toast.loading("Creating Category...");
+    toast.loading("Updating Event...");
 
     // Check if the image is still uploading
     if (uploadPromise) {
@@ -71,21 +76,17 @@ function AddCategoryForm() {
       return;
     }
 
-    try {
-      // create new category object
-      const newCategory = {
-        name: name,
-        price: price,
-        features: features.split(","),
-        description: description,
-        image: !image
-          ? "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4"
-          : image,
-      };
+    // create new event object
+    const updatedEvent = {
+      name: name,
+      description: description,
+      image: image,
+    };
 
-      const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/categories",
-        newCategory,
+    try {
+      const res = await axios.put(
+        import.meta.env.VITE_BACKEND_URL + "/api/events/" + event._id,
+        updatedEvent,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,12 +97,12 @@ function AddCategoryForm() {
 
       console.log(res);
       toast.dismiss();
-      toast.success("Category created successfully");
-      navigate("/admin/categories");
+      toast.success("Event updated successfully");
+      navigate("/admin/gallery");
     } catch (error) {
       console.log(error);
       toast.dismiss();
-      toast.error("Failed to create category. Please try again.");
+      toast.error("Failed to update event. Please try again.");
     } finally {
       setProcessing(false);
     }
@@ -109,60 +110,64 @@ function AddCategoryForm() {
 
   return (
     <div>
-      <div className="w-full h-full flex justify-center pt-[70px]">
+      <div className="w-full h-full flex justify-center pt-[30px]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleAddCategory();
+            handleUpdateEvent();
           }}
         >
           <div className="flex flex-col">
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///------------------------------------ add category title -----------------------------------*/}
+            {/*///------------------------------------ event image field ------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex justify-center mb-4 font-bold text-[30px] text-purple-600">
-              <span>Ctrate New Category</span>
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Image:</span>
             </div>
-
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///----------------------------------- category image field ----------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
             <div className="flex justify-center items-center">
               <div className="relative">
                 <input
                   type="file"
-                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-[10]"
                   onChange={handleImageChange}
                 />
                 <div className="w-[500px] h-[300px] rounded-lg bg-purple-300 border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
-                  {image ? (
-                    <img
-                      src={image}
-                      alt="Preview"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : isImageLoading ? (
-                    <span className="text-center">Uploading Image...</span>
-                  ) : (
-                    <span className="text-center flex flex-col items-center">
-                      <IoImageSharp className="h-[50px] w-[50px]" />
-                      Select or Drag & Drop Image Here
+                  {isImageLoading ? (
+                    <span className="text-center text-purple-700">
+                      Uploading Image...
                     </span>
+                  ) : image ? (
+                    <div className="w-full h-full rounded-lg">
+                      <img
+                        src={image}
+                        alt="Preview"
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                      <span className="text-center flex rounded-lg flex-col items-center justify-center absolute inset-0 z-[9] bg-black bg-opacity-50 text-white">
+                        <IoImageSharp className="h-[50px] w-[50px]" />
+                        Select or Drag & Drop New Image Here
+                      </span>
+                    </div>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
             </div>
 
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///----------------------------------- category name field -----------------------------------*/}
+            {/*///------------------------------------ event name field -------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex my-4">
+            <div className="pl-1 my-2 text-[16px] text-purple-600">
+              <span>Name:</span>
+            </div>
+            <div className="flex mb-4">
               <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <MdCategory className="h-4 w-4" />
+                <MdEmojiEvents className="h-4 w-4" />
               </div>
               <input
                 type="text"
-                placeholder="Category Name"
+                placeholder="Event Name"
                 required={true}
                 className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 value={name}
@@ -171,38 +176,11 @@ function AddCategoryForm() {
             </div>
 
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///----------------------------------- category price field ----------------------------------*/}
+            {/*///--------------------------------- event description field ---------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            {/* Price Field */}
-            <div className="flex mb-4">
-              <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FaRupeeSign className="h-4 w-4" />
-              </div>
-              <input
-                type="number"
-                placeholder="Price"
-                required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
+            <div className="pl-1 mb-2 text-[16px] text-purple-600">
+              <span>Description:</span>
             </div>
-
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///--------------------------------- category features field ---------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex mb-4">
-              <textarea
-                placeholder="Features (comma-separated)"
-                className="w-[505px] h-[120px] px-[10px] py-[5px] rounded-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                value={features}
-                onChange={(e) => setFeatures(e.target.value)}
-              />
-            </div>
-
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///-------------------------------- category description field -------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
             <div className="flex mb-4">
               <textarea
                 placeholder="Description"
@@ -214,13 +192,13 @@ function AddCategoryForm() {
             </div>
 
             {/*----------------------------------------------------------------------------------------------*/}
-            {/*///------------------------------------ add category button ----------------------------------*/}
+            {/*///------------------------------------ update event button ----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
             <div className="my-4">
               {!processing ? (
                 <button className="w-[505px] h-[40px] text-white text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out flex items-center justify-center bg-purple-600 hover:bg-purple-800">
-                  <TbCategoryPlus className="mr-2" />
-                  Add Category
+                  <GrUpdate className="mr-2" />
+                  Update Event
                 </button>
               ) : (
                 <button
@@ -239,4 +217,4 @@ function AddCategoryForm() {
   );
 }
 
-export default AddCategoryForm;
+export default UpdateEventForm;
