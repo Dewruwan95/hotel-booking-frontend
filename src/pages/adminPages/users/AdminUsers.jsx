@@ -54,16 +54,26 @@ function AdminUsers() {
 
   // Column headers for User table
   const userColumns = [
-    "First Name",
-    "Last Name",
+    "Image",
+    "Name",
     "Email",
     "Phone",
     "WhatsApp",
+    "Verification",
+    "Status",
     "Action",
   ];
 
   // Fields corresponding to the columns
-  const userFields = ["firstName", "lastName", "email", "phone", "whatsApp"];
+  const userFields = [
+    "image",
+    "firstName",
+    "email",
+    "phone",
+    "whatsApp",
+    "emailVerifiey",
+    "disabled",
+  ];
   return (
     <>
       <DataTable
