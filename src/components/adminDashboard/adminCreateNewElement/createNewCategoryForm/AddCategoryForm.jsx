@@ -109,7 +109,7 @@ function AddCategoryForm() {
 
   return (
     <div>
-      <div className="w-full h-full flex justify-center pt-[70px]">
+      <div className="w-full h-full flex justify-center pt-[20px]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
