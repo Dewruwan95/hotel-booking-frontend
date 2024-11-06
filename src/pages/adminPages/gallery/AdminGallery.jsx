@@ -68,7 +68,8 @@ function AdminGallery() {
             fields={galleryFields}
             data={galleryData}
             deleteElement={handleDelete}
-            elementIdentifier="eventId"
+            editElementPath={"/admin/update-event"}
+            elementIdentifier="_id"
           />
         </div>
       </div>
