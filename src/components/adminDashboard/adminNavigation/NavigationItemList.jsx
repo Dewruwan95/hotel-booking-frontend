@@ -6,10 +6,26 @@ import { ImUsers } from "react-icons/im";
 import { IoChatboxEllipses } from "react-icons/io5";
 import { PiListStarFill } from "react-icons/pi";
 import { IoIosImage } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function NavigationItemList() {
-  const [activeItem, setActiveItem] = useState("dashboard");
+  const [activeItem, setActiveItem] = useState("");
+
+  // Load the active item from localStorage on mount
+  useEffect(() => {
+    const savedItem = localStorage.getItem("activeNavItem");
+    if (savedItem) {
+      setActiveItem(savedItem);
+    } else {
+      setActiveItem("dashboard");
+    }
+  }, []);
+
+  // Save the active item to localStorage whenever it changes
+  function handleSetActiveItem(item) {
+    setActiveItem(item);
+    localStorage.setItem("activeNavItem", item);
+  }
 
   return (
     <div className="mt-[50px]">
@@ -18,56 +34,56 @@ function NavigationItemList() {
         itemIcon={RiDashboardHorizontalFill}
         itemLink="dashboard"
         isActive={activeItem === "dashboard"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Bookings"
         itemIcon={BsBookmarkCheckFill}
         itemLink="bookings"
         isActive={activeItem === "bookings"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Rooms"
         itemIcon={BsFillDoorOpenFill}
         itemLink="rooms"
         isActive={activeItem === "rooms"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Categories"
         itemIcon={MdCategory}
         itemLink="categories"
         isActive={activeItem === "categories"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Users"
         itemIcon={ImUsers}
         itemLink="users"
         isActive={activeItem === "users"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Feedbacks"
         itemIcon={PiListStarFill}
         itemLink="feedbacks"
         isActive={activeItem === "feedbacks"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Ticketing"
         itemIcon={IoChatboxEllipses}
         itemLink="ticketing"
         isActive={activeItem === "ticketing"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
       <NavigationItem
         itemName="Gallery"
         itemIcon={IoIosImage}
         itemLink="gallery"
         isActive={activeItem === "gallery"}
-        setActiveItem={setActiveItem}
+        setActiveItem={handleSetActiveItem}
       />
     </div>
   );

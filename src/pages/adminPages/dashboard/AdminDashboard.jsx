@@ -29,6 +29,7 @@ function AdminDashboard() {
   function handleUserLogedOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("userType");
+    localStorage.removeItem("activeNavItem");
     setIsUserLoggedIn(false);
     toast.success("Logged Out Successfully");
     navigate("/");
