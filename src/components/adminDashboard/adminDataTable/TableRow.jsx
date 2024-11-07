@@ -64,11 +64,10 @@ function TableRow({
                 {data[field] === true ? "Approved" : "Pending"}
               </span>
             ) : field === "image" ? (
-              <img
-                src={data[field]}
-                alt=""
-                className="w-[100px] h-[100px] rounded-[6px] object-cover mx-auto"
-              />
+              <div
+                className="w-[100px] h-[100px] rounded-[6px] bg-cover bg-center mx-auto"
+                style={{ backgroundImage: `url(${data[field]})` }}
+              ></div>
             ) : field === "firstName" ? (
               <span>
                 {data[field]} {data["lastName"]}
