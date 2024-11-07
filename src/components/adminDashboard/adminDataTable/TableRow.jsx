@@ -69,7 +69,6 @@ function TableRow({
                 alt=""
                 className="w-[100px] h-[100px] rounded-[6px] object-cover mx-auto"
               />
-
             ) : field === "firstName" ? (
               <span>
                 {data[field]} {data["lastName"]}
@@ -104,14 +103,13 @@ function TableRow({
                   ? "Super Admin"
                   : data[field] === "admin"
                   ? "Admin"
-                  : "Customer"}
-
+                  : "Customer"}{" "}
+              </span>
             ) : field === "rating" ? (
               <span className="flex justify-center items-center">
                 {Array.from({ length: data[field] }, (_, index) => (
                   <AiFillStar key={index} className="text-yellow-500" />
                 ))}
-
               </span>
             ) : (
               data[field]
