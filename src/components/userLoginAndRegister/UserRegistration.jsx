@@ -212,7 +212,7 @@ function UserRegistration({ setUserStatus }) {
       phone: phone,
       whatsApp: whatsApp,
       image: !image
-        ? "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/user.jpg?alt=media&token=698a12bd-0c12-48be-b4e8-8829c7d66a65"
+        ? "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/user.jpg?alt=media&token=bbb897b3-7773-4662-b9ae-2d0dc9b48a64"
         : image,
     };
 

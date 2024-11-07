@@ -67,13 +67,51 @@ function TableRow({
               <img
                 src={data[field]}
                 alt=""
-                className="w-[100px] h-[100px] rounded-[6px] object-cover"
+                className="w-[100px] h-[100px] rounded-[6px] object-cover mx-auto"
               />
+
+            ) : field === "firstName" ? (
+              <span>
+                {data[field]} {data["lastName"]}
+              </span>
+            ) : field === "emailVerifiey" ? (
+              <span
+                className={`${
+                  data[field] === true ? "text-green-500" : "text-orange-500"
+                }`}
+              >
+                {data[field] === true ? "Verified" : "Not Verified"}
+              </span>
+            ) : field === "disabled" ? (
+              <span
+                className={`${
+                  data[field] === false ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {data[field] === false ? "Active" : "Banned"}
+              </span>
+            ) : field === "type" ? (
+              <span
+                className={`${
+                  data[field] === "superAdmin"
+                    ? "text-blue-500"
+                    : data[field] === "admin"
+                    ? "text-yellow-500"
+                    : "text-green-500"
+                }`}
+              >
+                {data[field] === "superAdmin"
+                  ? "Super Admin"
+                  : data[field] === "admin"
+                  ? "Admin"
+                  : "Customer"}
+
             ) : field === "rating" ? (
               <span className="flex justify-center items-center">
                 {Array.from({ length: data[field] }, (_, index) => (
                   <AiFillStar key={index} className="text-yellow-500" />
                 ))}
+
               </span>
             ) : (
               data[field]

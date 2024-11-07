@@ -18,6 +18,8 @@ import UpdateCategoryForm from "../../../components/adminDashboard/adminUpdateEl
 import AddEventForm from "../../../components/adminDashboard/adminCreateNewElement/ctreateNewEventForm/AddEventForm";
 import UpdateEventForm from "../../../components/adminDashboard/adminUpdateElement/updateEventForm/UpdateEventForm";
 import UpdateFeedbackForm from "../../../components/adminDashboard/adminUpdateElement/updateFeedbackForm/UpdateFeedbackForm";
+import UpdateUserForm from "../../../components/adminDashboard/adminUpdateElement/updateUserForm/UpdateUserForm";
+
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -93,6 +95,8 @@ function AdminDashboard() {
                     element={<UpdateCategoryForm />}
                   />
                   <Route path="/users" element={<AdminUsers />} />
+                  <Route path="/update-user" element={<UpdateUserForm />} />
+
                   <Route path="/feedbacks" element={<AdminFeedback />} />
                   <Route
                     path="update-feedback"
