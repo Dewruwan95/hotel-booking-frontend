@@ -1,3 +1,4 @@
+import { AiFillStar } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -68,6 +69,7 @@ function TableRow({
                 alt=""
                 className="w-[100px] h-[100px] rounded-[6px] object-cover mx-auto"
               />
+
             ) : field === "firstName" ? (
               <span>
                 {data[field]} {data["lastName"]}
@@ -103,6 +105,13 @@ function TableRow({
                   : data[field] === "admin"
                   ? "Admin"
                   : "Customer"}
+
+            ) : field === "rating" ? (
+              <span className="flex justify-center items-center">
+                {Array.from({ length: data[field] }, (_, index) => (
+                  <AiFillStar key={index} className="text-yellow-500" />
+                ))}
+
               </span>
             ) : (
               data[field]

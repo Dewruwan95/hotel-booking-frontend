@@ -17,7 +17,9 @@ import toast from "react-hot-toast";
 import UpdateCategoryForm from "../../../components/adminDashboard/adminUpdateElement/updateCategoryForm/UpdateCategoryForm";
 import AddEventForm from "../../../components/adminDashboard/adminCreateNewElement/ctreateNewEventForm/AddEventForm";
 import UpdateEventForm from "../../../components/adminDashboard/adminUpdateElement/updateEventForm/UpdateEventForm";
+import UpdateFeedbackForm from "../../../components/adminDashboard/adminUpdateElement/updateFeedbackForm/UpdateFeedbackForm";
 import UpdateUserForm from "../../../components/adminDashboard/adminUpdateElement/updateUserForm/UpdateUserForm";
+
 
 function AdminDashboard() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -30,6 +32,7 @@ function AdminDashboard() {
   function handleUserLogedOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("userType");
+    localStorage.removeItem("activeNavItem");
     setIsUserLoggedIn(false);
     toast.success("Logged Out Successfully");
     navigate("/");
@@ -95,6 +98,11 @@ function AdminDashboard() {
                   <Route path="/update-user" element={<UpdateUserForm />} />
 
                   <Route path="/feedbacks" element={<AdminFeedback />} />
+                  <Route
+                    path="update-feedback"
+                    element={<UpdateFeedbackForm />}
+                  />
+
                   <Route path="/ticketing" element={<AdminTicketing />} />
 
                   <Route path="/gallery" element={<AdminGallery />} />
