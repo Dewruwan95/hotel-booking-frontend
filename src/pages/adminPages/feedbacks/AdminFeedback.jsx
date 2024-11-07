@@ -57,10 +57,10 @@ function AdminFeedback() {
   // Column headers for Room table
   const feedbackColumns = [
     "Date",
-    "Feedback ID",
     "Name",
     "Email",
     "Title",
+    "Description",
     "Rating",
     "Status",
     "Action",
@@ -69,10 +69,10 @@ function AdminFeedback() {
   // Fields corresponding to the columns
   const feedbackFields = [
     "timestamp",
-    "feedbackId",
-    "firstName",
+    "name",
     "email",
     "title",
+    "description",
     "rating",
     "approved",
   ];
@@ -83,6 +83,7 @@ function AdminFeedback() {
         fields={feedbackFields}
         data={feedbackData}
         deleteElement={handleDelete}
+        editElementPath="/admin/update-feedback"
         elementIdentifier="feedbackId"
       />
     </>
