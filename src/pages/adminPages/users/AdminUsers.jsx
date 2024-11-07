@@ -59,6 +59,7 @@ function AdminUsers() {
     "Email",
     "Phone",
     "WhatsApp",
+    "Type",
     "Verification",
     "Status",
     "Action",
@@ -71,6 +72,7 @@ function AdminUsers() {
     "email",
     "phone",
     "whatsApp",
+    "type",
     "emailVerifiey",
     "disabled",
   ];
@@ -81,6 +83,7 @@ function AdminUsers() {
         fields={userFields}
         data={usersData}
         deleteElement={handleDelete}
+        editElementPath={"/admin/update-user"}
         elementIdentifier={"email"}
       />
     </>

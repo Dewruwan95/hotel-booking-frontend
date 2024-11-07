@@ -88,6 +88,22 @@ function TableRow({
               >
                 {data[field] === false ? "Active" : "Banned"}
               </span>
+            ) : field === "type" ? (
+              <span
+                className={`${
+                  data[field] === "superAdmin"
+                    ? "text-blue-500"
+                    : data[field] === "admin"
+                    ? "text-yellow-500"
+                    : "text-green-500"
+                }`}
+              >
+                {data[field] === "superAdmin"
+                  ? "Super Admin"
+                  : data[field] === "admin"
+                  ? "Admin"
+                  : "Customer"}
+              </span>
             ) : (
               data[field]
             )}
