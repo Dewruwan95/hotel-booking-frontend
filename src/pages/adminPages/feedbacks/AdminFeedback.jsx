@@ -40,7 +40,7 @@ function AdminFeedback() {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          import.meta.env.VITE_BACKEND_URL + `/api/feedbacks/${feedbackId}`,
+          import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/" + feedbackId,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -84,7 +84,7 @@ function AdminFeedback() {
         data={feedbackData}
         deleteElement={handleDelete}
         editElementPath="/admin/update-feedback"
-        elementIdentifier="feedbackId"
+        elementIdentifier="_id"
       />
     </>
   );
