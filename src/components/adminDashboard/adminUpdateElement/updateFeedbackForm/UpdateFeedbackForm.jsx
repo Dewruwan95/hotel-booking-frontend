@@ -1,7 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { GrUpdate } from "react-icons/gr";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function UpdateFeedbackForm() {
   // check if state is available
@@ -28,11 +30,47 @@ function UpdateFeedbackForm() {
   const [isApproved, setIsApproved] = useState(feedback.approved);
   const [processing, setProcessing] = useState(false);
 
+  const navigate = useNavigate();
+
   function handleStatusChange(e) {
     setIsApproved(e.target.value === "true");
   }
 
-  async function handleUpdateFeedback() {}
+  async function handleUpdateFeedback() {
+    setProcessing(true);
+    toast.loading("Updating Feedback...");
+
+    // create new feedback object
+    const updatedFeedback = {
+      approved: isApproved,
+    };
+
+    console.log(updatedFeedback);
+
+    try {
+      const res = await axios.put(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/" + feedback._id,
+        updatedFeedback,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(res);
+      toast.dismiss();
+      toast.success("Feedback updated successfully");
+      navigate("/admin/feedbacks");
+    } catch (error) {
+      console.log(error);
+      toast.dismiss();
+      toast.error("Failed to update feedback. Please try again.");
+    } finally {
+      setProcessing(false);
+    }
+  }
 
   return (
     <div className="w-full h-full flex justify-center">
