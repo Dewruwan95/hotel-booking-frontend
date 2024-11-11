@@ -54,16 +54,28 @@ function AdminUsers() {
 
   // Column headers for User table
   const userColumns = [
-    "First Name",
-    "Last Name",
+    "Image",
+    "Name",
     "Email",
     "Phone",
     "WhatsApp",
+    "Type",
+    "Verification",
+    "Status",
     "Action",
   ];
 
   // Fields corresponding to the columns
-  const userFields = ["firstName", "lastName", "email", "phone", "whatsApp"];
+  const userFields = [
+    "image",
+    "firstName",
+    "email",
+    "phone",
+    "whatsApp",
+    "type",
+    "emailVerifiey",
+    "disabled",
+  ];
   return (
     <>
       <DataTable
@@ -71,6 +83,7 @@ function AdminUsers() {
         fields={userFields}
         data={usersData}
         deleteElement={handleDelete}
+        editElementPath={"/admin/update-user"}
         elementIdentifier={"email"}
       />
     </>

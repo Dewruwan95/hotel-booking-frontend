@@ -113,8 +113,8 @@ function UpdateCategoryForm() {
   }
 
   return (
-    <div>
-      <div className="w-full h-full flex justify-center pt-[30px]">
+    <div className="w-full h-full flex justify-center">
+      <div className="w-[500px] h-full flex flex-col justify-center pt-[20px]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -159,44 +159,49 @@ function UpdateCategoryForm() {
               </div>
             </div>
 
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///----------------------------------- category name field -----------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="pl-1 my-2 text-[16px] text-purple-600">
-              <span>Name:</span>
-            </div>
-            <div className="flex mb-4">
-              <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <MdCategory className="h-4 w-4" />
+            <div className="flex justify-between gap-4">
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///----------------------------------- category name field -----------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2">
+                <div className="pl-1 my-2 text-[16px] text-purple-600">
+                  <span>Name:</span>
+                </div>
+                <div className="flex mb-4">
+                  <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <MdCategory className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Category Name"
+                    required={true}
+                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                placeholder="Category Name"
-                required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            {/*----------------------------------------------------------------------------------------------*/}
-            {/*///----------------------------------- category price field ----------------------------------*/}
-            {/*----------------------------------------------------------------------------------------------*/}
-            <div className="pl-1 mb-2 text-[16px] text-purple-600">
-              <span>Price:</span>
-            </div>
-            <div className="flex mb-4">
-              <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
-                <FaRupeeSign className="h-4 w-4" />
+              {/*----------------------------------------------------------------------------------------------*/}
+              {/*///----------------------------------- category price field ----------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------*/}
+              <div className="w-1/2 ">
+                <div className="pl-1 my-2 text-[16px] text-purple-600">
+                  <span>Price:</span>
+                </div>
+                <div className="flex mb-4">
+                  <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
+                    <FaRupeeSign className="h-4 w-4" />
+                  </div>
+                  <input
+                    type="number"
+                    placeholder="Price"
+                    required={true}
+                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
               </div>
-              <input
-                type="number"
-                placeholder="Price"
-                required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
             </div>
 
             {/*----------------------------------------------------------------------------------------------*/}
