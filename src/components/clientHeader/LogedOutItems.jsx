@@ -18,8 +18,8 @@ function LogedOutItems({ onLogin }) {
           setIsLoginClicked(true);
         }}
       >
-        <TbLogin2 className="text-[30px] mr-1" />
-        Login / Sign Up
+        <TbLogin2 className="text-[20px] mr-1" />
+        <div className="text-[15px]">Login / Sign Up</div>
       </button>
       {isLoginClicked && (
         <div>

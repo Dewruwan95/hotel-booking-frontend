@@ -19,12 +19,14 @@ function LogedInItems({ onLogout, user }) {
           onClick={() => setIsProfileClicked(!isProfileClicked)}
         >
           <div
-            className="w-[75px] h-[75px] rounded-full bg-cover bg-center border-4 border-white mr-5 hover:border-purple-300"
+            className="w-[50px] h-[50px] rounded-full bg-cover bg-center border-4 border-white mr-2 hover:border-purple-300"
             style={{ backgroundImage: `url(${user.image})` }}
           ></div>
 
-          <span>{user.firstName + " " + user.lastName}</span>
-          <TiArrowSortedDown className="text-[30px] ml-1" />
+          <span className="text-[15px]">
+            {user.firstName + " " + user.lastName}
+          </span>
+          <TiArrowSortedDown className="text-[20px] ml-1" />
         </button>
       </div>
       {isProfileClicked && (
