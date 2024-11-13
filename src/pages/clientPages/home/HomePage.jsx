@@ -1,6 +1,28 @@
+import { useEffect, useState } from "react";
 import Header from "../../../components/clientHeader/Header";
+import axios from "axios";
 
 function HomePage() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategoriesData();
+  }, []);
+
+  async function fetchCategoriesData() {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories"
+      );
+
+      setCategories(res.data.categories);
+
+      //setCategories(res.data.categories);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  }
+
   const today = new Date().toISOString().split("T")[0];
   return (
     <>
@@ -38,7 +60,7 @@ function HomePage() {
                     {/* left side placeholder */}
                     <div className="h-[100%] w-[80%] flex flex-col items-center justify-around ">
                       {/* check-in date input */}
-                      <div className="flex flex-col items-center mt-5">
+                      <div className="flex flex-col items-center mt-8">
                         <label className="text-purple-700 text-md mb-1">
                           Check-in
                         </label>
@@ -66,17 +88,18 @@ function HomePage() {
                           Category
                         </label>
                         <select
-                          name=""
-                          id=""
+                          name="category"
+                          id="category"
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         >
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
+                          <option value="" disabled selected>
+                            Select Category
+                          </option>
+                          {categories.map((category, index) => (
+                            <option key={index} value={category.name}>
+                              {category.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
