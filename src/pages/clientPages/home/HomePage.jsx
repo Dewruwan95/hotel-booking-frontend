@@ -3,24 +3,52 @@ import Header from "../../../components/clientHeader/Header";
 import axios from "axios";
 
 function HomePage() {
-  const [categories, setCategories] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [category, setCategory] = useState("");
+  const [bookingData, setBookingData] = useState("");
 
   useEffect(() => {
     fetchCategoriesData();
   }, []);
 
+  // fetch categories data function
   async function fetchCategoriesData() {
     try {
       const res = await axios.get(
         import.meta.env.VITE_BACKEND_URL + "/api/categories"
       );
 
-      setCategories(res.data.categories);
-
-      //setCategories(res.data.categories);
+      setCategoriesData(res.data.categories);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
     }
+  }
+
+  // handle start date change
+  function handleStartDateChange(e) {
+    setStartDate(e.target.value);
+  }
+
+  //handle end date change
+  function handleEndDateChange(e) {
+    setEndDate(e.target.value);
+  }
+
+  // handle category change
+  function handleCategoryChange(e) {
+    setCategory(e.target.value);
+  }
+
+  async function handleBooking() {
+    const newBookingData = {
+      start: startDate,
+      end: endDate,
+      category: category,
+    };
+    //const token = localStorage.getItem("token");
+    console.log(newBookingData);
   }
 
   const today = new Date().toISOString().split("T")[0];
@@ -67,6 +95,7 @@ function HomePage() {
                         <input
                           type="date"
                           min={today}
+                          onChange={handleStartDateChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center "
                         />
                       </div>
@@ -79,6 +108,7 @@ function HomePage() {
                         <input
                           type="date"
                           min={today}
+                          onChange={handleEndDateChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         />
                       </div>
@@ -90,12 +120,14 @@ function HomePage() {
                         <select
                           name="category"
                           id="category"
+                          defaultValue=""
+                          onChange={handleCategoryChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         >
-                          <option value="" disabled selected>
+                          <option value="" disabled>
                             Select Category
                           </option>
-                          {categories.map((category, index) => (
+                          {categoriesData.map((category, index) => (
                             <option key={index} value={category.name}>
                               {category.name}
                             </option>
@@ -108,7 +140,10 @@ function HomePage() {
                     <div className="h-[100%] w-[20%]">
                       {/* booking button */}
                       <div className="h-full w-full flex flex-col items-center">
-                        <button className="w-[200px] rounded-lg mt-5 h-[50px] text-[20px] bg-purple-500 text-white font-semibold  hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-700">
+                        <button
+                          onClick={handleBooking}
+                          className="w-[200px] rounded-lg mt-5 h-[50px] text-[20px] bg-purple-500 text-white font-semibold  hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-700"
+                        >
                           Book Now
                         </button>
                       </div>
