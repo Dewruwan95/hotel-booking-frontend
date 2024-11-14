@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { GoKey } from "react-icons/go";
@@ -7,7 +7,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import { TbLogin2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
-function UserLogin({ onLogin }) {
+function UserLogin({ handleUserLogedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -16,6 +16,17 @@ function UserLogin({ onLogin }) {
   const [processing, setProcessing] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem("rememberedEmail");
+    const rememberedPassword = localStorage.getItem("rememberedPassword");
+
+    if (rememberedEmail || rememberedPassword) {
+      setEmail(rememberedEmail);
+      setPassword(rememberedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   //------------------------------------------------------------------
   ///--------------------------- email validation --------------------
@@ -71,9 +82,20 @@ function UserLogin({ onLogin }) {
       );
 
       if (res.data.user) {
-        onLogin();
+        handleUserLogedIn();
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("userType", res.data.user.type);
+
+        // Save email and password if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+        }
+
         if (res.data.user.type === "admin") {
           navigate("/admin");
         } else if (res.data.user.type === "customer") {

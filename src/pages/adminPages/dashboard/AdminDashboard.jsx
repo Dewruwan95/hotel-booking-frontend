@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AdminBooking from "../booking/AdminBooking";
 import AdminRooms from "../rooms/AdminRooms";
 import AdminCategories from "../categories/AdminCategories";
@@ -9,35 +9,20 @@ import AdminGallery from "../gallery/AdminGallery";
 import NavigationItemList from "../../../components/adminDashboard/adminNavigation/NavigationItemList";
 import DateAndTime from "../../../components/adminDashboard/adminDashboardTimestamp/DateAndTime";
 import AdminDashboardProfile from "../../../components/adminDashboard/adminDashboardProfile/AdminDashboardProfile";
-import { useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import AdminDashboardOptions from "../../../components/adminDashboard/adminDashboardOptions/AdminDashboardOptions";
 import AddCategoryForm from "../../../components/adminDashboard/adminCreateNewElement/createNewCategoryForm/AddCategoryForm";
-import toast from "react-hot-toast";
 import UpdateCategoryForm from "../../../components/adminDashboard/adminUpdateElement/updateCategoryForm/UpdateCategoryForm";
 import AddEventForm from "../../../components/adminDashboard/adminCreateNewElement/ctreateNewEventForm/AddEventForm";
 import UpdateEventForm from "../../../components/adminDashboard/adminUpdateElement/updateEventForm/UpdateEventForm";
 import UpdateFeedbackForm from "../../../components/adminDashboard/adminUpdateElement/updateFeedbackForm/UpdateFeedbackForm";
 import UpdateUserForm from "../../../components/adminDashboard/adminUpdateElement/updateUserForm/UpdateUserForm";
 
-
-function AdminDashboard() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-
-  const navigate = useNavigate();
-
-  function handleUserLogedIn() {
-    setIsUserLoggedIn(true);
-  }
-  function handleUserLogedOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userType");
-    localStorage.removeItem("activeNavItem");
-    setIsUserLoggedIn(false);
-    toast.success("Logged Out Successfully");
-    navigate("/");
-  }
-
+function AdminDashboard({
+  isUserLoggedIn,
+  handleUserLogedIn,
+  handleUserLogedOut,
+}) {
   const userType = localStorage.getItem("userType");
   if (userType) {
     if (userType === "admin") {

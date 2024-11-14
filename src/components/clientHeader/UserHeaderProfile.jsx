@@ -3,13 +3,21 @@ import LogedInItems from "./LogedInItems";
 import LogedOutItems from "./LogedOutItems";
 import axios from "axios";
 
-function UserHeaderProfile() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+function UserHeaderProfile({
+  openLoginPopup,
+  handleUserLogedOut,
+  isUserLoggedIn,
+  handleUserLogedIn,
+}) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const localUser = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
-    if (token) {
+    if (localUser) {
+      setUser(localUser);
+      handleUserLogedIn();
+    } else if (token) {
       axios
         .get(import.meta.env.VITE_BACKEND_URL + "/api/users", {
           headers: {
@@ -19,27 +27,20 @@ function UserHeaderProfile() {
         })
         .then((res) => {
           setUser(res.data.user);
-          setIsUserLoggedIn(true);
+          handleUserLogedIn();
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, []);
-
-  function handleUserLogedIn() {
-    setIsUserLoggedIn(true);
-  }
-  function handleUserLogedOut() {
-    setIsUserLoggedIn(false);
-  }
+  }, [isUserLoggedIn]);
 
   return (
     <div>
       {isUserLoggedIn ? (
-        <LogedInItems onLogout={handleUserLogedOut} user={user} />
+        <LogedInItems handleUserLogedOut={handleUserLogedOut} user={user} />
       ) : (
-        <LogedOutItems onLogin={handleUserLogedIn} />
+        <LogedOutItems openLoginPopup={openLoginPopup} />
       )}
     </div>
   );
