@@ -2,13 +2,13 @@ import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import ProfileDropDown from "./ProfileDropDown";
 
-function LogedInItems({ onLogout, user }) {
+function LogedInItems({ handleUserLogedOut, user }) {
   const [isProfileClicked, setIsProfileClicked] = useState(false);
 
   function handleLogoutClick() {
     localStorage.removeItem("token");
     setIsProfileClicked(false);
-    onLogout();
+    handleUserLogedOut();
   }
 
   return (

@@ -1,17 +1,44 @@
 import { useEffect, useState } from "react";
 import Header from "../../../components/clientHeader/Header";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-function HomePage() {
+function HomePage({
+  openLoginPopup,
+  handleUserLogedOut,
+  isUserLoggedIn,
+  handleUserLogedIn,
+}) {
+  const pendingBooking = JSON.parse(localStorage.getItem("pendingBookingData"));
+  const token = localStorage.getItem("token");
+
   const [categoriesData, setCategoriesData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [category, setCategory] = useState("");
-  const [bookingData, setBookingData] = useState("");
+  const [processing, setProcessing] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   useEffect(() => {
-    fetchCategoriesData();
+    if (categoriesData.length === 0) {
+      fetchCategoriesData();
+    }
+
+    if (pendingBooking && !startDate && !endDate && !category) {
+      setStartDate(pendingBooking.start);
+      setEndDate(pendingBooking.end);
+      setCategory(pendingBooking.category);
+      setIsInitialLoad(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (isInitialLoad && startDate && endDate && category) {
+      handleBooking();
+      setIsInitialLoad(false);
+    }
+  }, [startDate, endDate, category, isInitialLoad]);
 
   // fetch categories data function
   async function fetchCategoriesData() {
@@ -41,21 +68,65 @@ function HomePage() {
     setCategory(e.target.value);
   }
 
+  // handle booking
   async function handleBooking() {
-    const newBookingData = {
-      start: startDate,
-      end: endDate,
-      category: category,
-    };
-    //const token = localStorage.getItem("token");
-    console.log(newBookingData);
+    if (!startDate || !endDate || !category) {
+      toast.error("Please fill the fields before place a booking!");
+    } else {
+      const newBookingData = {
+        start: startDate,
+        end: endDate,
+        category: category,
+      };
+      if (!token) {
+        localStorage.setItem(
+          "pendingBookingData",
+          JSON.stringify(newBookingData)
+        );
+        openLoginPopup();
+        toast.error("Please login to place a booking!");
+      } else {
+        setProcessing(true);
+        try {
+          const res = await axios.post(
+            import.meta.env.VITE_BACKEND_URL +
+              "/api/bookings/create-by-category",
+            newBookingData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (res.status === 200) {
+            localStorage.removeItem("pendingBookingData");
+            toast.success("Booking placed successfully");
+
+            setStartDate("");
+            setEndDate("");
+            setCategory("");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error(error.response.data.message);
+        } finally {
+          setProcessing(false);
+        }
+      }
+    }
   }
 
   const today = new Date().toISOString().split("T")[0];
   return (
     <>
       {/* client header */}
-      <Header />
+      <Header
+        openLoginPopup={openLoginPopup}
+        handleUserLogedOut={handleUserLogedOut}
+        isUserLoggedIn={isUserLoggedIn}
+        handleUserLogedIn={handleUserLogedIn}
+      />
 
       {/* main background */}
       <div className="w-[100%] h-[100vh] bg-purple-200 flex justify-center">
@@ -95,6 +166,7 @@ function HomePage() {
                         <input
                           type="date"
                           min={today}
+                          defaultValue={startDate}
                           onChange={handleStartDateChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center "
                         />
@@ -108,6 +180,7 @@ function HomePage() {
                         <input
                           type="date"
                           min={today}
+                          defaultValue={endDate}
                           onChange={handleEndDateChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         />
@@ -120,7 +193,7 @@ function HomePage() {
                         <select
                           name="category"
                           id="category"
-                          defaultValue=""
+                          value={category}
                           onChange={handleCategoryChange}
                           className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
                         >
@@ -140,12 +213,22 @@ function HomePage() {
                     <div className="h-[100%] w-[20%]">
                       {/* booking button */}
                       <div className="h-full w-full flex flex-col items-center">
-                        <button
-                          onClick={handleBooking}
-                          className="w-[200px] rounded-lg mt-5 h-[50px] text-[20px] bg-purple-500 text-white font-semibold  hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-700"
-                        >
-                          Book Now
-                        </button>
+                        {!processing ? (
+                          <button
+                            onClick={handleBooking}
+                            className="w-[200px] h-[50px] rounded-lg mt-5  text-[20px] bg-purple-500 text-white font-semibold  hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-700"
+                          >
+                            Book Now
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="w-[200px] h-[50px] rounded-lg mt-5  text-[20px] bg-purple-500 text-white font-semibold   focus:outline-none focus:ring-2 focus:ring-purple-700 flex items-center justify-center"
+                          >
+                            <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
+                            Processing...
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

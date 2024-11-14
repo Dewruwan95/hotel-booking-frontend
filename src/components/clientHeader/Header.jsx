@@ -5,7 +5,12 @@ import { useState } from "react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 
-function Header() {
+function Header({
+  openLoginPopup,
+  handleUserLogedOut,
+  isUserLoggedIn,
+  handleUserLogedIn,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDrawer() {
@@ -37,7 +42,12 @@ function Header() {
         <div className="hidden">
           <MenuList />
         </div>
-        <UserHeaderProfile />
+        <UserHeaderProfile
+          openLoginPopup={openLoginPopup}
+          handleUserLogedOut={handleUserLogedOut}
+          isUserLoggedIn={isUserLoggedIn}
+          handleUserLogedIn={handleUserLogedIn}
+        />
       </header>
     </div>
   );

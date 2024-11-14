@@ -3,7 +3,7 @@ import UserRegistration from "./UserRegistration";
 import UserLogin from "./UserLogin";
 import { useState } from "react";
 
-function LoginSignUpPopup({ onClose, onLogin }) {
+function LoginSignUpPopup({ closeLoginPopup, handleUserLogedIn }) {
   const [userStatus, setUserStatus] = useState("login");
 
   return (
@@ -18,7 +18,7 @@ function LoginSignUpPopup({ onClose, onLogin }) {
               className="h-[40px] w-[40px] absolute bg-purple-50 rounded-full right-[-20px] top-[-20px]
             flex justify-center items-center
             "
-              onClick={onClose}
+              onClick={closeLoginPopup}
             >
               <IoMdCloseCircleOutline className="text-[40px] text-purple-950 hover:text-purple-600" />
             </button>
@@ -75,7 +75,7 @@ function LoginSignUpPopup({ onClose, onLogin }) {
                 {userStatus === "register" ? (
                   <UserRegistration setUserStatus={setUserStatus} />
                 ) : (
-                  <UserLogin onLogin={onLogin} />
+                  <UserLogin handleUserLogedIn={handleUserLogedIn} />
                 )}
               </div>
             </div>
