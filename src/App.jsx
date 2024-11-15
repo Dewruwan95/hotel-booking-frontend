@@ -66,6 +66,7 @@ function App() {
             />
           }
         />
+        <Route path="/login" element={<LoginSignUpPopup />}></Route>
       </Routes>
       {isLoginClicked && (
         <LoginSignUpPopup
