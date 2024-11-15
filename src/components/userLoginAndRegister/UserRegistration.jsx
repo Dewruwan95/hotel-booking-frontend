@@ -246,7 +246,7 @@ function UserRegistration({ setUserStatus }) {
         }}
       >
         <div className=" w-full flex justify-center ">
-          <div className="  flex flex-col ">
+          <div className="flex flex-col items-center ">
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- image field ---------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
@@ -287,26 +287,28 @@ function UserRegistration({ setUserStatus }) {
                 placeholder="Email"
                 autoComplete="true"
                 required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={email}
                 onBlur={validateEmail}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {/* Display error message if email is invalid */}
-            {emailError && (
-              <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                {emailError}
-              </div>
-            )}
+            <div className="w-[295px] md:w-[505px] flex flex-col items-start ">
+              {/* Display error message if email is invalid */}
+              {emailError && (
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                  {emailError}
+                </div>
+              )}
+            </div>
             {/*----------------------------------------------------------------------------------------------*/}
             {/*//*--------------------------------------- name field ----------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:justify-between md:gap-4">
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- first name field ----------------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="w-1/2">
+              <div className="md:w-1/2">
                 <div className="flex my-4">
                   <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                     <FaRegUser className="h-4 w-4" />
@@ -316,7 +318,7 @@ function UserRegistration({ setUserStatus }) {
                     placeholder="First Name"
                     autoComplete="true"
                     required={true}
-                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                     defaultValue={firstName}
                     onBlur={validateFirstName}
                     onChange={(e) => {
@@ -335,7 +337,7 @@ function UserRegistration({ setUserStatus }) {
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- last name field -----------------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="flex my-4 w-1/2">
+              <div className="flex my-4 md:w-1/2">
                 <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                   <FaRegUser className="h-4 w-4" />
                 </div>
@@ -343,7 +345,7 @@ function UserRegistration({ setUserStatus }) {
                   type="text"
                   placeholder="Last Name"
                   autoComplete="true"
-                  className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                  className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                   defaultValue={lastName}
                   onChange={(e) => {
                     setLastName(e.target.value);
@@ -356,11 +358,11 @@ function UserRegistration({ setUserStatus }) {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*//*--------------------------------------- phone fields --------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:justify-between md:gap-4">
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- mobile phone field --------------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="w-1/2">
+              <div className=" md:w-1/2">
                 <div className="flex my-4">
                   <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                     <FiPhone className="h-4 w-4" />
@@ -370,7 +372,7 @@ function UserRegistration({ setUserStatus }) {
                     placeholder="Phone"
                     autoComplete="true"
                     required={true}
-                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                     defaultValue={phone}
                     onBlur={validateMobileNumber}
                     onChange={(e) => {
@@ -390,7 +392,7 @@ function UserRegistration({ setUserStatus }) {
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- whatsApp field ------------------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="w-1/2">
+              <div className="md:w-1/2">
                 <div className="flex my-4">
                   <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                     <FaWhatsapp className="h-4 w-4" />
@@ -400,7 +402,7 @@ function UserRegistration({ setUserStatus }) {
                     placeholder="WhatsApp"
                     autoComplete="true"
                     required={true}
-                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                     defaultValue={whatsApp}
                     onBlur={validateWhatsAppNumber}
                     onChange={(e) => {
@@ -422,11 +424,11 @@ function UserRegistration({ setUserStatus }) {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*//*--------------------------------------- password fields -----------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:justify-between md:gap-4">
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- password field ------------------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="w-1/2">
+              <div className=" md:w-1/2">
                 <div className="flex my-4">
                   <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                     <GoKey className="h-4 w-4" />
@@ -436,7 +438,7 @@ function UserRegistration({ setUserStatus }) {
                     placeholder="Password"
                     autoComplete="true"
                     required={true}
-                    className="] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                     defaultValue={password}
                     onBlur={validatePassword}
                     onChange={(e) => {
@@ -458,7 +460,7 @@ function UserRegistration({ setUserStatus }) {
               {/*----------------------------------------------------------------------------------------------*/}
               {/*///--------------------------------------- confirm password field ----------------------------*/}
               {/*----------------------------------------------------------------------------------------------*/}
-              <div className="w-1/2">
+              <div className=" md:w-1/2">
                 <div className="flex my-4">
                   <div className=" bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
                     <GoKey className="h-4 w-4" />
@@ -468,7 +470,7 @@ function UserRegistration({ setUserStatus }) {
                     placeholder="Confirm Password"
                     autoComplete="true"
                     required={true}
-                    className=" h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                    className="w-[250px] md:w-auto h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                     defaultValue={confirmPassword}
                     onBlur={validateConfirmPassword}
                     onChange={(e) => {
@@ -496,7 +498,7 @@ function UserRegistration({ setUserStatus }) {
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- license agreement field ---------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="my-4 px-2 w-full">
+            <div className="my-4 pl-1 md:px-2 w-[295px] md:w-full">
               <span className=" text-gray-600">
                 <input
                   type="checkbox"
@@ -516,7 +518,7 @@ function UserRegistration({ setUserStatus }) {
             <div className="my-4">
               {!processing ? (
                 <button
-                  className={`w-[505px] h-[40px] text-white text-lg
+                  className={`w-[295px] md:w-[505px] h-[40px] text-white text-lg
                     font-semibold rounded-lg shadow-md  hover:shadow-lg
                     transition duration-300 ease-in-out flex items-center justify-center ${
                       agreeTerms
@@ -533,7 +535,7 @@ function UserRegistration({ setUserStatus }) {
                 ///--------------------------------------- processing buttom ---------------------------------
                 //--------------------------------------------------------------------------------------------
                 <button
-                  className="w-[505px] h-[40px] bg-purple-600 text-white text-lg
+                  className="w-[295px] md:w-[505px] h-[40px] bg-purple-600 text-white text-lg
                              font-semibold rounded-lg shadow-md flex items-center justify-center"
                   disabled
                 >

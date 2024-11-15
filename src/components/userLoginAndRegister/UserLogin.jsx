@@ -131,7 +131,7 @@ function UserLogin({ handleUserLogedIn }) {
                 placeholder="Email"
                 autoComplete="true"
                 required={true}
-                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={email}
                 onBlur={validateEmail}
                 onChange={(e) => setEmail(e.target.value)}
@@ -157,7 +157,7 @@ function UserLogin({ handleUserLogedIn }) {
                 placeholder="Password"
                 autoComplete="true"
                 required={true}
-                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-l-[0px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={password}
                 onBlur={validatePassword}
                 onChange={(e) => {

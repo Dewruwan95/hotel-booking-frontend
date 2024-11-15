@@ -9,7 +9,7 @@ function LoginSignUpPopup({ closeLoginPopup, handleUserLogedIn }) {
   return (
     <>
       {/*  background */}
-      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-80 z-50">
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-start md:items-center bg-black bg-opacity-80 z-50 overflow-y-scroll py-10 md:py-0">
         {/* component background */}
         <div className="w-[320px] md:w-[600px] lg:w-[950px] lg:h-[650px] bg-purple-50 rounded-lg relative">
           {/* close button */}
