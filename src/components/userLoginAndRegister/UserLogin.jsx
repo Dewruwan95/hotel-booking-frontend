@@ -118,7 +118,7 @@ function UserLogin({ handleUserLogedIn }) {
     <>
       <form onSubmit={handleLogin}>
         <div className=" w-full flex justify-center">
-          <div className="  flex flex-col   ">
+          <div className="flex flex-col items-center md:items-start">
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- email field ---------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
@@ -131,18 +131,20 @@ function UserLogin({ handleUserLogedIn }) {
                 placeholder="Email"
                 autoComplete="true"
                 required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={email}
                 onBlur={validateEmail}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {/* Display error message if email is invalid */}
-            {emailError && (
-              <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                {emailError}
-              </div>
-            )}
+            <div className="w-[295px] md:w-[505px] flex flex-col items-start ">
+              {/* Display error message if email is invalid */}
+              {emailError && (
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                  {emailError}
+                </div>
+              )}
+            </div>
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///--------------------------------------- password field ------------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
@@ -155,7 +157,7 @@ function UserLogin({ handleUserLogedIn }) {
                 placeholder="Password"
                 autoComplete="true"
                 required={true}
-                className="w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
+                className="w-[250px] md:w-[460px] h-[45px] px-[10px] py-[5px] rounded-r-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
                 defaultValue={password}
                 onBlur={validatePassword}
                 onChange={(e) => {
@@ -164,16 +166,18 @@ function UserLogin({ handleUserLogedIn }) {
                 }}
               />
             </div>
-            {/* Display error message if password is invalid */}
-            {passwordError && (
-              <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
-                {passwordError}
-              </div>
-            )}
+            <div className="w-[295px] md:w-[505px] flex flex-col items-start ">
+              {/* Display error message if password is invalid */}
+              {passwordError && (
+                <div className="text-red-500 text-sm mt-[-15px] mb-[-5px] ml-[50px]">
+                  {passwordError}
+                </div>
+              )}
+            </div>
             {/*----------------------------------------------------------------------------------------------*/}
             {/*///----------------------------- Remember me & Forgot Password -------------------------------*/}
             {/*----------------------------------------------------------------------------------------------*/}
-            <div className="my-4 px-8 flex justify-between w-full">
+            <div className="my-4 px-[5px] md:px-8 flex justify-between w-full">
               <span className=" text-gray-600">
                 <input
                   type="checkbox"
@@ -194,7 +198,7 @@ function UserLogin({ handleUserLogedIn }) {
               {!processing ? (
                 <button
                   type="submit"
-                  className="w-[505px] h-[40px] bg-purple-600 text-white text-lg
+                  className="w-[295px] md:w-[505px] h-[40px] bg-purple-600 text-white text-lg
                         font-semibold rounded-lg shadow-md hover:bg-purple-800 hover:shadow-lg
                         transition duration-300 ease-in-out flex items-center justify-center"
                 >
@@ -203,7 +207,7 @@ function UserLogin({ handleUserLogedIn }) {
                 </button>
               ) : (
                 <button
-                  className="w-[505px] h-[40px] bg-purple-600 text-white text-lg
+                  className="w-[295px] md:w-[505px] h-[40px] bg-purple-600 text-white text-lg
                              font-semibold rounded-lg shadow-md flex items-center justify-center"
                   disabled
                 >
