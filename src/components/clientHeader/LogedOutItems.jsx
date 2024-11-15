@@ -8,8 +8,10 @@ function LogedOutItems({ openLoginPopup }) {
         flex items-center"
         onClick={openLoginPopup}
       >
-        <TbLogin2 className="text-[20px] mr-1" />
-        <div className="text-[15px]">Login / Sign Up</div>
+        <TbLogin2 className="text-[20px] lg:text-[25px] xl:text-[30px] mr-1" />
+        <div className="text-[15px] lg:text-[18px] xl:text-[20px]">
+          Login / Sign Up
+        </div>
       </button>
     </div>
   );
