@@ -2,13 +2,13 @@ import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import ProfileDropDown from "./ProfileDropDown";
 
-function LogedInItems({ onLogout, user }) {
+function LogedInItems({ handleUserLogedOut, user }) {
   const [isProfileClicked, setIsProfileClicked] = useState(false);
 
   function handleLogoutClick() {
     localStorage.removeItem("token");
     setIsProfileClicked(false);
-    onLogout();
+    handleUserLogedOut();
   }
 
   return (
@@ -19,12 +19,14 @@ function LogedInItems({ onLogout, user }) {
           onClick={() => setIsProfileClicked(!isProfileClicked)}
         >
           <div
-            className="w-[75px] h-[75px] rounded-full bg-cover bg-center border-4 border-white mr-5 hover:border-purple-300"
+            className="w-[50px] lg:w-[60px] xl:w-[75px] h-[50px] lg:h-[60px] xl:h-[75px] rounded-full bg-cover bg-center border-4 border-white mr-2 xl:mr-4 hover:border-purple-300"
             style={{ backgroundImage: `url(${user.image})` }}
           ></div>
 
-          <span>{user.firstName + " " + user.lastName}</span>
-          <TiArrowSortedDown className="text-[30px] ml-1" />
+          <span className="text-[15px] lg:text-[18px] xl:text-[20px]">
+            {user.firstName + " " + user.lastName}
+          </span>
+          <TiArrowSortedDown className="text-[20px] ml-1" />
         </button>
       </div>
       {isProfileClicked && (

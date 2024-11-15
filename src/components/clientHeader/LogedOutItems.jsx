@@ -1,31 +1,18 @@
-import { useState } from "react";
-import LoginSignUpPopup from "../userLoginAndRegister/LoginSignUpPopup";
 import { TbLogin2 } from "react-icons/tb";
 
-function LogedOutItems({ onLogin }) {
-  const [isLoginClicked, setIsLoginClicked] = useState(false);
-
-  // Function to close the popup
-  function handleClosePopup() {
-    setIsLoginClicked(false);
-  }
+function LogedOutItems({ openLoginPopup }) {
   return (
     <div>
       <button
         className="px-6 py-3  text-white text-lg font-semibold rounded-lg shadow-md hover:text-purple-300 transition duration-300 ease-in-out
         flex items-center"
-        onClick={() => {
-          setIsLoginClicked(true);
-        }}
+        onClick={openLoginPopup}
       >
-        <TbLogin2 className="text-[30px] mr-1" />
-        Login / Sign Up
-      </button>
-      {isLoginClicked && (
-        <div>
-          <LoginSignUpPopup onClose={handleClosePopup} onLogin={onLogin} />
+        <TbLogin2 className="text-[20px] lg:text-[25px] xl:text-[30px] mr-1" />
+        <div className="text-[15px] lg:text-[18px] xl:text-[20px]">
+          Login / Sign Up
         </div>
-      )}
+      </button>
     </div>
   );
 }

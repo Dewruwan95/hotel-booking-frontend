@@ -3,31 +3,31 @@ import UserRegistration from "./UserRegistration";
 import UserLogin from "./UserLogin";
 import { useState } from "react";
 
-function LoginSignUpPopup({ onClose, onLogin }) {
+function LoginSignUpPopup({ closeLoginPopup, handleUserLogedIn }) {
   const [userStatus, setUserStatus] = useState("login");
 
   return (
     <>
       {/*  background */}
-      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-80 z-50">
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-start md:items-center bg-black bg-opacity-80 z-50 overflow-y-scroll py-10 md:py-0">
         {/* component background */}
-        <div className="w-[950px] h-[650px] bg-purple-50 rounded-lg relative">
+        <div className="w-[320px] md:w-[600px] lg:w-[950px] lg:h-[650px] bg-purple-50 rounded-lg relative">
           {/* close button */}
           <div>
             <button
               className="h-[40px] w-[40px] absolute bg-purple-50 rounded-full right-[-20px] top-[-20px]
             flex justify-center items-center
             "
-              onClick={onClose}
+              onClick={closeLoginPopup}
             >
               <IoMdCloseCircleOutline className="text-[40px] text-purple-950 hover:text-purple-600" />
             </button>
           </div>
 
           {/* component body */}
-          <div className="flex h-[100%] ">
+          <div className="flex h-[100%] flex-col items-center lg:flex-row mt-3 lg:mt-0">
             {/* left image area */}
-            <div className="h-[100%] w-[40%] ">
+            <div className="h-[100%] w-[40%] hidden lg:block ">
               <img
                 src="srilanka.jpg"
                 alt="Sri Lanka"
@@ -71,11 +71,11 @@ function LoginSignUpPopup({ onClose, onLogin }) {
                 </button>
               </div>
               {/*  forms content */}
-              <div className="w-full h-[85%] rounded-br-lg ">
+              <div className="w-full h-[85%] rounded-br-lg pt-3 lg:pt-0">
                 {userStatus === "register" ? (
                   <UserRegistration setUserStatus={setUserStatus} />
                 ) : (
-                  <UserLogin onLogin={onLogin} />
+                  <UserLogin handleUserLogedIn={handleUserLogedIn} />
                 )}
               </div>
             </div>
