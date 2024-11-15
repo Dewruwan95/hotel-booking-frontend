@@ -19,9 +19,9 @@ function Header({
 
   return (
     <div>
-      <header className=" w-full bg-purple-950 h-[70px] flex items-center justify-around shadow-xl">
+      <header className=" w-full bg-purple-950 h-[70px] lg:h-[100px] xl:h-[120px] flex items-center justify-around shadow-xl">
         {/* hamburger button */}
-        <div>
+        <div className="lg:hidden">
           <button onClick={toggleDrawer} className="text-[30px] text-purple-50">
             <GiHamburgerMenu />
           </button>
@@ -38,8 +38,10 @@ function Header({
             </div>
           </Drawer>
         </div>
-        <span className="text-[30px] text-purple-50">Hotel ABC</span>
-        <div className="hidden">
+        <span className="text-[30px] lg:text-[45px] xl:text-[60px] text-purple-50">
+          Hotel ABC
+        </span>
+        <div className="hidden lg:block">
           <MenuList />
         </div>
         <UserHeaderProfile
