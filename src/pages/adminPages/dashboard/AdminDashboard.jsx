@@ -19,6 +19,7 @@ import UpdateFeedbackForm from "../../../components/adminDashboard/adminUpdateEl
 import UpdateUserForm from "../../../components/adminDashboard/adminUpdateElement/updateUserForm/UpdateUserForm";
 import UpdateRoomForm from "../../../components/adminDashboard/adminUpdateElement/updateRoomForm/UpdateRoomForm";
 import AddRoomForm from "../../../components/adminDashboard/adminCreateNewElement/createNewRoomForm/AddRoomForm";
+import UpdateBookingForm from "../../../components/adminDashboard/adminUpdateElement/updateBookingForm/UpdateBookingForm";
 
 function AdminDashboard({
   isUserLoggedIn,
@@ -73,6 +74,10 @@ function AdminDashboard({
               <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
                 <Routes path="/*">
                   <Route path="/bookings" element={<AdminBooking />} />
+                  <Route
+                    path="/update-booking"
+                    element={<UpdateBookingForm />}
+                  />
 
                   <Route path="/rooms" element={<AdminRooms />} />
                   <Route path="/add-room" element={<AddRoomForm />} />
