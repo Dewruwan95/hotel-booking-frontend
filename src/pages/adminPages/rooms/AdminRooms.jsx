@@ -75,6 +75,7 @@ function AdminRooms() {
         fields={roomFields}
         data={roomsData}
         deleteElement={handleDelete}
+        editElementPath={"/admin/update-room"}
         elementIdentifier={"roomNo"}
       />
     </>
