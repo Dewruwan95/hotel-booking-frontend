@@ -88,58 +88,54 @@ function AddRoomForm() {
       import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + roomNo
     );
 
-    console.log(roomExistsRes.data.exists);
-
     if (roomExistsRes.data.exists) {
       toast.dismiss();
       toast.error("Room number already exists. Please use a different number.");
       setProcessing(false);
       return;
-    } else {
-      console.log("Room number does not exist.");
+    }
 
-      if (uploadPromise) {
-        setPendingSubmission(true);
-        return;
-      }
+    if (uploadPromise) {
+      setPendingSubmission(true);
+      return;
+    }
 
-      try {
-        // New room object
-        const newRoom = {
-          roomNo: roomNo,
-          category: category,
-          specialDescription: specialDescription,
-          maxGuests: maxGuests,
-          notes: notes,
-          photos: [
-            photos ||
-              "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
-          ],
-          available: available,
-        };
+    try {
+      // New room object
+      const newRoom = {
+        roomNo: roomNo,
+        category: category,
+        specialDescription: specialDescription,
+        maxGuests: maxGuests,
+        notes: notes,
+        photos: [
+          photos ||
+            "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
+        ],
+        available: available,
+      };
 
-        const res = await axios.post(
-          import.meta.env.VITE_BACKEND_URL + "/api/rooms",
-          newRoom,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/rooms",
+        newRoom,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-        console.log(res);
-        toast.dismiss();
-        toast.success("Room created successfully");
-        navigate("/admin/rooms");
-      } catch (error) {
-        console.error("Failed to create room:", error);
-        toast.dismiss();
-        toast.error("Failed to create room. Please try again.");
-      } finally {
-        setProcessing(false);
-      }
+      console.log(res);
+      toast.dismiss();
+      toast.success("Room created successfully");
+      navigate("/admin/rooms");
+    } catch (error) {
+      console.error("Failed to create room:", error);
+      toast.dismiss();
+      toast.error("Failed to create room. Please try again.");
+    } finally {
+      setProcessing(false);
     }
   }
 
