@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
-import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
-import { useNavigate } from "react-router-dom";
 
 function AdminRooms() {
   const [roomsData, setRoomsData] = useState([]);
   const [isRoomsDataLoaded, setIsRoomsDataLoaded] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isRoomsDataLoaded) {
@@ -54,7 +50,6 @@ function AdminRooms() {
 
   // Column headers for Room table
   const roomColumns = [
-    "Image",
     "Room No",
     "Category",
     "Max Guests",
@@ -66,7 +61,6 @@ function AdminRooms() {
 
   // Fields corresponding to the columns
   const roomFields = [
-    "photos",
     "roomNo",
     "category",
     "maxGuests",
@@ -76,23 +70,14 @@ function AdminRooms() {
   ];
   return (
     <>
-      <div className="h-full flex flex-col">
-        <AdminDataSummary
-          onAddElementClick={() => {
-            navigate("/admin/add-room");
-          }}
-        />
-        <div className="overflow-y-auto">
-          <DataTable
-            columns={roomColumns}
-            fields={roomFields}
-            data={roomsData}
-            deleteElement={handleDelete}
-            editElementPath={"/admin/update-room"}
-            elementIdentifier={"roomNo"}
-          />
-        </div>
-      </div>
+      <DataTable
+        columns={roomColumns}
+        fields={roomFields}
+        data={roomsData}
+        deleteElement={handleDelete}
+        editElementPath={"/admin/update-room"}
+        elementIdentifier={"roomNo"}
+      />
     </>
   );
 }
