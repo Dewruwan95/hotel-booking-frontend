@@ -83,47 +83,63 @@ function AddRoomForm() {
     setProcessing(true);
     toast.loading("Creating Room...");
 
-    if (uploadPromise) {
-      setPendingSubmission(true);
-      return;
-    }
+    // Check if room number already exists
+    const roomExistsRes = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + roomNo
+    );
 
-    try {
-      // New room object
-      const newRoom = {
-        roomNo: roomNo,
-        category: category,
-        specialDescription: specialDescription,
-        maxGuests: maxGuests,
-        notes: notes,
-        photos: [
-          photos ||
-            "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
-        ],
-        available: available,
-      };
+    console.log(roomExistsRes.data.exists);
 
-      const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/rooms",
-        newRoom,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log(res);
+    if (roomExistsRes.data.exists) {
       toast.dismiss();
-      toast.success("Room created successfully");
-      navigate("/admin/rooms");
-    } catch (error) {
-      console.error("Failed to create room:", error);
-      toast.dismiss();
-      toast.error("Failed to create room. Please try again.");
-    } finally {
+      toast.error("Room number already exists. Please use a different number.");
       setProcessing(false);
+      return;
+    } else {
+      console.log("Room number does not exist.");
+
+      if (uploadPromise) {
+        setPendingSubmission(true);
+        return;
+      }
+
+      try {
+        // New room object
+        const newRoom = {
+          roomNo: roomNo,
+          category: category,
+          specialDescription: specialDescription,
+          maxGuests: maxGuests,
+          notes: notes,
+          photos: [
+            photos ||
+              "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
+          ],
+          available: available,
+        };
+
+        const res = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/rooms",
+          newRoom,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log(res);
+        toast.dismiss();
+        toast.success("Room created successfully");
+        navigate("/admin/rooms");
+      } catch (error) {
+        console.error("Failed to create room:", error);
+        toast.dismiss();
+        toast.error("Failed to create room. Please try again.");
+      } finally {
+        setProcessing(false);
+      }
     }
   }
 
@@ -212,6 +228,7 @@ function AddRoomForm() {
                       name="category"
                       id="category"
                       value={category}
+                      required
                       onChange={(e) => setCategory(e.target.value)}
                       className={`w-[200px] h-[45px] p-2 border border-purple-300 rounded-r-[6px] focus:outline-none focus:ring-1 focus:ring-purple-500 text-left ${
                         category === "" ? "text-gray-400" : "text-black"
@@ -239,6 +256,7 @@ function AddRoomForm() {
                       name="category"
                       id="category"
                       value={available}
+                      required
                       onChange={(e) => setAvailable(e.target.value)}
                       className={`w-[200px] h-[45px] p-2 border border-purple-300 rounded-r-[6px] focus:outline-none focus:ring-1 focus:ring-purple-500 text-left ${
                         available === "" ? "text-gray-400" : "text-black"
