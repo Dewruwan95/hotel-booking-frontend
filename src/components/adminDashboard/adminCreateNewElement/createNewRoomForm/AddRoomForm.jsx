@@ -1,59 +1,49 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import uploadImages from "../../../../utils/MediaUpload";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FaBed, FaCheck, FaHashtag } from "react-icons/fa";
+import { TbCategoryPlus } from "react-icons/tb";
 import { MdCategory } from "react-icons/md";
 import { IoImageSharp } from "react-icons/io5";
-import { GrUpdate } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
+import { FaBed, FaCheck, FaHashtag } from "react-icons/fa";
 
-function UpdateRoomForm() {
-  // check if state is available
-  const location = useLocation();
-  if (location.state == null) {
-    window.location.href = "/admin/rooms";
-  }
-
-  // check if user is admin
+function AddRoomForm() {
+  // Check if user is admin
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
   if (userType !== "admin" || !token) {
     window.location.href = "/";
   }
 
-  const room = location.state.data;
-
   const [categoriesData, setCategoriesData] = useState([]);
-  const [roomNo, setRoomNo] = useState(room.roomNo);
-  const [category, setCategory] = useState(room.category);
-  const [specialDescription, setSpecialDescription] = useState(
-    room.specialDescription
-  );
-  const [maxGuests, setMaxGuests] = useState(room.maxGuests);
-  const [notes, setNotes] = useState(room.notes);
-  const [photos, setPhotos] = useState(room.photos);
-  const [available, setAvailable] = useState(room.available);
+  const [roomNo, setRoomNo] = useState("");
+  const [category, setCategory] = useState("");
+  const [specialDescription, setSpecialDescription] = useState("");
+  const [maxGuests, setMaxGuests] = useState("");
+  const [notes, setNotes] = useState("");
+  const [photos, setPhotos] = useState("");
+  const [available, setAvailable] = useState("");
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [uploadPromise, setUploadPromise] = useState(null);
   const [pendingSubmission, setPendingSubmission] = useState(false);
+
+  const navigate = useNavigate();
 
   // fetch categories data on loading
   useEffect(() => {
     fetchCategoriesData();
   }, []);
 
-  // useEffect to check when uploadPromise is completed and form submit if pending
+  // UseEffect to handle pending form submission after photo upload
   useEffect(() => {
     if (!uploadPromise && pendingSubmission) {
-      handleUpdateRoom();
+      handleAddRoom();
       setPendingSubmission(false);
     }
   }, [uploadPromise, pendingSubmission]);
-
-  const navigate = useNavigate();
 
   // fetch categories data function
   async function fetchCategoriesData() {
@@ -68,7 +58,7 @@ function UpdateRoomForm() {
     }
   }
 
-  // handle image upload change ---------------------------------------------------------
+  // Handle photo upload
   async function handlePhotoChange(e) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -77,10 +67,10 @@ function UpdateRoomForm() {
       setUploadPromise(promise);
 
       try {
-        const imageUrl = await promise;
-        setPhotos(imageUrl);
+        const photoUrl = await promise;
+        setPhotos(photoUrl);
       } catch (error) {
-        console.log(error);
+        console.error("Photo upload failed:", error);
       } finally {
         setIsPhotoLoading(false);
         setUploadPromise(null);
@@ -88,10 +78,10 @@ function UpdateRoomForm() {
     }
   }
 
-  // Update room function
-  async function handleUpdateRoom() {
+  // Add room function
+  async function handleAddRoom() {
     setProcessing(true);
-    toast.loading("Updating Room...");
+    toast.loading("Creating Room...");
 
     if (uploadPromise) {
       setPendingSubmission(true);
@@ -99,23 +89,23 @@ function UpdateRoomForm() {
     }
 
     try {
-      const updatedRoom = {
+      // New room object
+      const newRoom = {
         roomNo: roomNo,
         category: category,
         specialDescription: specialDescription,
         maxGuests: maxGuests,
         notes: notes,
-        photos: photos || [
-          "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
+        photos: [
+          photos ||
+            "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/image.png?alt=media&token=0f157e0a-29be-4da3-90a6-6c9eb54720e4",
         ],
         available: available,
       };
 
-      console.log(updatedRoom);
-
-      const res = await axios.put(
-        import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + room.roomNo,
-        updatedRoom,
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/rooms",
+        newRoom,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -126,12 +116,12 @@ function UpdateRoomForm() {
 
       console.log(res);
       toast.dismiss();
-      toast.success("Room updated successfully");
+      toast.success("Room created successfully");
       navigate("/admin/rooms");
     } catch (error) {
-      console.error("Failed to update room:", error);
+      console.error("Failed to create room:", error);
       toast.dismiss();
-      toast.error("Failed to update room. Please try again.");
+      toast.error("Failed to create room. Please try again.");
     } finally {
       setProcessing(false);
     }
@@ -144,57 +134,42 @@ function UpdateRoomForm() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleUpdateRoom();
+              handleAddRoom();
             }}
           >
             <div className="flex flex-col">
-              <div className="flex justify-center mb-2 font-bold text-[30px] text-purple-600">
-                <span>Update Room</span>
+              <div className="flex justify-center mb-4 font-bold text-[30px] text-purple-600">
+                <span>Create New Room</span>
               </div>
 
-              <div className="pl-1 text-[16px] text-purple-600">
-                <span>Image:</span>
-              </div>
-              <div className="flex justify-center items-center">
+              {/* Photo Upload */}
+              <div className="flex justify-center items-center mb-4">
                 <div className="relative">
                   <input
                     type="file"
-                    className="absolute inset-0 opacity-0 cursor-pointer z-[10]"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
                     onChange={handlePhotoChange}
                   />
                   <div className="w-[500px] h-[300px] rounded-lg bg-purple-300 border-[1px] border-gray-400 flex justify-center items-center text-purple-600 overflow-hidden">
-                    {isPhotoLoading ? (
-                      <span className="text-center text-purple-700">
-                        Uploading Image...
-                      </span>
-                    ) : photos ? (
-                      <div className="w-full h-full rounded-lg">
-                        <img
-                          src={photos}
-                          alt="Preview"
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                        <span className="text-center flex rounded-lg flex-col items-center justify-center absolute inset-0 z-[9] bg-black bg-opacity-50 text-white">
-                          <IoImageSharp className="h-[50px] w-[50px]" />
-                          Select or Drag & Drop New Image Here
-                        </span>
-                      </div>
+                    {photos ? (
+                      <img
+                        src={photos}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : isPhotoLoading ? (
+                      <span className="text-center">Uploading Photo...</span>
                     ) : (
-                      <></>
+                      <span className="text-center flex flex-col items-center">
+                        <IoImageSharp className="h-[50px] w-[50px]" />
+                        Select or Drag & Drop Photo Here
+                      </span>
                     )}
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-start items-center mt-4">
-                <div className="w-1/2 pl-1  text-[16px] text-purple-600">
-                  <span>Room No:</span>
-                </div>
-                <div className="w-1/2 pl-2  text-[16px] text-purple-600">
-                  <span>Max Guests:</span>
-                </div>
-              </div>
-              <div className="flex justify-between items-center max-w-[505px] mb-2">
+              <div className="flex justify-between items-center max-w-[505px] my-4">
                 {/* Room Number */}
                 <div className="flex ">
                   <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
@@ -225,16 +200,8 @@ function UpdateRoomForm() {
                 </div>
               </div>
 
-              <div className="flex justify-start items-center ">
-                <div className="w-1/2 pl-1  text-[16px] text-purple-600">
-                  <span>Category:</span>
-                </div>
-                <div className="w-1/2 pl-2  text-[16px] text-purple-600">
-                  <span>Room Availability:</span>
-                </div>
-              </div>
               {/* category & Room Availability */}
-              <div className="flex justify-between items-center max-w-[505px] mb-2">
+              <div className="flex justify-between items-center max-w-[505px] mb-4">
                 {/* category selection */}
                 <div className="flex ">
                   <div className="bg-purple-300 text-purple-600 h-[45px] w-[45px] flex items-center justify-center rounded-l-[6px]">
@@ -287,11 +254,8 @@ function UpdateRoomForm() {
                 </div>
               </div>
 
-              <div className="pl-1 text-[16px] text-purple-600">
-                <span>Special Description:</span>
-              </div>
               {/* Special Description */}
-              <div className="flex mb-2">
+              <div className="flex mb-4">
                 <textarea
                   placeholder="Special Description"
                   className="w-[505px] h-[120px] px-[10px] py-[5px] rounded-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
@@ -300,11 +264,8 @@ function UpdateRoomForm() {
                 />
               </div>
 
-              <div className="pl-1 text-[16px] text-purple-600">
-                <span>Notes:</span>
-              </div>
               {/* Notes */}
-              <div className="flex mb-2">
+              <div className="flex mb-4">
                 <textarea
                   placeholder="Notes"
                   className="w-[505px] h-[120px] px-[10px] py-[5px] rounded-[6px] border-[1px] border-gray-400 focus:border-[2px] focus:border-purple-400 focus:outline-none"
@@ -314,11 +275,11 @@ function UpdateRoomForm() {
               </div>
 
               {/* Submit Button */}
-              <div className="my-2">
+              <div className="my-4">
                 {!processing ? (
                   <button className="w-[505px] h-[40px] text-white text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out flex items-center justify-center bg-purple-600 hover:bg-purple-800">
-                    <GrUpdate className="mr-2" />
-                    Update Room
+                    <TbCategoryPlus className="mr-2" />
+                    Add Room
                   </button>
                 ) : (
                   <button
@@ -338,4 +299,4 @@ function UpdateRoomForm() {
   );
 }
 
-export default UpdateRoomForm;
+export default AddRoomForm;
