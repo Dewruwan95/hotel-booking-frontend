@@ -24,8 +24,20 @@ function TableRow({
             key={fieldIndex}
             className="py-4 px-6 text-center max-w-xs h-auto max-h-[150px] whitespace-normal overflow-hidden text-ellipsis"
           >
-            {field === "timestamp" || field === "start" || field === "end" ? (
+            {field === "start" || field === "end" ? (
               new Date(data[field]).toLocaleDateString()
+            ) : field === "timestamp" ? (
+              new Date(data[field])
+                .toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })
+                .replace(",", "")
+                .toUpperCase()
             ) : field === "status" ? (
               <span
                 className={`${
