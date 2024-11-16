@@ -68,6 +68,11 @@ function TableRow({
                 className="w-[100px] h-[100px] rounded-[6px] bg-cover bg-center mx-auto"
                 style={{ backgroundImage: `url(${data[field]})` }}
               ></div>
+            ) : field === "photos" ? (
+              <div
+                className="w-[100px] h-[100px] rounded-[6px] bg-cover bg-center mx-auto"
+                style={{ backgroundImage: `url(${data[field]})` }}
+              ></div>
             ) : field === "firstName" ? (
               <span>
                 {data[field]} {data["lastName"]}
