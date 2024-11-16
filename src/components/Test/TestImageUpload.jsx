@@ -1,5 +1,5 @@
 import { useState } from "react";
-import uploadImage from "../../utils/MediaUpload";
+import uploadImages from "../../utils/MediaUpload";
 
 function TestImageUpload() {
   const [file, setFile] = useState(null);
@@ -7,7 +7,7 @@ function TestImageUpload() {
   //handle upload files function
   async function handleUpload() {
     if (file) {
-      const downloadUrl = await uploadImage(file);
+      const downloadUrl = await uploadImages(file);
 
       if (downloadUrl) {
         console.log("Image uploaded to:", downloadUrl);
