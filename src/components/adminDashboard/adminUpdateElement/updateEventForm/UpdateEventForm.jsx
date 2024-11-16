@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import uploadImage from "../../../../utils/MediaUpload";
+import uploadImages from "../../../../utils/MediaUpload";
 import { IoImageSharp } from "react-icons/io5";
 import { MdEmojiEvents } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
@@ -47,7 +47,7 @@ function UpdateEventForm() {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const promise = uploadImage(selectedFile);
+      const promise = uploadImages(selectedFile);
       setUploadPromise(promise);
 
       try {

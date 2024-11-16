@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import uploadImage from "../../../../utils/MediaUpload";
+import uploadImages from "../../../../utils/MediaUpload";
 import { useEffect, useState } from "react";
 import { IoImageSharp } from "react-icons/io5";
 import { MdEmojiEvents } from "react-icons/md";
@@ -39,7 +39,7 @@ function AddEventForm() {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const promise = uploadImage(selectedFile);
+      const promise = uploadImages(selectedFile);
       setUploadPromise(promise);
 
       try {

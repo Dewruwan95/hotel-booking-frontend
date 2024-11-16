@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GrUpdate } from "react-icons/gr";
-import uploadImage from "../../../../utils/MediaUpload";
+import uploadImages from "../../../../utils/MediaUpload";
 
 function UpdateCategoryForm() {
   // check if state is available
@@ -50,7 +50,7 @@ function UpdateCategoryForm() {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const promise = uploadImage(selectedFile);
+      const promise = uploadImages(selectedFile);
       setUploadPromise(promise);
 
       try {
