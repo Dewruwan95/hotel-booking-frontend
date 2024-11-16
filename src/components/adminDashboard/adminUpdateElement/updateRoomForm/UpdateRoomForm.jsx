@@ -93,6 +93,22 @@ function UpdateRoomForm() {
     setProcessing(true);
     toast.loading("Updating Room...");
 
+    // Check if room number already exists
+    if (roomNo !== room.roomNo) {
+      const roomExistsRes = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + roomNo
+      );
+
+      if (roomExistsRes.data.exists) {
+        toast.dismiss();
+        toast.error(
+          "Room number already exists. Please use a different number."
+        );
+        setProcessing(false);
+        return;
+      }
+    }
+
     if (uploadPromise) {
       setPendingSubmission(true);
       return;
@@ -110,8 +126,6 @@ function UpdateRoomForm() {
         ],
         available: available,
       };
-
-      console.log(updatedRoom);
 
       const res = await axios.put(
         import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + room.roomNo,

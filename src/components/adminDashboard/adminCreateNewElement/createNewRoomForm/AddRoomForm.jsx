@@ -83,6 +83,18 @@ function AddRoomForm() {
     setProcessing(true);
     toast.loading("Creating Room...");
 
+    // Check if room number already exists
+    const roomExistsRes = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + "/api/rooms/" + roomNo
+    );
+
+    if (roomExistsRes.data.exists) {
+      toast.dismiss();
+      toast.error("Room number already exists. Please use a different number.");
+      setProcessing(false);
+      return;
+    }
+
     if (uploadPromise) {
       setPendingSubmission(true);
       return;
@@ -212,6 +224,7 @@ function AddRoomForm() {
                       name="category"
                       id="category"
                       value={category}
+                      required
                       onChange={(e) => setCategory(e.target.value)}
                       className={`w-[200px] h-[45px] p-2 border border-purple-300 rounded-r-[6px] focus:outline-none focus:ring-1 focus:ring-purple-500 text-left ${
                         category === "" ? "text-gray-400" : "text-black"
@@ -239,6 +252,7 @@ function AddRoomForm() {
                       name="category"
                       id="category"
                       value={available}
+                      required
                       onChange={(e) => setAvailable(e.target.value)}
                       className={`w-[200px] h-[45px] p-2 border border-purple-300 rounded-r-[6px] focus:outline-none focus:ring-1 focus:ring-purple-500 text-left ${
                         available === "" ? "text-gray-400" : "text-black"
