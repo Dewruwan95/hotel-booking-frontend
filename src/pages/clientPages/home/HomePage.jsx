@@ -112,7 +112,7 @@ function HomePage({
       {/* main background */}
       <div className="w-full max-h-[100vh] flex flex-col bg-purple-200">
         {/* client header */}
-        <div className="fixed inset-x-0 top-0">
+        <div className="fixed inset-x-0 top-0 z-10">
           <Header
             openLoginPopup={openLoginPopup}
             handleUserLogedOut={handleUserLogedOut}
@@ -137,9 +137,12 @@ function HomePage({
           />
         </div>
 
-        {/* category Features */}
         <div className="w-full h-full">
+          {/* room categories*/}
           <RoomCategories categoriesData={categoriesData} />
+
+          {/* special offers */}
+          <SpecialOffers />
         </div>
       </div>
     </>

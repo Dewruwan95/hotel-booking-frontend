@@ -36,13 +36,13 @@ function RoomCategories({ categoriesData }) {
 
   return (
     <>
-      <div className="w-full max-h-[100vh] bg-white pt-[60px]">
+      <div className="w-full max-h-[100vh] bg-white pt-[60px] mb-[200px] md:mb-[80px]">
         <h2 className="text-center text-3xl font-bold text-purple-800 pb-[60px]">
           Our Room Categories
         </h2>
         {/* Category card marquee */}
 
-        <div className="w-full h-full mb-[80px]">
+        <div className="w-full h-full ">
           <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg  bg-background ">
             <Marquee pauseOnHover className="[--duration:100s]">
               {firstRow.map((category) => (
