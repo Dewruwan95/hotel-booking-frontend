@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/clientHeader/Header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import RoomFeatures from "../../../components/homePage/RoomFeatures";
+import RoomCategories from "../../../components/homePage/RoomCategories";
 import SpecialOffers from "../../../components/homePage/SpecialOffers";
 import Testimonials from "../../../components/homePage/Testimonials";
 import FooterSection from "../../../components/homePage/FooterSection";
@@ -137,9 +137,9 @@ function HomePage({
           />
         </div>
 
-        {/* Room Features */}
+        {/* category Features */}
         <div className="w-full h-full">
-          <RoomFeatures />
+          <RoomCategories categoriesData={categoriesData} />
         </div>
       </div>
     </>
