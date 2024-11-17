@@ -7,6 +7,7 @@ import SpecialOffers from "../../../components/homePage/SpecialOffers";
 import Testimonials from "../../../components/homePage/Testimonials";
 import FooterSection from "../../../components/homePage/FooterSection";
 import HeroSection from "../../../components/homePage/HeroSection";
+import ImageGallery from "../../../components/homePage/ImageGallery";
 
 function HomePage({
   openLoginPopup,
@@ -143,6 +144,9 @@ function HomePage({
 
           {/* special offers */}
           <SpecialOffers />
+
+          {/* image gallery */}
+          <ImageGallery />
         </div>
       </div>
     </>
