@@ -165,6 +165,9 @@ function HomePage({
 
           {/* testimonials */}
           <Testimonials feedbackData={feedbackData} />
+
+          {/* footer */}
+          <FooterSection />
         </div>
       </div>
     </>

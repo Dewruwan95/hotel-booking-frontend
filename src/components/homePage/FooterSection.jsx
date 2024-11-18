@@ -1,7 +1,7 @@
 function FooterSection() {
   return (
     <>
-      <div className="bg-purple-900 py-8 text-white">
+      <div className="bg-purple-900 py-8  text-white">
         <div className="container mx-auto text-center">
           <h4 className="text-xl font-semibold mb-4">Stay Connected</h4>
           <div className="flex justify-center space-x-6">

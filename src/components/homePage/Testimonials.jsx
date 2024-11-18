@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from "react-icons/bi";
+import { AiFillStar } from "react-icons/ai";
 
 function Testimonials({ feedbackData }) {
   const defaultUserImageUrl =
@@ -19,7 +20,7 @@ function Testimonials({ feedbackData }) {
 
   return (
     <>
-      <div className="bg-purple-200 py-16 ">
+      <div className="bg-purple-200 pt-[100px] pb-[150px] ">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-purple-800 mb-5 lg:mb-16">
             What Our Guests Say
@@ -66,9 +67,22 @@ function Testimonials({ feedbackData }) {
                           </div>
 
                           <div className="absolute bottom-[10px]">
-                            <span className="text-[18px] lg:text-[20px] font-bold text-purple-900">
-                              {feedback.name}
-                            </span>
+                            <div className="flex gap-4">
+                              <span className="text-[18px] lg:text-[20px] font-bold text-purple-900">
+                                {feedback.name}
+                              </span>
+                              <span className="flex justify-center items-center text-[18px] lg:text-[20px]">
+                                {Array.from(
+                                  { length: feedback.rating },
+                                  (_, index) => (
+                                    <AiFillStar
+                                      key={index}
+                                      className="text-yellow-500"
+                                    />
+                                  )
+                                )}
+                              </span>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
