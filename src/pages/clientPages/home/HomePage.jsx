@@ -19,6 +19,7 @@ function HomePage({
   const token = localStorage.getItem("token");
 
   const [categoriesData, setCategoriesData] = useState([]);
+  const [feedbackData, setFeedbackData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [category, setCategory] = useState("");
@@ -28,6 +29,7 @@ function HomePage({
   useEffect(() => {
     if (categoriesData.length === 0) {
       fetchCategoriesData();
+      fetchFeedbacksData();
     }
 
     if (pendingBooking && !startDate && !endDate && !category) {
@@ -53,6 +55,19 @@ function HomePage({
       );
 
       setCategoriesData(res.data.categories);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  }
+
+  // fetch feedback data function
+  async function fetchFeedbacksData() {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks"
+      );
+
+      setFeedbackData(res.data.feedbacks);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
     }
@@ -147,6 +162,9 @@ function HomePage({
 
           {/* image gallery */}
           <ImageGallery />
+
+          {/* testimonials */}
+          <Testimonials feedbackData={feedbackData} />
         </div>
       </div>
     </>
