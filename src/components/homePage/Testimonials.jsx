@@ -20,7 +20,7 @@ function Testimonials({ feedbackData }) {
 
   return (
     <>
-      <div className="bg-purple-200 pt-[100px] pb-[150px] ">
+      <div className="bg-purple-200 pt-[100px] pb-[250px] ">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-purple-800 mb-5 lg:mb-16">
             What Our Guests Say
