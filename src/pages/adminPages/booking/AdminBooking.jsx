@@ -37,8 +37,10 @@ function AdminBooking() {
     if (confirmDelete) {
       const token = localStorage.getItem("token");
       try {
-        await axios.delete(
-          import.meta.env.VITE_BACKEND_URL + "/api/bookings/" + bookingId,
+        await axios.put(
+          `${import.meta.env.VITE_BACKEND_URL}/api/bookings/${bookingId}`,
+          { isDeleted: true },
+
           {
             headers: { Authorization: `Bearer ${token}` },
           }
