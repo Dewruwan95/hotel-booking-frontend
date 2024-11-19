@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { AiFillStar } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
@@ -24,8 +25,10 @@ function TableRow({
             key={fieldIndex}
             className="py-4 px-6 text-center max-w-xs h-auto max-h-[150px] whitespace-normal overflow-hidden text-ellipsis"
           >
-            {field === "timestamp" || field === "start" || field === "end" ? (
+            {field === "start" || field === "end" ? (
               new Date(data[field]).toLocaleDateString()
+            ) : field === "timestamp" ? (
+              format(new Date(data[field]), "yyyy MMMM dd h:mma")
             ) : field === "status" ? (
               <span
                 className={`${

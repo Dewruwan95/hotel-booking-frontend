@@ -1,4 +1,5 @@
 import axios from "axios";
+import { format } from "date-fns";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -94,7 +95,7 @@ function UpdateFeedbackForm() {
                       Date
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-900">
-                      {date}
+                      {format(new Date(date), "yyyy MMMM dd")}
                     </td>
                   </tr>
                   {/* feedback name */}

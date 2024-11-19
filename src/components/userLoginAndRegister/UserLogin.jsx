@@ -97,7 +97,7 @@ function UserLogin({ handleUserLogedIn }) {
         }
 
         if (res.data.user.type === "admin") {
-          navigate("/admin");
+          navigate("/admin/dashboard");
         } else if (res.data.user.type === "customer") {
           window.location.href = "/";
         }
