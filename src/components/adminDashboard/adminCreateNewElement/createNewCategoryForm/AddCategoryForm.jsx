@@ -4,7 +4,7 @@ import { FaRupeeSign } from "react-icons/fa6";
 import { IoImageSharp } from "react-icons/io5";
 import { MdCategory } from "react-icons/md";
 import { TbCategoryPlus } from "react-icons/tb";
-import uploadImage from "../../../../utils/MediaUpload";
+import uploadImages from "../../../../utils/MediaUpload";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ function AddCategoryForm() {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const promise = uploadImage(selectedFile);
+      const promise = uploadImages(selectedFile);
       setUploadPromise(promise);
 
       try {

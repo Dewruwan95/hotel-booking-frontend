@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/clientHeader/Header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import RoomCategories from "../../../components/homePage/RoomCategories";
+import SpecialOffers from "../../../components/homePage/SpecialOffers";
+import Testimonials from "../../../components/homePage/Testimonials";
+import FooterSection from "../../../components/homePage/FooterSection";
+import HeroSection from "../../../components/homePage/HeroSection";
+import ImageGallery from "../../../components/homePage/ImageGallery";
 
 function HomePage({
   openLoginPopup,
@@ -14,6 +19,7 @@ function HomePage({
   const token = localStorage.getItem("token");
 
   const [categoriesData, setCategoriesData] = useState([]);
+  const [feedbackData, setFeedbackData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [category, setCategory] = useState("");
@@ -23,6 +29,7 @@ function HomePage({
   useEffect(() => {
     if (categoriesData.length === 0) {
       fetchCategoriesData();
+      fetchFeedbacksData();
     }
 
     if (pendingBooking && !startDate && !endDate && !category) {
@@ -53,19 +60,17 @@ function HomePage({
     }
   }
 
-  // handle start date change
-  function handleStartDateChange(e) {
-    setStartDate(e.target.value);
-  }
+  // fetch feedback data function
+  async function fetchFeedbacksData() {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks"
+      );
 
-  //handle end date change
-  function handleEndDateChange(e) {
-    setEndDate(e.target.value);
-  }
-
-  // handle category change
-  function handleCategoryChange(e) {
-    setCategory(e.target.value);
+      setFeedbackData(res.data.feedbacks);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
   }
 
   // handle booking
@@ -120,122 +125,49 @@ function HomePage({
   const today = new Date().toISOString().split("T")[0];
   return (
     <>
-      {/* client header */}
-      <Header
-        openLoginPopup={openLoginPopup}
-        handleUserLogedOut={handleUserLogedOut}
-        isUserLoggedIn={isUserLoggedIn}
-        handleUserLogedIn={handleUserLogedIn}
-      />
-
       {/* main background */}
-      <div className="w-[100%] h-[100vh] bg-purple-200 flex justify-center">
+      <div className="w-full max-h-[100vh] flex flex-col bg-purple-200">
+        {/* client header */}
+        <div className="fixed inset-x-0 top-0 z-10">
+          <Header
+            openLoginPopup={openLoginPopup}
+            handleUserLogedOut={handleUserLogedOut}
+            isUserLoggedIn={isUserLoggedIn}
+            handleUserLogedIn={handleUserLogedIn}
+          />
+        </div>
+
         {/* hero section */}
-        <div className="w-[100%] h-[600px] lg:h-[650px] xl:h-[750px] bg-purple-800 overflow-hidden">
-          {/* hero image */}
-          <div
-            className="h-full w-full bg-cover bg-center flex flex-col items-center"
-            style={{ backgroundImage: `url(hero.jpg)` }}
-          >
-            {/* background overlay */}
-            <div className="h-full w-full bg-black bg-opacity-30">
-              {/* hero text content */}
-              <div className="h-full w-full flex flex-col items-center mt-[30px] lg:mt-[50px] xl:mt-[100px]">
-                {/* heading text */}
-                <div className="p-[15px] lg:p-[18px] xl:p-[20px] flex flex-col items-center">
-                  {/* primary heading */}
-                  <h1 className="text-[40px] lg:text-[50px] xl:text-[60px] text-purple-200 text-center">
-                    Book Your Room Today
-                  </h1>
-                  {/* secondary heading */}
-                  <h2 className="text-[20px] g:text-[25px] xl:text-[30px] text-purple-200">
-                    Find and book your perfect stay
-                  </h2>
-                </div>
+        <div className="w-full h-full pt-[70px] lg:pt-[100px] xl:pt-[120px]">
+          <HeroSection
+            today={today}
+            startDate={startDate}
+            endDate={endDate}
+            category={category}
+            categoriesData={categoriesData}
+            processing={processing}
+            handleStartDateChange={(e) => setStartDate(e.target.value)}
+            handleEndDateChange={(e) => setEndDate(e.target.value)}
+            handleCategoryChange={(e) => setCategory(e.target.value)}
+            handleBooking={handleBooking}
+          />
+        </div>
 
-                {/* booking placeholder */}
-                <div className="w-[80%] md:w-[40%] lg:w-[80%] 2xl:w-[60%] h-[370px] lg:h-[200px] xl:h-[150px] p-[12px] flex flex-col justify-center items-center bg-purple-300 bg-opacity-50 rounded-bl-[50px] rounded-tr-[50px] ">
-                  <div className="w-full h-full  bg-purple-50 rounded-bl-[40px] rounded-tr-[40px] flex flex-col lg:flex-row items-center justify-center overflow-hidden">
-                    {/* left side placeholder */}
-                    <div className="h-[100%] w-[80%] flex flex-col lg:flex-row items-center justify-around ">
-                      {/* check-in date input */}
-                      <div className="flex flex-col items-center mt-8 lg:mt-0">
-                        <label className="text-purple-700 text-md mb-1">
-                          Check-in
-                        </label>
-                        <input
-                          type="date"
-                          min={today}
-                          defaultValue={startDate}
-                          onChange={handleStartDateChange}
-                          className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center "
-                        />
-                      </div>
+        <div className="w-full h-full">
+          {/* room categories*/}
+          <RoomCategories categoriesData={categoriesData} />
 
-                      {/* check-out date input */}
-                      <div className="flex flex-col items-center">
-                        <label className="text-purple-700 text-md mb-1">
-                          Check-out
-                        </label>
-                        <input
-                          type="date"
-                          min={today}
-                          defaultValue={endDate}
-                          onChange={handleEndDateChange}
-                          className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
-                        />
-                      </div>
-                      {/* category selection */}
-                      <div className="flex flex-col items-center">
-                        <label className="text-purple-700 text-md mb-1">
-                          Category
-                        </label>
-                        <select
-                          name="category"
-                          id="category"
-                          value={category}
-                          onChange={handleCategoryChange}
-                          className="w-[200px] p-2 border border-purple-300 rounded-md text-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-500 text-center"
-                        >
-                          <option value="" disabled>
-                            Select Category
-                          </option>
-                          {categoriesData.map((category, index) => (
-                            <option key={index} value={category.name}>
-                              {category.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+          {/* special offers */}
+          <SpecialOffers />
 
-                    {/* right side placeholder */}
-                    <div className="h-[100%] w-[20%]">
-                      {/* booking button */}
-                      <div className="h-full w-full flex flex-col items-center lg:block ">
-                        {!processing ? (
-                          <button
-                            onClick={handleBooking}
-                            className="w-[200px] lg:w-full h-[50px] lg:h-full rounded-lg lg:rounded-none mt-5 lg:mt-0  text-[20px] bg-purple-500 text-white font-semibold  hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-700"
-                          >
-                            Book Now
-                          </button>
-                        ) : (
-                          <button
-                            disabled
-                            className="w-[200px] h-[50px] rounded-lg mt-5  text-[20px] bg-purple-500 text-white font-semibold   focus:outline-none focus:ring-2 focus:ring-purple-700 flex items-center justify-center"
-                          >
-                            <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
-                            Processing...
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* image gallery */}
+          <ImageGallery />
+
+          {/* testimonials */}
+          <Testimonials feedbackData={feedbackData} />
+
+          {/* footer */}
+          <FooterSection />
         </div>
       </div>
     </>

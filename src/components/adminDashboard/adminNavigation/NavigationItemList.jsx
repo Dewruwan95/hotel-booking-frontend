@@ -7,19 +7,42 @@ import { IoChatboxEllipses } from "react-icons/io5";
 import { PiListStarFill } from "react-icons/pi";
 import { IoIosImage } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function NavigationItemList() {
   const [activeItem, setActiveItem] = useState("");
+  const location = useLocation();
+
+  const pathToNavItemMap = {
+    "/admin/dashboard": "dashboard",
+    "/admin/bookings": "bookings",
+    "/admin/rooms": "rooms",
+    "/admin/add-room": "rooms",
+    "/admin/update-room": "rooms",
+    "/admin/categories": "categories",
+    "/admin/add-category": "categories",
+    "/admin/update-category": "categories",
+    "/admin/users": "users",
+    "/admin/update-user": "users",
+    "/admin/feedbacks": "feedbacks",
+    "/admin/update-feedback": "feedbacks",
+    "/admin/ticketing": "ticketing",
+    "/admin/gallery": "gallery",
+    "/admin/add-event": "gallery",
+    "/admin/update-event": "gallery",
+  };
 
   // Load the active item from localStorage on mount
   useEffect(() => {
-    const savedItem = localStorage.getItem("activeNavItem");
-    if (savedItem) {
-      setActiveItem(savedItem);
-    } else {
-      setActiveItem("dashboard");
+    const currentPath = location.pathname;
+    const matchedNavItem = Object.keys(pathToNavItemMap).find((path) =>
+      currentPath.startsWith(path)
+    );
+    if (matchedNavItem) {
+      setActiveItem(pathToNavItemMap[matchedNavItem]);
+      localStorage.setItem("activeNavItem", pathToNavItemMap[matchedNavItem]);
     }
-  }, []);
+  }, [location.pathname]);
 
   // Save the active item to localStorage whenever it changes
   function handleSetActiveItem(item) {

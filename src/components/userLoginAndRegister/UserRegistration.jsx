@@ -5,7 +5,7 @@ import { FiPhone } from "react-icons/fi";
 import { GoKey } from "react-icons/go";
 import { IoCreate } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
-import uploadImage from "../../utils/MediaUpload";
+import uploadImages from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from "react-hot-toast";
@@ -44,7 +44,7 @@ function UserRegistration({ setUserStatus }) {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsImageLoading(true);
-      const promise = uploadImage(selectedFile);
+      const promise = uploadImages(selectedFile);
       setUploadPromise(promise);
 
       try {
