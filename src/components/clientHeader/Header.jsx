@@ -4,6 +4,7 @@ import UserHeaderProfile from "./UserHeaderProfile";
 import { useState } from "react";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
+import { useNavigate } from "react-router-dom";
 
 function Header({
   openLoginPopup,
@@ -12,6 +13,8 @@ function Header({
   handleUserLogedIn,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   function toggleDrawer() {
     setIsOpen(!isOpen);
@@ -38,7 +41,10 @@ function Header({
             </div>
           </Drawer>
         </div>
-        <span className="text-[30px] lg:text-[45px] xl:text-[60px] text-purple-50">
+        <span
+          className="text-[30px] lg:text-[45px] xl:text-[60px] text-purple-50 hover:cursor-pointer"
+          onClick={() => navigate("/home")}
+        >
           Hotel ABC
         </span>
         <div className="hidden lg:block">

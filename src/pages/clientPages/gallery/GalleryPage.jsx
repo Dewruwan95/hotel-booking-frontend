@@ -1,8 +1,10 @@
 function GalleryPage() {
   return (
-    <div>
-      <h1>Gallery</h1>
-    </div>
+    <>
+      <div className="mt-[120px]">
+        <h1>Gallery</h1>
+      </div>
+    </>
   );
 }
 

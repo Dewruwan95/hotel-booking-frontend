@@ -1,8 +1,10 @@
 function ContactPage() {
   return (
-    <div>
-      <h1>Contact</h1>
-    </div>
+    <>
+      <div className="mt-[120px]">
+        <h1>Contact</h1>
+      </div>
+    </>
   );
 }
 
