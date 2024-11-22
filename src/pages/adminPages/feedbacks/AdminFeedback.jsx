@@ -33,24 +33,19 @@ function AdminFeedback() {
 
   // feedback delete function
   async function handleDelete(feedbackId) {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete Feedback ${feedbackId}?`
-    );
-    if (confirmDelete) {
-      const token = localStorage.getItem("token");
-      try {
-        await axios.delete(
-          import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/" + feedbackId,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        toast.success("Feedback Deleted Successfully");
-        setIsFeedbacksDataLoaded(false);
-      } catch (error) {
-        toast.error("Failed to delete feedback. Please try again.");
-        console.error("Failed to delete feedback:", error);
-      }
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/" + feedbackId,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("Feedback Deleted Successfully");
+      setIsFeedbacksDataLoaded(false);
+    } catch (error) {
+      toast.error("Failed to delete feedback. Please try again.");
+      console.error("Failed to delete feedback:", error);
     }
   }
 

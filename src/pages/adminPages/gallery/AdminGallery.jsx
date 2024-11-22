@@ -31,21 +31,19 @@ function AdminGallery() {
 
   // event delete function
   async function handleDelete(eventId) {
-    if (window.confirm(`Are you sure you want to delete Event ${eventId}?`)) {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      try {
-        await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/events/${eventId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setIsGalleryDataLoaded(false);
-      } catch (error) {
-        console.log("Failed to delete event:", error);
-        alert("Failed to delete event. Please try again.");
-      }
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/events/${eventId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setIsGalleryDataLoaded(false);
+    } catch (error) {
+      console.log("Failed to delete event:", error);
+      alert("Failed to delete event. Please try again.");
     }
   }
 
