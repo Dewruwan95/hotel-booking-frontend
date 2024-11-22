@@ -31,24 +31,19 @@ function AdminRooms() {
 
   // room delete function
   async function handleDelete(roomNo) {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete Room ${roomNo}?`
-    );
-    if (confirmDelete) {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      try {
-        await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/rooms/${roomNo}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setIsRoomsDataLoaded(false);
-      } catch (error) {
-        console.log("Failed to delete room:", error);
-        alert("Failed to delete room. Please try again.");
-      }
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/rooms/${roomNo}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setIsRoomsDataLoaded(false);
+    } catch (error) {
+      console.log("Failed to delete room:", error);
+      alert("Failed to delete room. Please try again.");
     }
   }
 

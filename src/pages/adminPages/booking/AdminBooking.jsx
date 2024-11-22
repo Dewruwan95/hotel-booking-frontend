@@ -31,25 +31,20 @@ function AdminBooking() {
 
   //booking delete function
   async function handleDelete(bookingId) {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete Booking ${bookingId}?`
-    );
-    if (confirmDelete) {
-      const token = localStorage.getItem("token");
-      try {
-        await axios.put(
-          `${import.meta.env.VITE_BACKEND_URL}/api/bookings/${bookingId}`,
-          { isDeleted: true },
+    const token = localStorage.getItem("token");
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/bookings/${bookingId}`,
+        { isDeleted: true },
 
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setIsBookingsDataLoaded(false);
-      } catch (error) {
-        console.error("Failed to delete booking:", error);
-        alert("Failed to delete booking. Please try again.");
-      }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setIsBookingsDataLoaded(false);
+    } catch (error) {
+      console.error("Failed to delete booking:", error);
+      alert("Failed to delete booking. Please try again.");
     }
   }
 

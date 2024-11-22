@@ -31,27 +31,21 @@ function AdminUsers() {
 
   // user delete function
   async function handleDelete(email) {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete User ${email}?`
-    );
-    if (confirmDelete) {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      try {
-        await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/users/${email}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setIsUsersLoaded(false);
-      } catch (error) {
-        console.error("Failed to delete user:", error);
-        alert("Failed to delete user. Please try again.");
-      }
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${email}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setIsUsersLoaded(false);
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      alert("Failed to delete user. Please try again.");
     }
   }
-
   // Column headers for User table
   const userColumns = [
     "Image",

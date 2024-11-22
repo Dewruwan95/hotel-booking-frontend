@@ -31,21 +31,18 @@ function AdminCategories() {
 
   // category delete function
   async function handleDelete(name) {
-    if (window.confirm(`Are you sure you want to delete Category ${name}?`)) {
-      const token = localStorage.getItem("token");
-
-      try {
-        await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/categories/${name}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setIsCategoriesLoaded(false);
-      } catch (error) {
-        console.error("Failed to delete category:", error);
-        alert("Failed to delete category. Please try again.");
-      }
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/categories/${name}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setIsCategoriesLoaded(false);
+    } catch (error) {
+      console.error("Failed to delete category:", error);
+      alert("Failed to delete category. Please try again.");
     }
   }
 
