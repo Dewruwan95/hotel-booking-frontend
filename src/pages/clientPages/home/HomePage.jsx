@@ -47,6 +47,12 @@ function HomePage({
     }
   }, [startDate, endDate, category, isInitialLoad]);
 
+  useEffect(() => {
+    if (!pendingBooking && !isUserLoggedIn) {
+      clearFields();
+    }
+  }, [isUserLoggedIn]);
+
   // fetch categories data function
   async function fetchCategoriesData() {
     try {
@@ -108,9 +114,7 @@ function HomePage({
             localStorage.removeItem("pendingBookingData");
             toast.success("Booking placed successfully");
 
-            setStartDate("");
-            setEndDate("");
-            setCategory("");
+            clearFields();
           }
         } catch (error) {
           console.log(error);
@@ -120,6 +124,12 @@ function HomePage({
         }
       }
     }
+  }
+
+  function clearFields() {
+    setStartDate("");
+    setEndDate("");
+    setCategory("");
   }
 
   const today = new Date().toISOString().split("T")[0];
