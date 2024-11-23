@@ -12,6 +12,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AboutPage from "../about/AboutPage";
 import ContactPage from "../contact/ContactPage";
 import GalleryPage from "../gallery/GalleryPage";
+import ProfilePage from "../profile/ProfilePage";
 
 function HomePage({
   openLoginPopup,
@@ -194,6 +195,7 @@ function HomePage({
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </div>
     </>
