@@ -31,7 +31,10 @@ function LogedInItems({ handleUserLogedOut, user }) {
       </div>
       {isProfileClicked && (
         <div>
-          <ProfileDropDown onLogoutClick={handleLogoutClick} />
+          <ProfileDropDown
+            onLogoutClick={handleLogoutClick}
+            setIsProfileClicked={setIsProfileClicked}
+          />
         </div>
       )}
     </div>
