@@ -45,13 +45,13 @@ function RoomCategories({ categoriesData }) {
         <div className="w-full h-full ">
           <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg  bg-background ">
             <Marquee pauseOnHover className="[--duration:100s]">
-              {firstRow.map((category) => (
-                <CategoryCard key={category.username} {...category} />
+              {firstRow.map((category, index) => (
+                <CategoryCard key={index} {...category} />
               ))}
             </Marquee>
             <Marquee reverse pauseOnHover className="[--duration:100s]">
-              {secondRow.map((category) => (
-                <CategoryCard key={category.username} {...category} />
+              {secondRow.map((category, index) => (
+                <CategoryCard key={index} {...category} />
               ))}
             </Marquee>
           </div>
