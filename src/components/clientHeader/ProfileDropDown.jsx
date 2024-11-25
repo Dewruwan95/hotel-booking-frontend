@@ -13,7 +13,10 @@ function ProfileDropDown({ onLogoutClick }) {
     <>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem className="bg-purple-100 hover:bg-purple-500">
+          <DropdownMenuItem
+            onClick={() => navigate("/bookings")}
+            className="bg-purple-100 hover:bg-purple-500"
+          >
             <Bookmark />
             <span>Bookings</span>
           </DropdownMenuItem>
