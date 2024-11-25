@@ -1,23 +1,44 @@
+import {
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+import { Bookmark, LogOut, Settings, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 function ProfileDropDown({ onLogoutClick }) {
+  const navigate = useNavigate();
   return (
-    <div className="relative">
-      <div className="absolute right-0  w-60 bg-white border rounded-lg shadow-lg">
-        <ul className="py-2">
-          <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-            Profile
-          </li>
-          <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-            Settings
-          </li>
-          <li
-            onClick={onLogoutClick}
-            className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+    <>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={() => navigate("/bookings")}
+            className="bg-purple-100 hover:bg-purple-500"
           >
-            Logout
-          </li>
-        </ul>
-      </div>
-    </div>
+            <Bookmark />
+            <span>Bookings</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => navigate("/profile")}
+            className="bg-purple-100"
+          >
+            <User />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="bg-purple-100">
+            <Settings />
+            <span>Settings</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={onLogoutClick} className="bg-purple-100">
+            <LogOut />
+            <span>Log out</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </>
   );
 }
 

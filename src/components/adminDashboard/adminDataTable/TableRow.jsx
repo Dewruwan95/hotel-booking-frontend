@@ -3,6 +3,17 @@ import { AiFillStar } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 // Render table rows dynamically
 function TableRow({
@@ -134,12 +145,33 @@ function TableRow({
             >
               <FaEdit className="text-orange-500 text-[25px] mr-4" />
             </Link>
-            <button
-              className="flex justify-center items-center "
-              onClick={() => deleteElement(data[elementIdentifier])}
-            >
-              <RiDeleteBin2Fill className="text-red-500 text-[25px] ml-4" />
-            </button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button className="flex justify-center items-center ">
+                  <RiDeleteBin2Fill className="text-red-500 text-[25px] ml-4" />
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-red-500">
+                    Are you absolutely sure?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your data and remove from database.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-red-700 hover:bg-red-600"
+                    onClick={() => deleteElement(data[elementIdentifier])}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </td>
       </tr>

@@ -8,6 +8,12 @@ import Testimonials from "../../../components/homePage/Testimonials";
 import FooterSection from "../../../components/homePage/FooterSection";
 import HeroSection from "../../../components/homePage/HeroSection";
 import ImageGallery from "../../../components/homePage/ImageGallery";
+import { Navigate, Route, Routes } from "react-router-dom";
+import AboutPage from "../about/AboutPage";
+import ContactPage from "../contact/ContactPage";
+import GalleryPage from "../gallery/GalleryPage";
+import ProfilePage from "../profile/ProfilePage";
+import CustomerBookingPage from "../booking/CustomerBookingPage";
 
 function HomePage({
   openLoginPopup,
@@ -46,6 +52,12 @@ function HomePage({
       setIsInitialLoad(false);
     }
   }, [startDate, endDate, category, isInitialLoad]);
+
+  useEffect(() => {
+    if (!pendingBooking && !isUserLoggedIn) {
+      clearFields();
+    }
+  }, [isUserLoggedIn]);
 
   // fetch categories data function
   async function fetchCategoriesData() {
@@ -108,9 +120,7 @@ function HomePage({
             localStorage.removeItem("pendingBookingData");
             toast.success("Booking placed successfully");
 
-            setStartDate("");
-            setEndDate("");
-            setCategory("");
+            clearFields();
           }
         } catch (error) {
           console.log(error);
@@ -120,6 +130,12 @@ function HomePage({
         }
       }
     }
+  }
+
+  function clearFields() {
+    setStartDate("");
+    setEndDate("");
+    setCategory("");
   }
 
   const today = new Date().toISOString().split("T")[0];
@@ -136,39 +152,56 @@ function HomePage({
             handleUserLogedIn={handleUserLogedIn}
           />
         </div>
+        <Routes>
+          <Route
+            path="/home"
+            element={
+              <>
+                {/* hero section */}
+                <div className="w-full h-full pt-[70px] lg:pt-[100px] xl:pt-[120px]">
+                  <HeroSection
+                    today={today}
+                    startDate={startDate}
+                    endDate={endDate}
+                    category={category}
+                    categoriesData={categoriesData}
+                    processing={processing}
+                    handleStartDateChange={(e) => setStartDate(e.target.value)}
+                    handleEndDateChange={(e) => setEndDate(e.target.value)}
+                    handleCategoryChange={(e) => setCategory(e.target.value)}
+                    handleBooking={handleBooking}
+                  />
+                </div>
 
-        {/* hero section */}
-        <div className="w-full h-full pt-[70px] lg:pt-[100px] xl:pt-[120px]">
-          <HeroSection
-            today={today}
-            startDate={startDate}
-            endDate={endDate}
-            category={category}
-            categoriesData={categoriesData}
-            processing={processing}
-            handleStartDateChange={(e) => setStartDate(e.target.value)}
-            handleEndDateChange={(e) => setEndDate(e.target.value)}
-            handleCategoryChange={(e) => setCategory(e.target.value)}
-            handleBooking={handleBooking}
+                <div className="w-full h-full">
+                  {/* room categories*/}
+                  <RoomCategories categoriesData={categoriesData} />
+
+                  {/* special offers */}
+                  <SpecialOffers />
+
+                  {/* image gallery */}
+                  <ImageGallery />
+
+                  {/* testimonials */}
+                  <Testimonials feedbackData={feedbackData} />
+
+                  {/* footer */}
+                  <FooterSection />
+                </div>
+              </>
+            }
           />
-        </div>
-
-        <div className="w-full h-full">
-          {/* room categories*/}
-          <RoomCategories categoriesData={categoriesData} />
-
-          {/* special offers */}
-          <SpecialOffers />
-
-          {/* image gallery */}
-          <ImageGallery />
-
-          {/* testimonials */}
-          <Testimonials feedbackData={feedbackData} />
-
-          {/* footer */}
-          <FooterSection />
-        </div>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/bookings"
+            element={<CustomerBookingPage categoriesData={categoriesData} />}
+          />
+        </Routes>
       </div>
     </>
   );
