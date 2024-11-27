@@ -3,6 +3,7 @@ import { IoImageSharp } from "react-icons/io5";
 import uploadImages from "../../../utils/MediaUpload";
 import toast from "react-hot-toast";
 import axios from "axios";
+import OtpVerificationForm from "../../../components/otpVerification/OtpVerificationForm";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -15,25 +16,47 @@ function ProfilePage() {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
   const [pendingSubmission, setPendingSubmission] = useState(false);
+  const [showOtpVerification, setShowOtpVerification] = useState(false);
+  const [isVerifyButtonDisabled, setIsVerifyButtonDisabled] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-      // Populate individual fields
-      setFirstName(storedUser.firstName);
-      setLastName(storedUser.lastName);
-      setPhone(storedUser.phone);
-      setWhatsApp(storedUser.whatsApp);
-      setImage(storedUser.image);
+    fetchUserData();
+  }, [emailVerified]);
+
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setPhone(user.phone);
+      setWhatsApp(user.whatsApp);
+      setImage(user.image);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (pendingSubmission && !imageUploading) {
       handleUpdateUser();
     }
   }, [imageUploading]);
+
+  // fetch user data function
+  async function fetchUserData() {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/api/users",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUser(res.data.user);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+    }
+  }
 
   // handle image upload change
   async function handleImageChange(e) {
@@ -101,9 +124,28 @@ function ProfilePage() {
     }
   }
 
-  const handleVerifyEmail = () => {
-    alert("Verification email sent! Please check your inbox.");
-  };
+  // handle email verification
+  async function handleVerifyEmail() {
+    // Disable the button to prevent multiple clicks
+    setIsVerifyButtonDisabled(true);
+
+    const email = user.email;
+    try {
+      await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/users/send-otp",
+        { email }
+      );
+      toast.success(
+        "Please verify your email. Otp has sent to your email & will expire within 5 minutes!"
+      );
+      setShowOtpVerification(true);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      // Re-enable the button if there's an error
+      setIsVerifyButtonDisabled(false);
+    }
+  }
 
   if (!user) {
     return (
@@ -232,12 +274,17 @@ function ProfilePage() {
                 </p>
                 <p className="text-lg text-purple-600">
                   {user.email}{" "}
-                  {!user.emailVerified && (
+                  {!user.emailVerify && (
                     <button
                       onClick={handleVerifyEmail}
-                      className="ml-2 px-3 py-1 text-sm bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700"
+                      disabled={isVerifyButtonDisabled}
+                      className={`ml-2 px-3 py-1 text-sm font-semibold rounded-lg ${
+                        isVerifyButtonDisabled
+                          ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                          : "bg-purple-600 text-white hover:bg-purple-700"
+                      }`}
                     >
-                      Verify Email
+                      {isVerifyButtonDisabled ? "Verifying..." : "Verify Email"}
                     </button>
                   )}
                 </p>
@@ -268,6 +315,11 @@ function ProfilePage() {
           </div>
         </div>
       </div>
+      <OtpVerificationForm
+        showOtpVerification={showOtpVerification}
+        setShowOtpVerification={setShowOtpVerification}
+        setEmailVerified={setEmailVerified}
+      />
     </div>
   );
 }

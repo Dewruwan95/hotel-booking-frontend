@@ -67,7 +67,7 @@ function AdminUsers() {
     "phone",
     "whatsApp",
     "type",
-    "emailVerifiey",
+    "emailVerify",
     "disabled",
   ];
   return (

@@ -9,6 +9,7 @@ import uploadImages from "../../utils/MediaUpload";
 import { LuCamera } from "react-icons/lu";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from "react-hot-toast";
+import OtpVerificationForm from "../otpVerification/OtpVerificationForm";
 
 function UserRegistration({ setUserStatus }) {
   const [image, setImage] = useState("");
@@ -30,6 +31,7 @@ function UserRegistration({ setUserStatus }) {
   const [processing, setProcessing] = useState(false);
   const [uploadPromise, setUploadPromise] = useState(null);
   const [pendingSubmission, setPendingSubmission] = useState(false);
+  const [showOtpVerification, setShowOtpVerification] = useState(false);
 
   // useEffect to check when uploadPromise is completed and form submit if pending
   useEffect(() => {
@@ -194,6 +196,7 @@ function UserRegistration({ setUserStatus }) {
     }
 
     setProcessing(true);
+    toast.dismiss();
     toast.loading("Creating User...");
 
     // Check if the image is still uploading
@@ -223,10 +226,14 @@ function UserRegistration({ setUserStatus }) {
       );
 
       console.log(res);
+      localStorage.setItem("registeredEmail", email);
       toast.dismiss();
-      toast.success("Registration Successful. Please Login");
+      toast.success("Registration Successful.");
       clearAll();
-      setUserStatus("login");
+      setShowOtpVerification(true);
+      toast.success(
+        "Please verify your email. Otp has sent to your email & will expire within 5 minutes!"
+      );
     } catch (error) {
       toast.error("Failed to register. Please try again.");
       console.log(error);
@@ -547,6 +554,11 @@ function UserRegistration({ setUserStatus }) {
           </div>
         </div>
       </form>
+      <OtpVerificationForm
+        showOtpVerification={showOtpVerification}
+        setShowOtpVerification={setShowOtpVerification}
+        setUserStatus={setUserStatus}
+      />
     </>
   );
 }
