@@ -91,7 +91,7 @@ function TableRow({
               <span>
                 {data[field]} {data["lastName"]}
               </span>
-            ) : field === "emailVerifiey" ? (
+            ) : field === "emailVerify" ? (
               <span
                 className={`${
                   data[field] === true ? "text-green-500" : "text-orange-500"
