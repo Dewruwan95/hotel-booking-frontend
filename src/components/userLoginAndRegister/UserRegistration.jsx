@@ -231,9 +231,8 @@ function UserRegistration({ setUserStatus }) {
       toast.success("Registration Successful.");
       clearAll();
       setShowOtpVerification(true);
-      toast.success("Please verify your email!");
       toast.success(
-        "Otp has sent to your email & will expire within 5 minutes!"
+        "Please verify your email. Otp has sent to your email & will expire within 5 minutes!"
       );
     } catch (error) {
       toast.error("Failed to register. Please try again.");

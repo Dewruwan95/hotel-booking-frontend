@@ -10,14 +10,18 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 
 function OtpVerificationForm({
   showOtpVerification,
   setShowOtpVerification,
   setUserStatus,
+  setEmailVerified,
 }) {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
 
   // handle otp input cange
   const handleInputChange = (event) => {
@@ -35,28 +39,60 @@ function OtpVerificationForm({
     }
 
     setLoading(true);
-    const userEmail = localStorage.getItem("registeredEmail");
 
-    const data = {
-      email: userEmail,
-      otp: parseInt(otp, 10), // Convert OTP to number
-    };
+    //verify otp for loged in user
+    if (location.pathname === "/profile") {
+      try {
+        const token = localStorage.getItem("token");
+        const userResponce = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/users",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
-    //verify otp
-    try {
-      const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/users/validate-otp",
-        data
-      );
+        const data = {
+          email: userResponce.data.user.email,
+          otp: parseInt(otp, 10), // Convert OTP to number
+        };
 
-      toast.success(res.data.message);
-      setShowOtpVerification(false);
-      localStorage.removeItem("registeredEmail");
-      setUserStatus("login");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      setLoading(false);
+        const res = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/users/validate-otp",
+          data
+        );
+        setEmailVerified(true);
+        toast.success(res.data.message);
+        setShowOtpVerification(false);
+      } catch (error) {
+        toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // verify otp for registered user
+      const userEmail = localStorage.getItem("registeredEmail");
+
+      const data = {
+        email: userEmail,
+        otp: parseInt(otp, 10), // Convert OTP to number
+      };
+      console.log(data);
+
+      try {
+        const res = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/users/validate-otp",
+          data
+        );
+
+        toast.success(res.data.message);
+        setShowOtpVerification(false);
+        localStorage.removeItem("registeredEmail");
+        setUserStatus("login");
+      } catch (error) {
+        toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
@@ -93,6 +129,9 @@ function OtpVerificationForm({
             <div className="pt-10 flex items-center justify-end space-x-4">
               <AlertDialogCancel
                 onClick={() => {
+                  if (location.pathname === "/profile") {
+                    setShowOtpVerification(false);
+                  }
                   setUserStatus("login");
                   toast(
                     "You can login now & verify your email from your profile later!",
