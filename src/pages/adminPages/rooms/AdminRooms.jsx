@@ -3,11 +3,15 @@ import DataTable from "../../../components/adminDashboard/adminDataTable/DataTab
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
+import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminRooms() {
   const [roomsData, setRoomsData] = useState([]);
   const [isRoomsDataLoaded, setIsRoomsDataLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
+  const pageSize = 5; // Define page size
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,13 +20,22 @@ function AdminRooms() {
     }
   }, [isRoomsDataLoaded]);
 
+  useEffect(() => {
+    fetchRoomsData();
+  }, [page]);
+
   // fetch rooms data function
   async function fetchRoomsData() {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/rooms`
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/rooms/all`,
+        { page: page, pageSize: pageSize },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       setRoomsData(res.data.rooms);
+      setTotalPages(res.data.pagination.totalPages);
       setIsRoomsDataLoaded(true);
     } catch (error) {
       console.error("Error fetching rooms data:", error);
@@ -72,12 +85,14 @@ function AdminRooms() {
   return (
     <>
       <div className="h-full flex flex-col">
-        <AdminDataSummary
-          onAddElementClick={() => {
-            navigate("/admin/add-room");
-          }}
-        />
-        <div className="overflow-y-auto">
+        <div className="h-[17%]">
+          <AdminDataSummary
+            onAddElementClick={() => {
+              navigate("/admin/add-room");
+            }}
+          />
+        </div>
+        <div className="h-full overflow-y-auto">
           <DataTable
             columns={roomColumns}
             fields={roomFields}
@@ -85,6 +100,12 @@ function AdminRooms() {
             deleteElement={handleDelete}
             editElementPath={"/admin/update-room"}
             elementIdentifier={"roomNo"}
+          />
+
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
           />
         </div>
       </div>
