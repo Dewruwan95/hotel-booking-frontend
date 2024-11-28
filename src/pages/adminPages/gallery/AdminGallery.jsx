@@ -10,8 +10,8 @@ function AdminGallery() {
   const [isGalleryDataLoaded, setIsGalleryDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
 
-  const pageSize = 5; // Define page size
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function AdminGallery() {
 
   useEffect(() => {
     fetchGalleryData();
-  }, [page]);
+  }, [page, pageSize]);
 
   // fetch gallery data function
   async function fetchGalleryData() {
@@ -89,6 +89,8 @@ function AdminGallery() {
             page={page}
             setPage={setPage}
             totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
           />
         </div>
       </div>

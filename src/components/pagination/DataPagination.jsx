@@ -7,8 +7,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-function DataPagination({ page, setPage, totalPages }) {
+function DataPagination({ page, setPage, totalPages, pageSize, setPageSize }) {
   // Build link function for consistent navigation (not used in API calls but useful for visual integrity)
   //const buildLink = (newPage) => `#page=${newPage}`;
 
@@ -81,32 +88,58 @@ function DataPagination({ page, setPage, totalPages }) {
   };
   return (
     <>
-      <div className="flex justify-center mt-4 text-purple-800">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                className={
-                  page === 1 ? "pointer-events-none opacity-50" : undefined
-                }
-              />
-            </PaginationItem>
-            {renderPageNumbers()}
-            <PaginationItem>
-              <PaginationNext
-                onClick={() =>
-                  setPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                className={
-                  page === totalPages
-                    ? "pointer-events-none opacity-50"
-                    : undefined
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      <div className="relative flex justify-center mt-4 text-purple-800">
+        <div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  className={
+                    page === 1 ? "pointer-events-none opacity-50" : undefined
+                  }
+                />
+              </PaginationItem>
+              {renderPageNumbers()}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  className={
+                    page === totalPages
+                      ? "pointer-events-none opacity-50"
+                      : undefined
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+        <div className="absolute right-[50px]">
+          <div className="flex items-center gap-4">
+            <span className="whitespace-nowrap text-sm">Rows per page</span>
+            <Select
+              defaultValue={pageSize}
+              onValueChange={(value) => {
+                setPageSize(value);
+              }}
+            >
+              <SelectTrigger className="w-[70px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={5}>5</SelectItem>
+                <SelectItem value={10}>10</SelectItem>
+                <SelectItem value={15}>15</SelectItem>
+                <SelectItem value={20}>20</SelectItem>
+                <SelectItem value={25}>25</SelectItem>
+                <SelectItem value={50}>50</SelectItem>
+                <SelectItem value={100}>100</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
     </>
   );

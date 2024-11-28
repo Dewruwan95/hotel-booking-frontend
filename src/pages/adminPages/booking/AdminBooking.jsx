@@ -8,8 +8,7 @@ function AdminBooking() {
   const [isBookingsDataLoaded, setIsBookingsDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  const pageSize = 12; // Define page size
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     if (!isBookingsDataLoaded) {
@@ -19,7 +18,7 @@ function AdminBooking() {
 
   useEffect(() => {
     fetchBookingsData();
-  }, [page]);
+  }, [page, pageSize]);
 
   // fetch bookings data function
   async function fetchBookingsData() {
@@ -94,7 +93,13 @@ function AdminBooking() {
         elementIdentifier={"bookingId"}
       />
 
-      <DataPagination page={page} setPage={setPage} totalPages={totalPages} />
+      <DataPagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+      />
     </>
   );
 }

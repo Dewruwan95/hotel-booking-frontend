@@ -12,7 +12,7 @@ function DataTable({
   return (
     <>
       <div className="w-full h-[90%] p-[20px] bg-purple-200 rounded-tl-[10px]">
-        <div className="w-full h-full overflow-y-hidden rounded-[10px]">
+        <div className="w-full h-full overflow-y-scroll rounded-[10px]">
           <table className="w-full">
             {/* Reusable TableHeader */}
             <TableHeader columns={columns} />

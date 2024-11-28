@@ -10,8 +10,8 @@ function AdminCategories() {
   const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
 
-  const pageSize = 5; // Define page size
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function AdminCategories() {
 
   useEffect(() => {
     fetchCategoriesData();
-  }, [page]);
+  }, [page, pageSize]);
 
   // fetch categories data function
   async function fetchCategoriesData() {
@@ -95,6 +95,8 @@ function AdminCategories() {
             page={page}
             setPage={setPage}
             totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
           />
         </div>
       </div>

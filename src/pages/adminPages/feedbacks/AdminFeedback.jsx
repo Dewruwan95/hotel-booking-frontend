@@ -9,8 +9,7 @@ function AdminFeedback() {
   const [isFeedbacksDataLoaded, setIsFeedbacksDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  const pageSize = 7; // Define page size
+  const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
     if (!isFeedbacksDataLoaded) {
@@ -20,7 +19,7 @@ function AdminFeedback() {
 
   useEffect(() => {
     fetchFeedbackData();
-  }, [page]);
+  }, [page, pageSize]);
 
   // fetch feedback data function
   async function fetchFeedbackData() {
@@ -93,7 +92,13 @@ function AdminFeedback() {
         elementIdentifier="_id"
       />
 
-      <DataPagination page={page} setPage={setPage} totalPages={totalPages} />
+      <DataPagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+      />
     </>
   );
 }

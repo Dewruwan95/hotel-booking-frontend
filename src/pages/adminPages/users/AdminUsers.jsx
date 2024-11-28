@@ -8,8 +8,7 @@ function AdminUsers() {
   const [isUsersLoaded, setIsUsersLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  const pageSize = 6; // Define page size
+  const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
     if (!isUsersLoaded) {
@@ -19,7 +18,7 @@ function AdminUsers() {
 
   useEffect(() => {
     fetchUsersData();
-  }, [page]);
+  }, [page, pageSize]);
 
   // fetch users data function
   async function fetchUsersData() {
@@ -93,7 +92,13 @@ function AdminUsers() {
         elementIdentifier={"email"}
       />
 
-      <DataPagination page={page} setPage={setPage} totalPages={totalPages} />
+      <DataPagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+      />
     </>
   );
 }
