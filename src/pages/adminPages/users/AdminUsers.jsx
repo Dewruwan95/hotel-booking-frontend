@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
+import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminUsers() {
   const [usersData, setUsersData] = useState([]);
   const [isUsersLoaded, setIsUsersLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
     if (!isUsersLoaded) {
@@ -12,17 +16,23 @@ function AdminUsers() {
     }
   }, [isUsersLoaded]);
 
+  useEffect(() => {
+    fetchUsersData();
+  }, [page, pageSize]);
+
   // fetch users data function
   async function fetchUsersData() {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(
+      const res = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/all",
+        { page: page, pageSize: pageSize },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       setUsersData(res.data.users);
+      setTotalPages(res.data.pagination.totalPages);
       setIsUsersLoaded(true);
     } catch (error) {
       console.error("Failed to fetch users:", error);
@@ -46,6 +56,7 @@ function AdminUsers() {
       alert("Failed to delete user. Please try again.");
     }
   }
+
   // Column headers for User table
   const userColumns = [
     "Image",
@@ -79,6 +90,14 @@ function AdminUsers() {
         deleteElement={handleDelete}
         editElementPath={"/admin/update-user"}
         elementIdentifier={"email"}
+      />
+
+      <DataPagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
       />
     </>
   );

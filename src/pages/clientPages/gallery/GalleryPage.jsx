@@ -13,8 +13,8 @@ function GalleryPage() {
   // fetch events data
   async function fetchEvents() {
     try {
-      const response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/events"
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/events/all"
       );
 
       setEvents(response.data.events);
