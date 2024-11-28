@@ -75,8 +75,8 @@ function HomePage({
   // fetch feedback data function
   async function fetchFeedbacksData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/all"
       );
 
       setFeedbackData(res.data.feedbacks);
