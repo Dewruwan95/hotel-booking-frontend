@@ -3,11 +3,15 @@ import DataTable from "../../../components/adminDashboard/adminDataTable/DataTab
 import axios from "axios";
 import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 import { useNavigate } from "react-router-dom";
+import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminGallery() {
   const [galleryData, setGalleryData] = useState([]);
   const [isGalleryDataLoaded, setIsGalleryDataLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
+  const pageSize = 5; // Define page size
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,13 +20,22 @@ function AdminGallery() {
     }
   }, [isGalleryDataLoaded]);
 
+  useEffect(() => {
+    fetchGalleryData();
+  }, [page]);
+
   // fetch gallery data function
   async function fetchGalleryData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/events"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/events/all",
+        { page: page, pageSize: pageSize },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       setGalleryData(res.data.events);
+      setTotalPages(res.data.pagination.totalPages);
       setIsGalleryDataLoaded(true);
     } catch (error) {
       console.error("Failed to fetch events:", error);
@@ -55,12 +68,14 @@ function AdminGallery() {
   return (
     <>
       <div className="h-full flex flex-col">
-        <AdminDataSummary
-          onAddElementClick={() => {
-            navigate("/admin/add-event");
-          }}
-        />
-        <div className="overflow-y-auto">
+        <div className="h-[17%]">
+          <AdminDataSummary
+            onAddElementClick={() => {
+              navigate("/admin/add-event");
+            }}
+          />
+        </div>
+        <div className="h-full overflow-y-auto">
           <DataTable
             columns={galleryColumns}
             fields={galleryFields}
@@ -68,6 +83,12 @@ function AdminGallery() {
             deleteElement={handleDelete}
             editElementPath={"/admin/update-event"}
             elementIdentifier="_id"
+          />
+
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
           />
         </div>
       </div>
