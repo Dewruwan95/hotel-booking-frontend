@@ -3,11 +3,15 @@ import DataTable from "../../../components/adminDashboard/adminDataTable/DataTab
 import axios from "axios";
 import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 import { useNavigate } from "react-router-dom";
+import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminCategories() {
   const [categoriesData, setCategoriesData] = useState([]);
   const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
+  const pageSize = 5; // Define page size
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,13 +20,22 @@ function AdminCategories() {
     }
   }, [isCategoriesLoaded]);
 
+  useEffect(() => {
+    fetchCategoriesData();
+  }, [page]);
+
   // fetch categories data function
   async function fetchCategoriesData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/categories"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories/all",
+        { page: page, pageSize: pageSize },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       setCategoriesData(res.data.categories);
+      setTotalPages(res.data.pagination.totalPages);
       setIsCategoriesLoaded(true);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
@@ -61,12 +74,14 @@ function AdminCategories() {
   return (
     <>
       <div className="h-full flex flex-col">
-        <AdminDataSummary
-          onAddElementClick={() => {
-            navigate("/admin/add-category");
-          }}
-        />
-        <div className="overflow-y-auto">
+        <div className="h-[17%]">
+          <AdminDataSummary
+            onAddElementClick={() => {
+              navigate("/admin/add-category");
+            }}
+          />
+        </div>
+        <div className="h-full overflow-y-auto">
           <DataTable
             columns={categoryColumns}
             fields={categoryFields}
@@ -74,6 +89,12 @@ function AdminCategories() {
             deleteElement={handleDelete}
             editElementPath={"/admin/update-category"}
             elementIdentifier={"name"}
+          />
+
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
           />
         </div>
       </div>

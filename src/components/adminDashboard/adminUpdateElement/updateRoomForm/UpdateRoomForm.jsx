@@ -58,8 +58,8 @@ function UpdateRoomForm() {
   // fetch categories data function
   async function fetchCategoriesData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/categories"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories/all"
       );
 
       setCategoriesData(res.data.categories);
