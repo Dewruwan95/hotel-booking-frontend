@@ -158,7 +158,7 @@ function ProfilePage() {
   }
 
   return (
-    <div className="mt-[120px]">
+    <div className="mt-[70px] lg:mt-[100px] xl:mt-[120px]">
       <div className="w-full min-h-screen bg-purple-50 py-10 px-5">
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
           <h1 className="text-4xl font-bold text-purple-700 text-center mb-6">

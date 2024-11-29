@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from "react-icons/bi";
 function CustomerFeedbackPage({ feedbackData }) {
   return (
-    <div className="mt-[120px]">
+    <div className="mt-[70px] lg:mt-[100px] xl:mt-[120px]">
       <div className="w-full min-h-screen bg-purple-100 py-16 px-5">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold text-center text-purple-700 mb-10">

@@ -113,7 +113,7 @@ function CustomerBookingPage({ categoriesData }) {
 
   return (
     <>
-      <div className="p-4 mb-10 mt-[120px] bg-purple-100  lg:px-[300px] ">
+      <div className="p-4 mb-10 mt-[70px] lg:mt-[100px] xl:mt-[120px] bg-purple-100  lg:px-[300px] ">
         <h1 className="text-4xl font-bold text-purple-700 text-center pt-4 mb-6">
           Customer Bookings
         </h1>
