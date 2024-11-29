@@ -152,7 +152,7 @@ function CustomerBookingPage({ categoriesData }) {
                             {field === "start" || field === "end" ? (
                               new Date(data[field]).toLocaleDateString()
                             ) : field === "timestamp" ? (
-                              format(new Date(data[field]), "dd/mm/yyyy")
+                              format(new Date(data[field]), "dd/MM/yyyy")
                             ) : field === "status" ? (
                               <span
                                 className={`${

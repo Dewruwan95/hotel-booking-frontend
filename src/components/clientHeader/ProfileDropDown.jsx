@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Bookmark, LogOut, Settings, User } from "lucide-react";
+import { TbMessageReport } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
 function ProfileDropDown({ onLogoutClick }) {
@@ -20,6 +21,7 @@ function ProfileDropDown({ onLogoutClick }) {
             <Bookmark />
             <span>Bookings</span>
           </DropdownMenuItem>
+
           <DropdownMenuItem
             onClick={() => navigate("/profile")}
             className="bg-purple-100"
@@ -27,6 +29,16 @@ function ProfileDropDown({ onLogoutClick }) {
             <User />
             <span>Profile</span>
           </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => navigate("/inquiry")}
+            className="bg-purple-100"
+          >
+            <TbMessageReport />
+
+            <span>Inquiry</span>
+          </DropdownMenuItem>
+
           <DropdownMenuItem className="bg-purple-100">
             <Settings />
             <span>Settings</span>
