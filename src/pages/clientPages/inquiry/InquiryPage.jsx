@@ -17,7 +17,7 @@ function InquiryPage() {
 
   // Inquiry table columns and fields
   const inquiryColumns = ["Date", "Type", "Status"];
-  const inquiryFields = ["timestamp", "type", "status"];
+  const inquiryFields = ["timestamp", "inquiryType", "status"];
 
   // Fetch inquiries
   useEffect(() => {
@@ -34,6 +34,7 @@ function InquiryPage() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
       setInquiries(response.data.inquiries || []);
     } catch (err) {
       console.log(err);
