@@ -57,11 +57,7 @@ function Testimonials({ feedbackData }) {
                           <div className="relative px-6 pt-2">
                             <BiSolidQuoteAltLeft className="absolute top-0 left-0 text-[20px] text-purple-400" />
                             <span className="text-gray-600">
-                              Lorem, ipsum dolor sit amet consectetur
-                              adipisicing elit. Delectus eius ea tempora ducimus
-                              reprehenderit vel perspiciatis rem quo dicta illo
-                              vero temporibus repellat et unde, sequi quod ex
-                              aperiam ad?
+                              {feedback.description}
                             </span>
                             <BiSolidQuoteAltRight className="absolute bottom-0 right-0 text-[20px] text-purple-400" />
                           </div>
