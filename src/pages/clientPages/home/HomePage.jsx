@@ -15,6 +15,7 @@ import GalleryPage from "../gallery/GalleryPage";
 import ProfilePage from "../profile/ProfilePage";
 import CustomerBookingPage from "../booking/CustomerBookingPage";
 import InquiryPage from "../inquiry/InquiryPage";
+import CustomerFeedbackPage from "../feedback/CustomerFeedbackPage";
 
 function HomePage({
   openLoginPopup,
@@ -199,6 +200,10 @@ function HomePage({
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/inquiry" element={<InquiryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/feedback"
+            element={<CustomerFeedbackPage feedbackData={feedbackData} />}
+          />
 
           <Route
             path="/bookings"
