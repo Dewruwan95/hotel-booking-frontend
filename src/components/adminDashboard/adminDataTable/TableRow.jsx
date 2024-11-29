@@ -47,10 +47,12 @@ function TableRow({
                     ? "text-green-500"
                     : data[field] === "pending"
                     ? "text-yellow-500"
+                    : data[field] === "resolved"
+                    ? "text-green-500"
                     : "text-red-500"
                 }`}
               >
-                {data[field]}
+                {data[field].charAt(0).toUpperCase() + data[field].slice(1)}
               </span>
             ) : field === "available" ? (
               <span
@@ -128,6 +130,10 @@ function TableRow({
                 {Array.from({ length: data[field] }, (_, index) => (
                   <AiFillStar key={index} className="text-yellow-500" />
                 ))}
+              </span>
+            ) : field === "inquiryType" ? (
+              <span>
+                {data[field].charAt(0).toUpperCase() + data[field].slice(1)}
               </span>
             ) : (
               data[field]

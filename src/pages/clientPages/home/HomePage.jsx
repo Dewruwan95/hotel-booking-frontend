@@ -14,6 +14,7 @@ import ContactPage from "../contact/ContactPage";
 import GalleryPage from "../gallery/GalleryPage";
 import ProfilePage from "../profile/ProfilePage";
 import CustomerBookingPage from "../booking/CustomerBookingPage";
+import InquiryPage from "../inquiry/InquiryPage";
 
 function HomePage({
   openLoginPopup,
@@ -196,7 +197,9 @@ function HomePage({
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/inquiry" element={<InquiryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+
           <Route
             path="/bookings"
             element={<CustomerBookingPage categoriesData={categoriesData} />}
