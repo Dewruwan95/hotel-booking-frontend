@@ -129,6 +129,10 @@ function TableRow({
                   <AiFillStar key={index} className="text-yellow-500" />
                 ))}
               </span>
+            ) : field === "inquiryType" ? (
+              <span>
+                {data[field].charAt(0).toUpperCase() + data[field].slice(1)}
+              </span>
             ) : (
               data[field]
             )}
