@@ -7,6 +7,7 @@ import {
 import { Bookmark, LogOut, Settings, User } from "lucide-react";
 import { TbMessageReport } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { FaRegStar } from "react-icons/fa";
 
 function ProfileDropDown({ onLogoutClick }) {
   const navigate = useNavigate();
@@ -31,12 +32,20 @@ function ProfileDropDown({ onLogoutClick }) {
           </DropdownMenuItem>
 
           <DropdownMenuItem
+            onClick={() => navigate("/review")}
+            className="bg-purple-100"
+          >
+            <FaRegStar />
+            <span>Feedbacks</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
             onClick={() => navigate("/inquiry")}
             className="bg-purple-100"
           >
             <TbMessageReport />
 
-            <span>Inquiry</span>
+            <span>Inquiries</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem className="bg-purple-100">

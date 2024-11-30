@@ -52,7 +52,10 @@ function Testimonials({ feedbackData }) {
                               }}
                             ></div>
                           </div>
-
+                          {/* feedback title */}
+                          <div className="text-lg font-bold text-purple-900">
+                            {feedback.title}
+                          </div>
                           {/* feedback text */}
                           <div className="relative px-6 pt-2">
                             <BiSolidQuoteAltLeft className="absolute top-0 left-0 text-[20px] text-purple-400" />
