@@ -15,6 +15,7 @@ import GalleryPage from "../gallery/GalleryPage";
 import ProfilePage from "../profile/ProfilePage";
 import CustomerBookingPage from "../booking/CustomerBookingPage";
 import InquiryPage from "../inquiry/InquiryPage";
+import FeedbackPage from "../feedback/FeedbackPage";
 import CustomerFeedbackPage from "../feedback/CustomerFeedbackPage";
 
 function HomePage({
@@ -202,8 +203,9 @@ function HomePage({
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/feedback"
-            element={<CustomerFeedbackPage feedbackData={feedbackData} />}
+            element={<FeedbackPage feedbackData={feedbackData} />}
           />
+          <Route path="/review" element={<CustomerFeedbackPage />} />
 
           <Route
             path="/bookings"
