@@ -69,7 +69,7 @@ function Testimonials({ feedbackData }) {
                           {/* feedback text */}
                           <div className="relative px-6 pt-2">
                             <BiSolidQuoteAltLeft className="absolute top-0 left-0 text-[20px] text-purple-400" />
-                            <span className="text-gray-600">
+                            <span className="text-gray-600 break-words max-w-[150px] lg:max-w-[350px] line-clamp-[7] lg:line-clamp-5">
                               {feedback.description}
                             </span>
                             <BiSolidQuoteAltRight className="absolute bottom-0 right-0 text-[20px] text-purple-400" />
