@@ -14,6 +14,9 @@ import ContactPage from "../contact/ContactPage";
 import GalleryPage from "../gallery/GalleryPage";
 import ProfilePage from "../profile/ProfilePage";
 import CustomerBookingPage from "../booking/CustomerBookingPage";
+import InquiryPage from "../inquiry/InquiryPage";
+import FeedbackPage from "../feedback/FeedbackPage";
+import CustomerFeedbackPage from "../feedback/CustomerFeedbackPage";
 
 function HomePage({
   openLoginPopup,
@@ -62,8 +65,8 @@ function HomePage({
   // fetch categories data function
   async function fetchCategoriesData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/categories"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/categories/all"
       );
 
       setCategoriesData(res.data.categories);
@@ -75,8 +78,8 @@ function HomePage({
   // fetch feedback data function
   async function fetchFeedbacksData() {
     try {
-      const res = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks"
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/feedbacks/all"
       );
 
       setFeedbackData(res.data.feedbacks);
@@ -196,7 +199,14 @@ function HomePage({
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/inquiry" element={<InquiryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/feedback"
+            element={<FeedbackPage feedbackData={feedbackData} />}
+          />
+          <Route path="/review" element={<CustomerFeedbackPage />} />
+
           <Route
             path="/bookings"
             element={<CustomerBookingPage categoriesData={categoriesData} />}

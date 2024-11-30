@@ -45,8 +45,9 @@ function CustomerBookingPage({ categoriesData }) {
   async function fetchBookings() {
     setLoading(true);
     try {
-      const response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/bookings",
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/bookings/all",
+        { page: 1, pageSize: 10 },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -112,7 +113,7 @@ function CustomerBookingPage({ categoriesData }) {
 
   return (
     <>
-      <div className="p-4 mb-10 mt-[120px] bg-purple-100  lg:px-[300px] ">
+      <div className="p-4 mb-10 mt-[70px] lg:mt-[100px] xl:mt-[120px] bg-purple-100  lg:px-[300px] ">
         <h1 className="text-4xl font-bold text-purple-700 text-center pt-4 mb-6">
           Customer Bookings
         </h1>
@@ -124,7 +125,7 @@ function CustomerBookingPage({ categoriesData }) {
             {loading ? (
               <p>Loading...</p>
             ) : bookings.length > 0 ? (
-              <div className="w-full h-full max-h-[400px] overflow-y-scroll rounded-[10px]">
+              <div className="w-full h-full max-h-[400px] overflow-y-hidden rounded-[10px]">
                 <table className="w-full">
                   <thead>
                     <tr className="bg-purple-600 text-white sticky top-0">
@@ -151,7 +152,7 @@ function CustomerBookingPage({ categoriesData }) {
                             {field === "start" || field === "end" ? (
                               new Date(data[field]).toLocaleDateString()
                             ) : field === "timestamp" ? (
-                              format(new Date(data[field]), "dd/mm/yyyy")
+                              format(new Date(data[field]), "dd/MM/yyyy")
                             ) : field === "status" ? (
                               <span
                                 className={`${

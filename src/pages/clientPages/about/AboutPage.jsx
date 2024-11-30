@@ -1,7 +1,7 @@
 function AboutPage() {
   return (
     <>
-      <div className="mt-[120px]">
+      <div className="mt-[70px] lg:mt-[100px] xl:mt-[120px]">
         <div className="w-full min-h-screen bg-gradient-to-r from-purple-50 to-purple-100 py-16 px-5">
           <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
             <div className="relative">
