@@ -14,8 +14,18 @@ function Testimonials({ feedbackData }) {
   const defaultUserImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/user.jpg?alt=media&token=bbb897b3-7773-4662-b9ae-2d0dc9b48a64";
 
-  const positiveFeedback = feedbackData.filter(
-    (item) => item.rating >= 4 && item.image !== defaultUserImageUrl
+  // Filter positive feedback and ensure only one feedback per user
+  const positiveFeedback = Array.from(
+    feedbackData
+      .filter((item) => item.rating >= 4 && item.image !== defaultUserImageUrl)
+      .reduce((map, feedback) => {
+        // Use email or another unique identifier to ensure uniqueness
+        if (!map.has(feedback.email)) {
+          map.set(feedback.email, feedback);
+        }
+        return map;
+      }, new Map())
+      .values()
   );
 
   return (
