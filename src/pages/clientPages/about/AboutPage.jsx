@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function AboutPage() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="mt-[70px] lg:mt-[100px] xl:mt-[120px]">
@@ -93,7 +96,12 @@ function AboutPage() {
                 </p>
               </div>
               <div className="mt-10 text-center">
-                <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-purple-700 transition">
+                <button
+                  onClick={() => {
+                    navigate("/home");
+                  }}
+                  className="bg-purple-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-purple-700 transition"
+                >
                   Book Your Stay
                 </button>
               </div>

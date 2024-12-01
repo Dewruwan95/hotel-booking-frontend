@@ -14,8 +14,18 @@ function Testimonials({ feedbackData }) {
   const defaultUserImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/mern-hotel-management.appspot.com/o/user.jpg?alt=media&token=bbb897b3-7773-4662-b9ae-2d0dc9b48a64";
 
-  const positiveFeedback = feedbackData.filter(
-    (item) => item.rating >= 4 && item.image !== defaultUserImageUrl
+  // Filter positive feedback and ensure only one feedback per user
+  const positiveFeedback = Array.from(
+    feedbackData
+      .filter((item) => item.rating >= 4 && item.image !== defaultUserImageUrl)
+      .reduce((map, feedback) => {
+        // Use email or another unique identifier to ensure uniqueness
+        if (!map.has(feedback.email)) {
+          map.set(feedback.email, feedback);
+        }
+        return map;
+      }, new Map())
+      .values()
   );
 
   return (
@@ -59,7 +69,7 @@ function Testimonials({ feedbackData }) {
                           {/* feedback text */}
                           <div className="relative px-6 pt-2">
                             <BiSolidQuoteAltLeft className="absolute top-0 left-0 text-[20px] text-purple-400" />
-                            <span className="text-gray-600">
+                            <span className="text-gray-600 break-words max-w-[150px] lg:max-w-[350px] line-clamp-[7] lg:line-clamp-5">
                               {feedback.description}
                             </span>
                             <BiSolidQuoteAltRight className="absolute bottom-0 right-0 text-[20px] text-purple-400" />
