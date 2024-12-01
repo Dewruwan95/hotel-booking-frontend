@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineLoading3Quarters } from "react-icons/ai";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import toast from "react-hot-toast";
 
 function CustomerFeedbackPage() {
