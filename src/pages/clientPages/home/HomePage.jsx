@@ -17,6 +17,7 @@ import CustomerBookingPage from "../booking/CustomerBookingPage";
 import InquiryPage from "../inquiry/InquiryPage";
 import FeedbackPage from "../feedback/FeedbackPage";
 import CustomerFeedbackPage from "../feedback/CustomerFeedbackPage";
+import RoomsPage from "../rooms/RoomsPage";
 
 function HomePage({
   openLoginPopup,
@@ -145,7 +146,7 @@ function HomePage({
   return (
     <>
       {/* main background */}
-      <div className="w-full max-h-[100vh] flex flex-col bg-purple-200">
+      <div className="w-full flex flex-col bg-purple-200">
         {/* client header */}
         <div className="fixed inset-x-0 top-0 z-10">
           <Header
@@ -196,6 +197,10 @@ function HomePage({
             }
           />
           <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route
+            path="/rooms"
+            element={<RoomsPage categoriesData={categoriesData} />}
+          />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
