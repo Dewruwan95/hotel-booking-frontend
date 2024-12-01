@@ -63,7 +63,7 @@ function RoomsPage({ categoriesData }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-lg text-gray-600">
+        <p className="text-2xl  text-purple-600">
           <AiOutlineLoading3Quarters className="mr-2 animate-spin font-bold	" />
         </p>
       </div>
