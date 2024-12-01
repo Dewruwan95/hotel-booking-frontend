@@ -8,6 +8,7 @@ import { FaBed, FaCheck, FaHashtag } from "react-icons/fa";
 import { MdCategory } from "react-icons/md";
 import { IoImageSharp } from "react-icons/io5";
 import { GrUpdate } from "react-icons/gr";
+import { resizeImage } from "../../../../utils/MediaResize";
 
 function UpdateRoomForm() {
   // check if state is available
@@ -73,10 +74,15 @@ function UpdateRoomForm() {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsPhotoLoading(true);
-      const promise = uploadImages(selectedFile);
-      setUploadPromise(promise);
 
       try {
+        // Resize and crop the image to 600x400
+        const croppedImageBlob = await resizeImage(selectedFile, 600, 400);
+
+        // Upload the cropped image to Firebase
+        const promise = uploadImages(croppedImageBlob);
+        setUploadPromise(promise);
+
         const imageUrl = await promise;
         setPhotos(imageUrl);
       } catch (error) {
