@@ -7,6 +7,7 @@ import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminCategories() {
   const [categoriesData, setCategoriesData] = useState([]);
+  const [categoriesSummary, setCategoriesSummary] = useState([]);
   const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -35,6 +36,7 @@ function AdminCategories() {
         }
       );
       setCategoriesData(res.data.categories);
+      setCategoriesSummary(res.data.categoriesSymmary);
       setTotalPages(res.data.pagination.totalPages);
       setIsCategoriesLoaded(true);
     } catch (error) {
@@ -79,6 +81,7 @@ function AdminCategories() {
             onAddElementClick={() => {
               navigate("/admin/add-category");
             }}
+            categoriesSummary={categoriesSummary}
           />
         </div>
         <div className="h-full overflow-y-auto">

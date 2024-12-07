@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
 import DataPagination from "../../../components/pagination/DataPagination";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 
 function AdminBooking() {
   const [bookings, setBookings] = useState([]);
+  const [bookingsSummary, setBookingsSummary] = useState([]);
   const [isBookingsDataLoaded, setIsBookingsDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -32,6 +34,7 @@ function AdminBooking() {
       );
 
       setBookings(res.data.bookings);
+      setBookingsSummary(res.data.bookingsSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsBookingsDataLoaded(true);
     } catch (error) {
@@ -84,22 +87,29 @@ function AdminBooking() {
   ];
   return (
     <>
-      <DataTable
-        columns={bookingColumns}
-        fields={bookingFields}
-        data={bookings}
-        deleteElement={handleDelete}
-        editElementPath={"/admin/update-booking"}
-        elementIdentifier={"bookingId"}
-      />
+      <div className="h-full flex flex-col">
+        <div className="h-[17%]">
+          <AdminDataSummary bookingsSummary={bookingsSummary} />
+        </div>
+        <div className="h-full overflow-y-auto">
+          <DataTable
+            columns={bookingColumns}
+            fields={bookingFields}
+            data={bookings}
+            deleteElement={handleDelete}
+            editElementPath={"/admin/update-booking"}
+            elementIdentifier={"bookingId"}
+          />
 
-      <DataPagination
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-      />
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </div>
+      </div>
     </>
   );
 }

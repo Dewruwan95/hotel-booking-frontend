@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
 import DataPagination from "../../../components/pagination/DataPagination";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 
 function AdminUsers() {
   const [usersData, setUsersData] = useState([]);
+  const [usersSummary, setUsersSummary] = useState([]);
   const [isUsersLoaded, setIsUsersLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -32,6 +34,7 @@ function AdminUsers() {
         }
       );
       setUsersData(res.data.users);
+      setUsersSummary(res.data.usersSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsUsersLoaded(true);
     } catch (error) {
@@ -83,22 +86,28 @@ function AdminUsers() {
   ];
   return (
     <>
-      <DataTable
-        columns={userColumns}
-        fields={userFields}
-        data={usersData}
-        deleteElement={handleDelete}
-        editElementPath={"/admin/update-user"}
-        elementIdentifier={"email"}
-      />
-
-      <DataPagination
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-      />
+      <div className="h-full flex flex-col">
+        <div className="h-[17%]">
+          <AdminDataSummary usersSummary={usersSummary} />
+        </div>
+        <div className="h-full overflow-y-auto">
+          <DataTable
+            columns={userColumns}
+            fields={userFields}
+            data={usersData}
+            deleteElement={handleDelete}
+            editElementPath={"/admin/update-user"}
+            elementIdentifier={"email"}
+          />
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </div>
+      </div>
     </>
   );
 }
