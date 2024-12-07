@@ -21,6 +21,7 @@ import UpdateRoomForm from "../../../components/adminDashboard/adminUpdateElemen
 import AddRoomForm from "../../../components/adminDashboard/adminCreateNewElement/createNewRoomForm/AddRoomForm";
 import UpdateBookingForm from "../../../components/adminDashboard/adminUpdateElement/updateBookingForm/UpdateBookingForm";
 import UpdateTicketForm from "../../../components/adminDashboard/adminUpdateElement/updateTicketForm/UpdateTicketForm";
+import AdminDashboardSummary from "../../../components/adminDashboard/adminDashboardSummary/AdminDashboardSummary";
 
 function AdminDashboard({
   isUserLoggedIn,
@@ -74,6 +75,10 @@ function AdminDashboard({
               {/* dashboard content design */}
               <div className="h-[94%] rounded-tl-[10px] bg-purple-200">
                 <Routes path="/*">
+                  <Route
+                    path="/dashboard"
+                    element={<AdminDashboardSummary />}
+                  />
                   <Route path="/bookings" element={<AdminBooking />} />
                   <Route
                     path="/update-booking"
