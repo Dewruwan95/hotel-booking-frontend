@@ -8,6 +8,7 @@ function AdminDataSummary({
   feedbackSummary,
   ticketsSummary,
   gallerySummary,
+  bookingsSummary,
 }) {
   return (
     <div>
@@ -208,6 +209,57 @@ function AdminDataSummary({
                   <span className="text-[30px] text-center ml-2"> : </span>
                   <span className="ml-[10px] text-[50px] font-extrabold text-center">
                     {gallerySummary.totalEvents}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : bookingsSummary ? (
+            // users summary section
+            <div className="flex h-full justify-between w-full px-[20px]">
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Total <br /> Bookings
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {bookingsSummary.totalBookings}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Pending <br /> Bookings
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {bookingsSummary.totalPendingBookings}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Confirmed <br /> Bookings
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {bookingsSummary.totalConfirmedBookings}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Canceled <br /> Bookings
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {bookingsSummary.totalCanceledBookings}
                   </span>
                 </div>
               </div>
