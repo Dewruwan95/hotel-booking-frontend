@@ -3,9 +3,11 @@ import DataTable from "../../../components/adminDashboard/adminDataTable/DataTab
 import axios from "axios";
 import toast from "react-hot-toast";
 import DataPagination from "../../../components/pagination/DataPagination";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 
 function AdminFeedback() {
   const [feedbackData, setFeedbackData] = useState([]);
+  const [feedbackSummary, setFeedbackSummary] = useState([]);
   const [isFeedbacksDataLoaded, setIsFeedbacksDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -34,6 +36,7 @@ function AdminFeedback() {
       );
 
       setFeedbackData(res.data.feedbacks);
+      setFeedbackSummary(res.data.feedbacksSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsFeedbacksDataLoaded(true);
     } catch (error) {
@@ -83,22 +86,29 @@ function AdminFeedback() {
   ];
   return (
     <>
-      <DataTable
-        columns={feedbackColumns}
-        fields={feedbackFields}
-        data={feedbackData}
-        deleteElement={handleDelete}
-        editElementPath="/admin/update-feedback"
-        elementIdentifier="_id"
-      />
+      <div className="h-full flex flex-col">
+        <div className="h-[17%]">
+          <AdminDataSummary feedbackSummary={feedbackSummary} />
+        </div>
+        <div className="h-full overflow-y-auto">
+          <DataTable
+            columns={feedbackColumns}
+            fields={feedbackFields}
+            data={feedbackData}
+            deleteElement={handleDelete}
+            editElementPath="/admin/update-feedback"
+            elementIdentifier="_id"
+          />
 
-      <DataPagination
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-      />
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </div>
+      </div>
     </>
   );
 }

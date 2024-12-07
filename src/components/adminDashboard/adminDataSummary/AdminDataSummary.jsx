@@ -5,6 +5,7 @@ function AdminDataSummary({
   roomsSummary,
   categoriesSummary,
   usersSummary,
+  feedbackSummary,
 }) {
   return (
     <div>
@@ -112,6 +113,45 @@ function AdminDataSummary({
                   <span className="text-[30px] text-center ml-2"> : </span>
                   <span className="ml-[10px] text-[50px] font-extrabold text-center">
                     {usersSummary.totalEmailVerifiedUsers}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : feedbackSummary ? (
+            // feedback summary section
+            <div className="flex h-full justify-between w-full px-[20px]">
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Total <br /> Feedbacks
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {feedbackSummary.totalFeedbacks}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Verified <br /> Feedbacks
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {feedbackSummary.totalVerifiedFeedbacks}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Pending <br /> Feedbacks
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {feedbackSummary.totalPendingFeedbacks}
                   </span>
                 </div>
               </div>
