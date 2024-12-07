@@ -230,23 +230,23 @@ function AdminDashboardSummary() {
       <div className="flex w-full">
         {/* Left Column (50% width) */}
         <div className="w-[50%] p-[20px]">
-          <div className="bg-purple-400 rounded-lg shadow-md p-6">
+          <div className="bg-purple-400 rounded-lg shadow-md p-4">
             <h2 className="text-2xl font-bold mb-4">Bookings</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-100 text-yellow-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {bookingsSummary.totalPendingBookings}
                 </span>
                 <span className="ml-2 ">Pending</span>
               </div>
               <div className="bg-gray-100 text-green-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {ongoingBookings.length}
                 </span>
                 <span className="ml-2 ">Confirmed</span>
               </div>
               <div className="bg-gray-100 text-red-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {bookingsSummary.totalCanceledBookings}
                 </span>
                 <span className="ml-2 ">Canceled</span>
@@ -254,7 +254,7 @@ function AdminDashboardSummary() {
             </div>
           </div>
 
-          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-6">
+          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-4">
             <h2 className="text-2xl font-bold mb-4">Ongoing Bookings</h2>
             <div className="grid grid-cols-1 gap-4">
               {groupedBookings.map((booking, index) => (
@@ -280,23 +280,23 @@ function AdminDashboardSummary() {
         {/* Right Column (50% width) */}
         <div className="w-[50%] p-[20px]">
           {/* Feedbacks summary */}
-          <div className="bg-purple-400 rounded-lg shadow-md  p-6">
+          <div className="bg-purple-400 rounded-lg shadow-md  p-4">
             <h2 className="text-2xl font-bold mb-4">Feedbacks</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {feedbackSummary.totalFeedbacks}
                 </span>
                 <span className="ml-2 ">Total</span>
               </div>
               <div className="bg-gray-100 text-yellow-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {feedbackSummary.totalPendingFeedbacks}
                 </span>
                 <span className="ml-2 ">Pending</span>
               </div>
               <div className="bg-gray-100 text-green-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {feedbackSummary.totalVerifiedFeedbacks}
                 </span>
                 <span className="ml-2 ">Verified</span>
@@ -305,23 +305,23 @@ function AdminDashboardSummary() {
           </div>
 
           {/* inquiry summary */}
-          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-6">
+          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-4">
             <h2 className="text-2xl font-bold mb-4">Inquiries</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {ticketsSummary.totalInquiries}
                 </span>
                 <span className="ml-2 ">Total</span>
               </div>
               <div className="bg-gray-100 text-yellow-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {ticketsSummary.totalPendingInquiries}
                 </span>
                 <span className="ml-2 ">Pending</span>
               </div>
               <div className="bg-gray-100 text-green-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {ticketsSummary.totalResolvedInquiries}
                 </span>
                 <span className="ml-2 ">Resolved</span>
@@ -330,23 +330,23 @@ function AdminDashboardSummary() {
           </div>
 
           {/* rooms summary */}
-          <div className="bg-purple-400 rounded-lg shadow-md p-6 mt-[20px]">
+          <div className="bg-purple-400 rounded-lg shadow-md p-4 mt-[20px]">
             <h2 className="text-2xl font-bold mb-4">Rooms</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {roomsSummary.totalRooms}
                 </span>
                 <span className="ml-2 ">Total</span>
               </div>
               <div className="bg-gray-100 text-green-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {roomsSummary.availableRooms}
                 </span>
                 <span className="ml-2 ">Available</span>
               </div>
               <div className="bg-gray-100 text-red-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {roomsSummary.notAvailableRooms}
                 </span>
                 <span className="ml-2 ">Disabled</span>
@@ -355,23 +355,23 @@ function AdminDashboardSummary() {
           </div>
 
           {/* users summary */}
-          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-6">
+          <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] p-4">
             <h2 className="text-2xl font-bold mb-4">Users</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {usersSummary.totalUsers}
                 </span>
                 <span className="ml-2 ">Total</span>
               </div>
               <div className="bg-gray-100 text-green-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {usersSummary.totalActiveUsers}
                 </span>
                 <span className="ml-2 ">Active</span>
               </div>
               <div className="bg-gray-100 text-red-500 rounded-lg p-4 flex items-center justify-center">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl font-bold">
                   {usersSummary.totalBannedUsers}
                 </span>
                 <span className="ml-2 ">Banned</span>
@@ -381,11 +381,11 @@ function AdminDashboardSummary() {
 
           <div className="grid grid-cols-[50%,50%] w-full ">
             {/* categories summary */}
-            <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] mr-[10px] p-6">
+            <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] mr-[10px] p-4">
               <h2 className="text-2xl font-bold mb-4">Categories</h2>
               <div className="grid grid-cols-1 gap-4">
                 <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                  <span className="text-4xl font-bold">
+                  <span className="text-3xl font-bold">
                     {categoriesSummary.totalCategories}
                   </span>
                   <span className="ml-2 ">Total</span>
@@ -394,11 +394,11 @@ function AdminDashboardSummary() {
             </div>
 
             {/* events summary */}
-            <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] ml-[10px] p-6">
+            <div className="bg-purple-400 rounded-lg shadow-md mt-[20px] ml-[10px] p-4">
               <h2 className="text-2xl font-bold mb-4">Events</h2>
               <div className="grid grid-cols-1 gap-4">
                 <div className="bg-gray-100 text-purple-500 rounded-lg p-4 flex items-center justify-center">
-                  <span className="text-4xl font-bold">
+                  <span className="text-3xl font-bold">
                     {gallerySummary.totalEvents}
                   </span>
                   <span className="ml-2 ">Total</span>
