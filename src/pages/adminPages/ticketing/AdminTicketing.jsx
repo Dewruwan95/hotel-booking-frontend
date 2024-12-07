@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import DataTable from "../../../components/adminDashboard/adminDataTable/DataTable";
 import axios from "axios";
 import DataPagination from "../../../components/pagination/DataPagination";
+import AdminDataSummary from "../../../components/adminDashboard/adminDataSummary/AdminDataSummary";
 
 function AdminTicketing() {
   const [tickets, setTickets] = useState([]);
+  const [ticketsSummary, setTicketsSummary] = useState([]);
   const [isTicketsDataLoaded, setIsTicketsDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -32,6 +34,7 @@ function AdminTicketing() {
       );
 
       setTickets(res.data.inquiries);
+      setTicketsSummary(res.data.inquiriesSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsTicketsDataLoaded(true);
     } catch (error) {
@@ -79,22 +82,29 @@ function AdminTicketing() {
 
   return (
     <>
-      <DataTable
-        columns={ticketColumns}
-        fields={ticketFields}
-        data={tickets}
-        deleteElement={handleDelete}
-        editElementPath={"/admin/update-ticket"}
-        elementIdentifier={"_id"}
-      />
+      <div className="h-full flex flex-col">
+        <div className="h-[17%]">
+          <AdminDataSummary ticketsSummary={ticketsSummary} />
+        </div>
+        <div className="h-full overflow-y-auto">
+          <DataTable
+            columns={ticketColumns}
+            fields={ticketFields}
+            data={tickets}
+            deleteElement={handleDelete}
+            editElementPath={"/admin/update-ticket"}
+            elementIdentifier={"_id"}
+          />
 
-      <DataPagination
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-      />
+          <DataPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </div>
+      </div>
     </>
   );
 }

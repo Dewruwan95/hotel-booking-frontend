@@ -7,6 +7,7 @@ import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminRooms() {
   const [roomsData, setRoomsData] = useState([]);
+  const [roomsSummary, setRoomsSummary] = useState([]);
   const [isRoomsDataLoaded, setIsRoomsDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -35,6 +36,7 @@ function AdminRooms() {
         }
       );
       setRoomsData(res.data.rooms);
+      setRoomsSummary(res.data.roomsSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsRoomsDataLoaded(true);
     } catch (error) {
@@ -90,6 +92,7 @@ function AdminRooms() {
             onAddElementClick={() => {
               navigate("/admin/add-room");
             }}
+            roomsSummary={roomsSummary}
           />
         </div>
         <div className="h-full overflow-y-auto">
