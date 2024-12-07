@@ -6,6 +6,7 @@ function AdminDataSummary({
   categoriesSummary,
   usersSummary,
   feedbackSummary,
+  ticketsSummary,
 }) {
   return (
     <div>
@@ -152,6 +153,44 @@ function AdminDataSummary({
                   <span className="text-[30px] text-center ml-2"> : </span>
                   <span className="ml-[10px] text-[50px] font-extrabold text-center">
                     {feedbackSummary.totalPendingFeedbacks}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : ticketsSummary ? (
+            <div className="flex h-full justify-between w-full px-[20px]">
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Total <br /> Inquiries
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {ticketsSummary.totalInquiries}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Pending <br /> Inquiries
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {ticketsSummary.totalPendingInquiries}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Resolved <br /> Inquiries
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {ticketsSummary.totalResolvedInquiries}
                   </span>
                 </div>
               </div>
