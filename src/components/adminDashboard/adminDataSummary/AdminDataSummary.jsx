@@ -7,6 +7,7 @@ function AdminDataSummary({
   usersSummary,
   feedbackSummary,
   ticketsSummary,
+  gallerySummary,
 }) {
   return (
     <div>
@@ -158,6 +159,7 @@ function AdminDataSummary({
               </div>
             </div>
           ) : ticketsSummary ? (
+            // tickets summary section
             <div className="flex h-full justify-between w-full px-[20px]">
               <div className="flex h-full items-center justify-center py-[10px]">
                 <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
@@ -191,6 +193,21 @@ function AdminDataSummary({
                   <span className="text-[30px] text-center ml-2"> : </span>
                   <span className="ml-[10px] text-[50px] font-extrabold text-center">
                     {ticketsSummary.totalResolvedInquiries}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : gallerySummary ? (
+            // gallery summary section
+            <div className="flex h-full justify-between w-full px-[20px]">
+              <div className="flex h-full items-center justify-center py-[10px]">
+                <div className="bg-white px-[20px] h-full  rounded-[10px] flex items-center text-purple-800">
+                  <span className="text-[30px] text-center">
+                    Total <br /> Events
+                  </span>
+                  <span className="text-[30px] text-center ml-2"> : </span>
+                  <span className="ml-[10px] text-[50px] font-extrabold text-center">
+                    {gallerySummary.totalEvents}
                   </span>
                 </div>
               </div>

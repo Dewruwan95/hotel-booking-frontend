@@ -7,6 +7,7 @@ import DataPagination from "../../../components/pagination/DataPagination";
 
 function AdminGallery() {
   const [galleryData, setGalleryData] = useState([]);
+  const [gallerySummary, setGallerySummary] = useState([]);
   const [isGalleryDataLoaded, setIsGalleryDataLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -35,6 +36,7 @@ function AdminGallery() {
         }
       );
       setGalleryData(res.data.events);
+      setGallerySummary(res.data.eventsSummary);
       setTotalPages(res.data.pagination.totalPages);
       setIsGalleryDataLoaded(true);
     } catch (error) {
@@ -73,6 +75,7 @@ function AdminGallery() {
             onAddElementClick={() => {
               navigate("/admin/add-event");
             }}
+            gallerySummary={gallerySummary}
           />
         </div>
         <div className="h-full overflow-y-auto">
